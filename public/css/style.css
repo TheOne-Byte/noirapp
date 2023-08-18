@@ -1,0 +1,144 @@
+body {
+    background: url('https://c0.wallpaperflare.com/preview/153/380/988/headphones-red-black-dark.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    font-family: 'Quicksand', sans-serif;
+    backdrop-filter: blur(5px);
+
+  }
+
+  .nav-item:hover {
+    background-color: orange;
+    color: white;
+    padding: 0.5rem 0.5rem;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .card {
+    background-color: #EE7828;
+  }
+
+  h3{
+    color: white;
+    font-weight: bold;
+    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Quicksand', sans-serif;
+
+  }
+
+  h2{
+    color: whitesmoke;
+    font-weight: bold;
+  }
+
+  hr{
+    border: none;
+    height: 4px;
+    /* Set the hr color */
+    color: orange;  /* old IE */
+    background-color: orange;  /* Modern Browsers */
+    margin-top: -10px;
+  }
+
+  .price{
+    size: 0.5rem;
+  }
+
+  .informasi{
+    display: inline-block;
+    background-color: #EE7828;
+    padding: 4%;
+    border-radius: 10px;
+    border: none;
+    color: white;
+  }
+  
+  .btn{
+    background-color: #786778;
+      border: none;      
+      margin-top: -10px;
+      color: black;
+      padding: 10px 25px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 16px;
+      color: white;
+  }
+  .btn-chat{
+     border:solid 2px #786778;
+     border-radius: 16px;
+     padding: 10px 25px;
+     text-align: center;
+     text-decoration: none;
+     display: inline-block;
+     margin: 4px 2px;
+     cursor: pointer;
+     background: transparent;
+     color: white;
+     margin-top: 10px;
+  }
+  .btn:hover .btn-chat:hover{
+    background-color: #C3A4C3;
+  }
+
+/* LOGIN */
+.form-signin .form-registration {
+  padding: 1rem;
+}
+.form-registration input{
+  border-radius: 0%;
+  margin-bottom: -1;
+
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: 5px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.error message{
+  color: wheat;
+}
+
+#login {
+  margin-left: 120px;
+}
+
+#register{
+  margin-left: 120px;
+}
+
+.btn:hover{
+  background-color: #C3A4C3;
+}
+
+#logintext{
+  color: #C3A4C3;
+}
+
+#registertext{
+  color: #C3A4C3;
+
+}
+
+
