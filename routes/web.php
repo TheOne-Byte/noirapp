@@ -43,7 +43,7 @@ Route::get('/game', [CategoryController::class,'showcategory']);
 // });
 
 Route::get('/categories/{category:slug}', [CategoryController::class,'showuserbycategory']);
-Route::get('/user/{user:username}', [UserController::class,'showsingleuser']);
+Route::get('/user/{user:username}', [UserController::class,'showsingleuser'])->name('user');
 
 // login
 Route::get('/login', [LoginController::class,'index'])->middleware('guest')->name('login');
@@ -59,4 +59,6 @@ Route::get('/addtocart/{user:username}', [OrderController::class,'index'])->midd
 
 
 Route::resource('/addtocart', OrderController::class)->middleware('auth');
+Route::get('/cart/{user:username}', [OrderController::class,'GetCartByUserId'])->middleware('auth');
+
 

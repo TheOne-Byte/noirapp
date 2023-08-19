@@ -1,9 +1,12 @@
 @extends('layouts/main')
 <link rel="stylesheet" href="/css/order.css" >
 @section('container')
-
     <form action="/addtocart" method="POST">
         @csrf
+        {{-- @foreach ($user as $value){ <input type="hidden" name="result[]" value="$value."> }@endforeach --}}
+        <input type="hidden" name="user_id" value="{{ $user -> id}}">
+        {{-- <input type="hidden" name="buyer_id" value="{{ auth()->user()->id}}"> --}}
+
     <table id="cart" class="table table-hover table-condensed">
         <thead>
         <tr>
@@ -45,6 +48,10 @@
             <td><button type="submit" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</button></td>
             <td colspan="2" class="hidden-xs"></td>
             <td class="hidden-xs text-center"><strong id="grand-total">Total ${{ $user->price }}</strong></td>
+            <input type="hidden" name="price" id="price" value="{{ $user->price }}">
+
+            <input type="hidden" name="grand_total" id="grand-total" value="grand-total">
+
         </tr>
         </tfoot>
     </table>
@@ -71,7 +78,9 @@
             });
 
             document.getElementById('grand-total').innerText = 'Total $' + grandTotal.toFixed(2);
+            
         }
+        
     </script>
 
 @endsection

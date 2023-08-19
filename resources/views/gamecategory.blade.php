@@ -1,9 +1,21 @@
 @extends('layouts/main')
 @section('container')
 
+{{-- @dd(auth()) --}}
+<a href="/cart/{{auth()->user()->username  }}">WOI</a>
 
 <div class="container">
     <div class="row">
+      @if(session()->has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+      @endif
+      @if(session()->has('error'))
+      <div class="alert alert-danger" role="alert">
+          {{ session('error') }}
+      </div>
+    @endif
         @foreach ($categories as $categories)
         <div class="col-md-4">        
             <a href="/categories/{{ $categories->slug }}" class="text-decoration-none text-white"> 
