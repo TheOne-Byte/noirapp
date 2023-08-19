@@ -6,6 +6,7 @@ use App\Models\cart;
 use App\Models\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -42,7 +43,28 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
+        // $buyer_id = $request->user()->id;
+        // dd($buyer_id);
+        // dd($request->user()->name);
+
+        $validated = $request->validate([
+            'quantity' =>'min:1|required'
+        ]);
+
+        $validated['user_id'] = $request->user_id;
+        $validated['price'] = $request->price;
+        $validated['buyer_id'] = auth()->user()->id;
+    
+        if($request->user_id == auth()->user()->id){
+            return redirect('/game')->with('error','Cant Order Yourself!');
+        }
+        cart::create($validated);
+       
+        $users = DB::table('users')->where('id',$request->user_id)->get('username');
+
+        // return redirect()->route('user',['username' => DB::table('users')->where('id',$request->user_id)->get('username')])->with('success','Add To Cart!');   
+        return redirect('/game')->with('success','Add To Cart!');
     }
 
     /**
@@ -51,9 +73,21 @@ class OrderController extends Controller
      * @param  \App\Models\cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function show(cart $cart)
+    public function GetCartByUserId(User $user)
     {
-        //
+        // dd('masuk');
+        // dd($cart);
+
+        return view('order.show', [
+            "title" => "order show",
+            'active' => 'order show',
+            'cart' => $user->cart
+            // Post::find($id)
+    
+        ]);
+
+        
+
     }
 
     /**
