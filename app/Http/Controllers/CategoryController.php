@@ -22,7 +22,7 @@ class CategoryController extends Controller
         return view('users', [
             'title' => "User by category",
             'active' => 'category',
-            'users' => $category -> user  //ini category sm author karena di html nya dipanggil catgory sm author
+            'users' => $category -> user ->load('category','role')  //ini category sm author karena di html nya dipanggil catgory sm author
             // Post::find($id)
     
         ]);
