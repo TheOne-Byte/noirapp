@@ -29,7 +29,7 @@ Route::get('/home', function () {
     return view('home',[
         'active' => 'home'
     ]);
-    
+
 });
 
 Route::get('/game', [CategoryController::class,'showcategory']);
@@ -60,5 +60,4 @@ Route::get('/addtocart/{user:username}', [OrderController::class,'index'])->midd
 
 Route::resource('/addtocart', OrderController::class)->middleware('auth');
 Route::get('/cart/{user:username}', [OrderController::class,'GetCartByUserId'])->middleware('auth');
-
 
