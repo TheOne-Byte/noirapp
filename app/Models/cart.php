@@ -9,7 +9,7 @@ class cart extends Model
 {
     use HasFactory;
     protected $fillable = [
-      
+
         'user_id',
         'buyer_id',
         'quantity',

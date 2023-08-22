@@ -40,9 +40,13 @@
                                 ${{ number_format($totalPrice, 2) }}
                             </td>
                             <td class="text-center">
-                                <a href="/deleteItem/{{ $cartItems[0]->id }}" class="btn btn-danger btn-sm">
-                                    <i class="bi bi-trash"></i>
-                                </a>
+                                <form method="POST" action="/cart/deleteItem/{{ $cartItems[0]->id }}">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger btn-sm delete-item" data-item-id="{{ $cartItems[0]->id }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -51,6 +55,9 @@
         </div>
     </div>
 </div>
+
+<!-- JavaScript and Styles remain the same -->
+
 
 <script>
     // Get all quantity input fields
@@ -75,6 +82,30 @@
         // Update the subtotal in the corresponding row
         subtotal.textContent = `$${newSubtotal}`;
     }
+
+    // Get all delete buttons
+const deleteButtons = document.querySelectorAll('.delete-item');
+
+// Add click event listener to each delete button
+deleteButtons.forEach((button) => {
+    button.addEventListener('click', deleteCartItem);
+});
+
+// Function to handle item deletion
+function deleteCartItem(event) {
+    event.preventDefault(); // Prevent the default link behavior (navigating to /deleteItem/...)
+
+    const button = event.target;
+    const row = button.closest('tr');
+    const itemId = button.getAttribute('data-item-id'); // Get the item ID from the data attribute
+
+    // Send an AJAX request to delete the item from the cart (you will need a server-side route for this)
+    // For example, you can use fetch or jQuery's $.ajax to send the request
+
+    // After successfully deleting the item on the server, you can remove the row from the table
+    row.remove();
+}
+
 </script>
 
 <style>
