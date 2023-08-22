@@ -119,32 +119,33 @@ class OrderController extends Controller
      * @param  \App\Models\cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(cart $cart)
+    public function destroy($id)
     {
-        //
+       cart::destroy($id);
+        return redirect()->back()->with('success','Item Sudah Dihapus!');    
     }
 
     //For deleting item in cart
-    public function deleteItem($id)
-    {
-        // Find the Cart item by ID
-        $cartItem = cart::find($id);
+    // public function deleteItem($id)
+    // {
+    //     // Find the Cart item by ID
+    //     $cartItem = cart::find($id);
 
-        // Check if the item exists
-        if (!$cartItem) {
-            return redirect('/cart')->with('error', 'Item not found in the cart.');
-        }
+    //     // Check if the item exists
+    //     if (!$cartItem) {
+    //         return redirect('/cart')->with('error', 'Item not found in the cart.');
+    //     }
 
-        // Check if the item belongs to the currently authenticated user
-        if ($cartItem->buyer_id !== auth()->user()->id) {
-            return redirect('/cart')->with('error', 'You cannot delete this item as it does not belong to you.');
-        }
+    //     // Check if the item belongs to the currently authenticated user
+    //     if ($cartItem->buyer_id !== auth()->user()->id) {
+    //         return redirect('/cart')->with('error', 'You cannot delete this item as it does not belong to you.');
+    //     }
 
-        // Delete the item
-        $cartItem->delete();
+    //     // Delete the item
+    //     $cartItem->delete();
 
-        return redirect('/cart')->with('success', 'Item removed from the cart.');
-    }
+    //     return redirect('/cart')->with('success', 'Item removed from the cart.');
+    // }
 
 
 
