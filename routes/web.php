@@ -60,5 +60,5 @@ Route::get('/addtocart/{user:username}', [OrderController::class,'index'])->midd
 
 Route::resource('/addtocart', OrderController::class)->middleware('auth');
 Route::get('/cart/{user:username}', [OrderController::class,'GetCartByUserId'])->middleware('auth');
-Route::delete('/cart/deleteItem/{id}', 'OrderController@deleteItem')->name('cart.deleteItem');
+// Route::delete('/cart/deleteItem/{id}', 'OrderController@deleteItem')->name('cart.deleteItem');
 
