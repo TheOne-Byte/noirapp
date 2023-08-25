@@ -65,7 +65,7 @@
             var quantity = parseFloat(input.value);
             var subtotal = price * quantity;
             row.querySelector('[data-th="Subtotal"]').innerText = subtotal.toFixed(2);
-            
+
             updateGrandTotal(); // Call the function to update the grand total
         }
 
@@ -78,9 +78,9 @@
             });
 
             document.getElementById('grand-total').innerText = 'Total $' + grandTotal.toFixed(2);
-            
+
         }
-        
+
     </script>
 
 @endsection

@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Item;
+use Illuminate\Support\Facades\Redirect;
 
 class OrderController extends Controller
 {
@@ -43,29 +45,63 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        // $buyer_id = $request->user()->id;
-        // dd($buyer_id);
-        // dd($request->user()->name);
-
         $validated = $request->validate([
-            'quantity' =>'min:1|required'
+            'quantity' => 'min:1|required'
         ]);
 
-        $validated['user_id'] = $request->user_id;
-        $validated['price'] = $request->price;
-        $validated['buyer_id'] = auth()->user()->id;
+        // Add some logging for debugging
+        Log::info('Store method is being called.'); // Check if this log is shown in your logs
 
-        if($request->user_id == auth()->user()->id){
-            return redirect('/game')->with('error','Cant Order Yourself!');
+        $user_id = $request->user_id;
+        $buyer_id = auth()->user()->id;
+        $price = $request->price;
+        $quantity = $validated['quantity'];
+        $subtotal = $price * $quantity; // Calculate the subtotal
+
+        // Check if the product already exists in the cart for the current user
+        $existingCartItem = cart::where('user_id', $user_id)
+            ->where('buyer_id', $buyer_id)
+            ->first();
+
+        if ($existingCartItem) {
+            // If the product exists, update the quantity and subtotal
+            $existingCartItem->increment('quantity', $quantity);
+            $existingCartItem->subtotal += $subtotal;
+            $existingCartItem->save();
+        } else {
+            // If the product doesn't exist, create a new cart item
+            cart::create([
+                'user_id' => $user_id,
+                'quantity' => $quantity,
+                'price' => $price,
+                'buyer_id' => $buyer_id,
+                'subtotal' => $subtotal,
+            ]);
         }
-        cart::create($validated);
 
-        $users = DB::table('users')->where('id',$request->user_id)->get('username');
-
-        // return redirect()->route('user',['username' => DB::table('users')->where('id',$request->user_id)->get('username')])->with('success','Add To Cart!');
-        return redirect('/game')->with('success','Add To Cart!');
+        return redirect('/game')->with('success', 'Added to Cart!');
     }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        // Calculate the new subtotal
+        $cartItem = cart::findOrFail($id);
+        $quantity = $validated['quantity'];
+        $subtotal = $cartItem->price * $quantity;
+
+        // Update the quantity and subtotal in the database
+        $cartItem->quantity = $quantity;
+        $cartItem->subtotal = $subtotal;
+        $cartItem->save();
+
+        return response()->json(['message' => 'Quantity updated successfully']);
+    }
+
+
 
     /**
      * Display the specified resource.
@@ -75,19 +111,14 @@ class OrderController extends Controller
      */
     public function GetCartByUserId(User $user)
     {
-        // dd('masuk');
-        // dd($cart);
+        // Retrieve the cart items for the user
+        $cart = $user->cart;
 
         return view('order.show', [
             "title" => "order show",
             'active' => 'order show',
-            'cart' => $user->cart
-            // Post::find($id)
-
+            'cart' => $cart // Pass the cart items to the view
         ]);
-
-
-
     }
 
     /**
@@ -108,10 +139,8 @@ class OrderController extends Controller
      * @param  \App\Models\cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, cart $cart)
-    {
-        //
-    }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -122,31 +151,35 @@ class OrderController extends Controller
     public function destroy($id)
     {
          cart::destroy($id);
-        return redirect()->back()->with('success','Item Sudah Dihapus!');    
+        return redirect()->back()->with('success','Item Sudah Dihapus!');
+    }
+    public function showOrderPage(Request $request, $selectedItems)
+    {
+        $itemIds = explode(',', $selectedItems);
+
+        try {
+            // Fetch selected items' data here
+
+            return view('order.orderpage', ['selectedItems' => $itemIds]);
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 
-    //For deleting item in cart
-    // public function deleteItem($id)
-    // {
-    //     // Find the Cart item by ID
-    //     $cartItem = cart::find($id);
-
-    //     // Check if the item exists
-    //     if (!$cartItem) {
-    //         return redirect('/cart')->with('error', 'Item not found in the cart.');
-    //     }
-
-    //     // Check if the item belongs to the currently authenticated user
-    //     if ($cartItem->buyer_id !== auth()->user()->id) {
-    //         return redirect('/cart')->with('error', 'You cannot delete this item as it does not belong to you.');
-    //     }
-
-    //     // Delete the item
-    //     $cartItem->delete();
-
-    //     return redirect('/cart')->with('success', 'Item removed from the cart.');
-    // }
 
 
+    public function placeOrder(Request $request)
+    {
+        $selectedItems = $request->input('selectedItems');
+        $itemIds = explode(',', $selectedItems);
 
+        try {
+            // Perform any necessary actions for placing the order here
+
+            // Redirect to the order page with selected item IDs
+            return redirect()->route('order.page', ['selectedItems' => $itemIds]);
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+    }
 }
