@@ -9,6 +9,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\TopUpController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,41 +23,44 @@ use App\Http\Controllers\RegisterController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home', [
+        'active' => 'home'
+    ]);
 });
 
 Route::get('/home', function () {
-    return view('home',[
+    return view('home', [
         'active' => 'home'
     ]);
-    
 });
 
-Route::get('/game', [CategoryController::class,'showcategory']);
-// Route::get('/users', [CategoryController::class,'showuserbycategory']);
+Route::get('/game', [CategoryController::class, 'showcategory']);
+// Route::get('/users', [CategoryController::class, 'showuserbycategory']);
 
-// Route::get('/users/{id}', [CategoryController::class,'showuserbycategory']);
-// Route::get('/users/{category:slug}', function(category $category){
-//     return view('test',[
+// Route::get('/users/{id}', [CategoryController::class, 'showuserbycategory']);
+// Route::get('/users/{category:slug}', function (category $category) {
+//     return view('test', [
 //         'category' =>  $category->user
 //     ]);
 // });
 
-Route::get('/categories/{category:slug}', [CategoryController::class,'showuserbycategory']);
-Route::get('/user/{user:username}', [UserController::class,'showsingleuser']);
+Route::get('/categories/{category:slug}', [CategoryController::class, 'showuserbycategory']);
+Route::get('/user/{user:username}', [UserController::class, 'showsingleuser']);
 
 // login
-Route::get('/login', [LoginController::class,'index'])->middleware('guest')->name('login');
-Route::post('/login', [LoginController::class,'authenticate']);
+Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
+Route::post('/login', [LoginController::class, 'authenticate']);
 
 //register
-Route::get('/register', [RegisterController::class,'index'])->middleware('guest');
-Route::post('/register', [RegisterController::class,'register']);
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+Route::post('/register', [RegisterController::class, 'register']);
 
-Route::post('/logout',[LogoutController::class,'logout']);
+Route::post('/logout', [LogoutController::class, 'logout']);
 
-Route::get('/addtocart/{user:username}', [OrderController::class,'index'])->middleware('auth');
-
+Route::get('/addtocart/{user:username}', [OrderController::class, 'index'])->middleware('auth');
 
 Route::resource('/addtocart', OrderController::class)->middleware('auth');
 
+Route::get('/top_up', [TopUpController::class, 'index'])->middleware('auth')->name('top_up');
+Route::post('/top_up', [TopUpController::class, 'store'])->middleware('auth')->name('store_top_up');
+Route::get('/top_up/sukses', [TopUpController::class, 'sukses']);

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\role;
 use App\Models\cart;
+use App\Models\point;
 
 class DatabaseSeeder extends Seeder
 {
@@ -89,6 +90,11 @@ class DatabaseSeeder extends Seeder
         cart::create([
             'user_id' => 1,
             'buyer_id' => 4
+        ]);
+
+        point::create([
+            'username' => 'Lele89',
+            'current_point' => 0
         ]);
     }
 }

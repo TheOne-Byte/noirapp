@@ -7,10 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\category;
-use App\Models\cart;
 
-class User extends Authenticatable
+class point extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -19,14 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'username',
-        'role_id'
-
-    ];
+    public $fillable = ['username', 'point_top_up', 'payment_method', 'status'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -47,23 +38,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function category()
-    {
-        return $this->belongsTo(category::class);
-    }
-
-    public function role()
-    {
-        return $this->belongsTo(role::class);
-    }
-
-    public function cart()
-    {
-        return $this->hasMany(cart::class);
-    }
-
     public function point()
     {
-        return $this->hasOne(point::class);
+        return $this->belongsTo(User::class);
     }
 }
