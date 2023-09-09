@@ -61,7 +61,7 @@
                     alt="">
                 <div class="text-center w-100">
                     <h1 class="title-text text-white">
-                        Checkout Successful
+                        Topup Successful
                     </h1>
                     <p class="caption-text">
                         We've sent the receipt to your email<br class="d-sm-block d-none"> address is
