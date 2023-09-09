@@ -11,7 +11,7 @@ class UserController extends Controller
         return view('singleuser', [
             'title' => "User Information",
             'active' => 'singleuser',
-            'user' => $user  //ini category sm author karena di html nya dipanggil catgory sm author
+            'user' => $user -> load('category') //ini category sm author karena di html nya dipanggil catgory sm author
             // Post::find($id)
     
         ]);

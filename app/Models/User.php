@@ -57,9 +57,8 @@ class User extends Authenticatable
         return $this->belongsTo(role::class);
     }
 
-    public function cart()
-    {
-        return $this->hasMany(cart::class);
+    public function cart(){
+        return $this->hasMany(cart::class,'buyer_id');
     }
 
     public function point()

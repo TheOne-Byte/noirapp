@@ -44,8 +44,8 @@ Route::get('/game', [CategoryController::class, 'showcategory']);
 //     ]);
 // });
 
-Route::get('/categories/{category:slug}', [CategoryController::class, 'showuserbycategory']);
-Route::get('/user/{user:username}', [UserController::class, 'showsingleuser']);
+Route::get('/categories/{category:slug}', [CategoryController::class,'showuserbycategory']);
+Route::get('/user/{user:username}', [UserController::class,'showsingleuser'])->name('user');
 
 // login
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
@@ -60,6 +60,8 @@ Route::post('/logout', [LogoutController::class, 'logout']);
 Route::get('/addtocart/{user:username}', [OrderController::class, 'index'])->middleware('auth');
 
 Route::resource('/addtocart', OrderController::class)->middleware('auth');
+Route::get('/cart/{user:username}', [OrderController::class,'GetCartByUserId'])->middleware('auth');
+// Route::delete('/cart/deleteItem/{id}', 'OrderController@deleteItem')->name('cart.deleteItem');
 
 Route::get('/top_up', [TopUpController::class, 'index'])->middleware('auth')->name('top_up');
 Route::post('/top_up', [TopUpController::class, 'store'])->middleware('auth')->name('store_top_up');

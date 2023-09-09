@@ -87,14 +87,10 @@ class DatabaseSeeder extends Seeder
             'role_id' => 4,
             "password" => bcrypt('password')
         ]);
-        cart::create([
-            'user_id' => 1,
-            'buyer_id' => 4
-        ]);
-
-        point::create([
-            'username' => 'Lele89',
-            'current_point' => 0
-        ]);
+        // cart::create([
+        //     'user_id' => 1,
+        //     'buyer_id' => 4,
+        //     'quantity'
+        // ]);
     }
 }

@@ -4,7 +4,7 @@
 
     <div class="container">
         <div class="row justify-content-center mb-5">
-          
+           
             <div class="col-md-4 d-inline-block justify-content-right">
 
                 <img style="border-radius: 10px" src="https://source.unsplash.com/400x500?{{ $user->username }}" class="img-fluid" alt="{{ $user->username }}">
