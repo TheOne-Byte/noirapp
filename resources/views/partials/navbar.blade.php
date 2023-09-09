@@ -22,6 +22,11 @@
             @auth
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
+                        <a href="/cart/{{ auth()->user()->username }}" class="btn btn-primary">
+                            <i class="bi bi-cart-fill"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ $active === 'top_up' ? 'active' : '' }}" href="/top_up">Top Up</a>
                     </li>
                     <li class="nav-item dropdown">
@@ -65,7 +70,7 @@
                 </li>
             </ul>
 
-            @auth
+            {{-- @auth
             <ul class="navbar-nav me-auto">
                 <!-- Shopping Cart Button -->
                 <li class="nav-item">
@@ -99,7 +104,7 @@
                     </a>
                 </li>
             </ul>
-            @endauth
+            @endauth --}}
         </div>
     </div>
 </nav>
