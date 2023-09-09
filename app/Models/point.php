@@ -40,6 +40,6 @@ class point extends Authenticatable
 
     public function point()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'username', 'username');
     }
 }
