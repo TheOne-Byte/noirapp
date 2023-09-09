@@ -8,23 +8,21 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function showcategory(){
+    public function showcategory()
+    {
         return view('gamecategory', [
             'title' => "User by category",
             'active' => 'category',
-            'categories' => category::all() //ini category sm author karena di html nya dipanggil catgory sm author
-            // Post::find($id)
-    
+            'categories' => category::all() // Use the correct model name
         ]);
     }
-    
-    public function showuserbycategory(category $category){            
+
+    public function showuserbycategory(category $category)
+    {
         return view('users', [
             'title' => "User by category",
             'active' => 'category',
-            'users' => $category -> user ->load('category','role')  //ini category sm author karena di html nya dipanggil catgory sm author
-            // Post::find($id)
-    
+            'users' => $category->user->load('category', 'role','cart') // Use the correct relationship name 'users'
         ]);
     }
 }
