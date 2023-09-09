@@ -90,7 +90,7 @@
 @endforeach --}}
 
 @else
-<p class="text-center fs-4">no post found</p>
+<p class="text-center fs-4 text-white" >no user found</p>
 @endif
 
 
