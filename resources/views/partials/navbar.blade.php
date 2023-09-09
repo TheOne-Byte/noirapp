@@ -47,13 +47,13 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <h2>
+                        <h3>
                             @if(auth()->user()->points)
                                 {{ auth()->user()->points }} POINT
                             @else
                                 0 POINT
                             @endif
-                        </h2>
+                        </h3>
                     </li>
                 </ul>
             @else
