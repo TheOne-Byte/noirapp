@@ -92,6 +92,13 @@
                     <ul class="dropdown-menu">
                         <!-- Add your dropdown menu items here -->
                         <li>
+                            <a href="/role/request" style="text-decoration: none">
+                                <button type="" class="dropdown-item">
+                                    <i class="bi bi-arrow-up-right-square"></i> Request
+                                </button>
+                            </a>
+                        </li>
+                        <li>
                             <form action="/logout" method="POST">
                                 @csrf
                                 <button type="submit" class="dropdown-item">

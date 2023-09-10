@@ -150,8 +150,8 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-         cart::destroy($id);
-        return redirect()->back()->with('success','Item Sudah Dihapus!');
+        cart::destroy($id);
+        return redirect()->back()->with('success','Item Deleted!');
     }
     public function showOrderPage(Request $request, $selectedItems)
     {

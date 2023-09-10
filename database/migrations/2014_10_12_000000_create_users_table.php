@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('price')->nullable();
             $table->string('email')->unique();
             $table->foreignId('category_id')->nullable();
+            $table->foreignId('permission_id')->nullable();
             $table->foreignId('role_id');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

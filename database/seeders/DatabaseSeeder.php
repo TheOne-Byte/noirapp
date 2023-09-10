@@ -21,11 +21,13 @@ class DatabaseSeeder extends Seeder
     {
         Category::create([
             'name' => "Valorant",
-            "slug" => 'valorant'
+            "slug" => 'valorant',
+            'image' => ''
         ]);
         Category::create([
             'name' => "Mobile Legends",
-            "slug" => 'mobile-legend'
+            "slug" => 'mobile-legend',
+            'image' => ''
         ]);
         role::create([
             'name' => "Coach",
