@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\cart;
-use App\Models\User;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Item;
+use App\Models\User;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
+use App\Models\OrderValidation;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class OrderController extends Controller
@@ -170,16 +173,77 @@ class OrderController extends Controller
 
     public function placeOrder(Request $request)
     {
-        $selectedItems = $request->input('selectedItems');
-        $itemIds = explode(',', $selectedItems);
+
+        $itemIds = cart::pluck('id')->toArray(); // Ambil semua id dari kelas cart
+        $cartItems = cart::whereIn('id', $itemIds)->get();
+        // dd($cartItems);
 
         try {
-            // Perform any necessary actions for placing the order here
+            // Ambil data dari Cart
+            // dd($cartItems);
 
-            // Redirect to the order page with selected item IDs
-            return redirect()->route('order.page', ['selectedItems' => $itemIds]);
+            foreach ($cartItems as $cartItem) {
+                $orderValidation = new OrderValidation;
+                $orderValidation->buyer_id = auth()->user()->id; // Pembeli adalah user yang sedang login
+                $orderValidation->seller_id = $cartItem->user_id; // Penjual adalah pemilik item di cart
+                $orderValidation->price = $cartItem->price;
+                $orderValidation->quantity = $cartItem->quantity;
+                $orderValidation->total_price = $cartItem->price * $cartItem->quantity;
+                $orderValidation->status = 'REQ'; // Status awal adalah request
+                $orderValidation->save();
+            }
+            // dd($orderValidation);
+            // Hapus item dari Cart
+            // cart::whereIn('id', $itemIds)->delete();
+
+            // Redirect atau kirim respons sesuai kebutuhan aplikasi Anda
+            return view('order.orderpage', ['selectedItems' => $itemIds]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage(), ['trace' => $e->getTrace()]);
+
+        }
+    }
+
+    public function validateOrder(Request $request, $id)
+    {
+        try {
+            $orderValidation = OrderValidation::findOrFail($id);
+
+            // Check if the user has enough points
+            $amount = $orderValidation->total_price;
+
+            if ($this->hasEnoughPoints($orderValidation->buyer, $amount)) {
+                $orderValidation->status = 'APV';
+                $orderValidation->save();
+
+                // Masukkan ke transaksi
+                Transaction::create([
+                    'buyer_id' => $orderValidation->buyer_id,
+                    'seller_id' => $orderValidation->seller_id,
+                    'price' => $orderValidation->price,
+                    'quantity' => $orderValidation->quantity,
+                    'total_price' => $orderValidation->total_price,
+                    'status' => 'ON_GOING'
+                ]);
+
+                // Potong saldo
+                $this->deductPoints($orderValidation->buyer, $amount);
+
+                // Kirim notifikasi ke pengguna
+            } else {
+                return redirect()->back()->with('error', 'Saldo tidak mencukupi.');
+            }
+
+            return redirect()->back()->with('success', 'Order validation status updated.');
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
+    }
+
+    private function hasEnoughPoints($user, $amount) {
+        return $user->points >= $amount;
+    }
+    private function deductPoints($user, $amount) {
+        return $user->points >= $amount;
     }
 }

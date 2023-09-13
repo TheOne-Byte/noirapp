@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
             'excerpt' => "halo semua nama aku venicia",
             "body" => "halo semua nama aku venicia, yuk main bareng guys aku ini anaknya mage banget jadi bisa buat gendong kalian! cus order",
             'category_id' => 1,
-            'role_id' => 1,
+            'role_id' => 3,
             "password" => bcrypt('password')
         ]);
         User::create([

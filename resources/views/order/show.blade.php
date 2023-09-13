@@ -68,14 +68,42 @@
         <h3>Total: <span id="grand-total">${{ number_format($totalPrice, 2) }}</span></h3>
     </div>
 
-    <div class="text-center">
-        <button id="order-button" class="btn btn-primary" disabled>Place Order</button>
-    </div>
+    <form id="place-order-form" action="/place-order" method="POST">
+        @csrf
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        </div>
+    </form>
 </div>
 
 <!-- JavaScript -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $(document).ready(function() {
+        $('#place-order-button').click(function(e) {
+            e.preventDefault(); // Prevent default form submission behavior
+
+            // Get CSRF token from meta tag
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+            // Send POST request to /place-order endpoint with CSRF token
+            $.ajax({
+                url: '/place-order',
+                type: 'POST',
+                data: {
+                    _token: csrfToken
+                },
+                success: function(data) {
+                    // Handle response from the server (optional)
+                    console.log(data);
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors (optional)
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
     // Get all quantity input fields
     const quantityInputs = document.querySelectorAll('.quantity-input');
     const grandTotalElement = document.getElementById('grand-total');
@@ -160,32 +188,52 @@
         });
 
         // Enable the "Place Order" button if items are selected
-        const orderButton = document.getElementById('order-button');
-        orderButton.disabled = selectedItems.length === 0;
+        // const orderButton = document.getElementById('order-button');
+        // orderButton.disabled = selectedItems.length === 0;
     }
 
-    // Handle the "Place Order" button click
-    const orderButton = document.getElementById('order-button');
-    orderButton.addEventListener('click', function() {
-        // Create an array to store selected item IDs
-        const selectedItems = [];
+    // // Handle the "Place Order" button click
+    // const orderButton = document.getElementById('order-button');
 
-        // Loop through the checkboxes to find selected items
-        itemCheckboxes.forEach((checkbox) => {
-            if (checkbox.checked) {
-                const itemId = checkbox.getAttribute('data-item-id');
-                selectedItems.push(itemId);
-            }
-        });
+    // orderButton.addEventListener('click', function() {
+    //     const selectedItems = [];
 
-        // Redirect to the order page with the selected item IDs as a query parameter
-        if (selectedItems.length > 0) {
-            const selectedItemsString = selectedItems.join(',');
-            window.location.href = `/orderpage?selectedItems=${selectedItemsString}`;
-        } else {
-            alert('Please select at least one item before placing an order.');
-        }
-    });
+    //     itemCheckboxes.forEach((checkbox) => {
+    //         if (checkbox.checked) {
+    //             const itemId = checkbox.getAttribute('data-item-id');
+    //             selectedItems.push(itemId);
+    //         }
+    //     });
+
+    //     if (selectedItems.length === 0) {
+    //         alert('Please select at least one item before placing an order.');
+    //         return;
+    //     }
+
+    //     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    //     fetch('/place-order', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'X-CSRF-TOKEN': csrfToken,
+    //         },
+    //         body: JSON.stringify({ selectedItems }),
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log(data); // Handle response from server if needed
+
+    //         const selectedItemsString = selectedItems.join(',');
+    //         const orderPageUrl = `/orderpage?selectedItems=${selectedItemsString}`;
+
+    //         // Redirect to the order page
+    //         window.location.href = orderPageUrl;
+    //     })
+    //     .catch(error => {
+    //         console.error('Error:', error);
+    //     });
+    // });
 </script>
 
 <style>

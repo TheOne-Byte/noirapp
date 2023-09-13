@@ -69,7 +69,7 @@ Route::get('/cart/{user:username}', [OrderController::class,'GetCartByUserId'])-
 Route::put('/cart/{id}', [OrderController::class, 'update']);
 Route::get('/orderpage/{selectedItems}', 'OrderController@showOrderPage')->name('order.page');
 
-Route::post('/place-order', 'OrderController@placeOrder')->name('place.order');
+Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
 Route::get('/dashboard', function(){
     return view('admin.index',
     [

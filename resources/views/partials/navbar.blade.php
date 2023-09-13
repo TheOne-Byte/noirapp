@@ -69,12 +69,12 @@
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form> --}}
-                    <a class="nav-link {{ $active === "home" ? 'active' : '' }}" aria-current="page" href="/home">Home</a>
+                    {{-- <a class="nav-link {{ $active === "home" ? 'active' : '' }}" aria-current="page" href="/home">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ $active === "game" ? 'active' : '' }}" href="/game">Game</a>
                 </li>
-            </ul>
+            </ul> --}}
 
             {{-- @auth
             <ul class="navbar-nav me-auto">
