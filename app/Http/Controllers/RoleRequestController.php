@@ -46,10 +46,11 @@ class RoleRequestController extends Controller
      */
     public function store(Request $request)
     {
+        $data = permission::where('user_id',auth()->user()->id)->first();
         $validated = $request->validate([
             'role_id' =>'required',
             'price' => 'required',
-            'image' => 'image|file|max:1024',
+            'image' => 'required|image|file|max:1024',
             'category_id' => 'required'
         ]);
 
@@ -59,6 +60,26 @@ class RoleRequestController extends Controller
         $validated['user_id'] = auth()->user()->id;
         $validated['statcode'] = "REQ";
 
+
+
+        if($data){
+            if($data->statcode ==="REQ"){
+                return redirect('/role/request')->with('danger','You Already Have Pending Request!');    
+            }
+            else if($data->statcode ==="APV"){
+                if($data->role_id == $request->role_id){
+                    return redirect('/role/request')->with('danger','Nothing To Change!');    
+                }
+                permission::where('id',$data->id)
+                ->update($validated);
+                return redirect('/role/request')->with('success','Changing Role Request Has Been Submitted!');    
+            }
+            else if($data->statcode ==="RJC"){
+                permission::where('id',$data->id)
+                ->update($validated);
+                return redirect('/role/request')->with('success','Role Request Again Has Been Submitted!');   
+            }
+        }
 
         permission::create($validated);
         return redirect('/role/request')->with('success','Request Has Been Submitted!');    

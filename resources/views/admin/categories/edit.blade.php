@@ -28,15 +28,6 @@
         @enderror
         </div>
 
-        {{-- <div class="mb-3">
-        <label for="category" class="form-label">Category</label>
-        <select class="form-select" id="category" name="category_id" >
-            @foreach ($categories as $category)
-                <option value="{{ $category->id }}" {{ old('category_id',$post->category_id) == $category->id ? ' selected' : ' ' }}>{{ $category->name }}</option>
-            @endforeach
-        </select>
-        </div> --}}
-
         <div class="mb-3">
             <label for="iamge" class="form-label">Category Image</label>
 
@@ -57,7 +48,6 @@
         </div>
 
         
-
         <script>
             const name = document.querySelector("#name");
             const slug = document.querySelector("#slug");

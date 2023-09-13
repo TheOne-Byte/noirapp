@@ -2,14 +2,19 @@
 @section('container')
 <div class="row justify-content-center">
     <div class="col-lg-5">
+    @if(session()->has('success'))
+      <div class="alert alert-success col-lg-5" role="alert">
+          {{ session('success') }}
+      </div>
+    @endif
+
+    @if(session()->has('danger'))
+      <div class="alert alert-danger col-lg-5" role="alert">
+          {{ session('danger') }}
+      </div>
+    @endif
     <main class="form-registration">
         
-      @if(session()->has('success'))
-        <div class="alert alert-success col-lg-5" role="alert">
-            {{ session('success') }}
-        </div>
-      @endif
-
       <h1 class="h3 mb-3 fw-normal text-center" id="registertext">Request Role Form</h1>
         <form action="/role/request" method="POST" enctype="multipart/form-data">
           @csrf
