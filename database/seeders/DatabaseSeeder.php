@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\role;
 use App\Models\cart;
+use App\Models\point;
 
 class DatabaseSeeder extends Seeder
 {
