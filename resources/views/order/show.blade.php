@@ -50,7 +50,12 @@
                                 ${{ number_format($sellerSubtotal, 2) }}
                             </td>
                             <td class="text-center">
-                                <a href="#" class="badge bg-danger border-0 delete-item" data-item-id="{{ $cartItems[0]->id }}"><span class="bi bi-trash" style="color: white"></span></a>
+                                <form action="/addtocart/{{ $cartItems[0]->id }}" method="POST" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button class="badge bg-danger border-0" onclick="return confirm('are you sure deleting this?')"><span class="bi bi-trash " style="color: white"></span></button>
+                                  </form>
+                                {{-- <a href="#" class="badge bg-danger border-0 delete-item" data-item-id="{{ $cartItems[0]->id }}"><span class="bi bi-trash" style="color: white"></span></a> --}}
                             </td>
                         </tr>
                     @endforeach

@@ -22,7 +22,7 @@ class CategoryController extends Controller
         return view('users', [
             'title' => "User by category",
             'active' => 'category',
-            'users' => $category->users->load('category', 'role') // Use the correct relationship name 'users'
+            'users' => $category->user->load('category', 'role','cart') // Use the correct relationship name 'users'
         ]);
     }
 }
