@@ -4,7 +4,7 @@
 
     <div class="container">
         <div class="row justify-content-center mb-5">
-           
+
             <div class="col-md-4 d-inline-block justify-content-right">
 
                 <img style="border-radius: 10px" src="https://source.unsplash.com/400x500?{{ $user->username }}" class="img-fluid" alt="{{ $user->username }}">
@@ -13,7 +13,7 @@
 
                 <div class="col-md-4 d-inline">
                     <a href="/addtocart/{{ $user->username }}" class="btn">Order</a>
-                    <button type="submit" class="btn-chat"><i class="bi bi-chat-heart"></i> Chat</button>
+                    <button type="submit" class="btn-chat" data-chat-with="{{ $user->id }}" onclick="window.location.href='/chatify'"><i class="bi bi-chat-heart"></i> Chat</button>
 
                 </div>
             </div>
