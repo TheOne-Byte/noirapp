@@ -8,10 +8,11 @@ class ChatifyController extends Controller
 {
     public function showChatify()
     {
-        // You can add any logic here that's needed before displaying the Chatify view
-        // For example, you might want to check if the user is authenticated or perform other checks.
+        if (auth()->user()) {
+            session()->put('chat_with', auth()->user()->id);
+        }
 
-        return view('chatify'); // Assuming you have a 'chatify.blade.php' view
+        return view('vendor.Chatify.pages.app');
     }
 
 }
