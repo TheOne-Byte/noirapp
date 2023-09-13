@@ -85,3 +85,4 @@ Route::resource('/dashboard/categories', AdminCategoryController::class)->middle
 Route::resource('/dashboard/role', AdminRoleController::class)->middleware('auth');
 
 
+Route::get('/chatify', 'ChatifyController@showChatify');
