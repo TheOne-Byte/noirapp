@@ -22,7 +22,7 @@
             @auth
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a href="/cart/{{ auth()->user()->username }}" class="btn btn-primary">
+                        <a href="/cart/{{ auth()->user()->username }}" class="btn">
                             <i class="bi bi-cart-fill"></i>
                         </a>
                     </li>
@@ -36,6 +36,13 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
+                                <a href="/role/request" style="text-decoration: none">
+                                    <button type="" class="dropdown-item">
+                                        <i class="bi bi-arrow-up-right-square"></i> Request
+                                    </button>
+                                </a>
+                            </li>
+                            <li>
                                 <form action="/logout" method="POST">
                                     @csrf
                                     <button type="submit" class="dropdown-item">
@@ -43,17 +50,17 @@
                                         Logout</button>
                                 </form>
                             </li>
-
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <h3>
+                    <li class="nav-item mt-2">
+                        <img src="/img/gatcha.png" style="height:30px" alt="" />
+                        <a href="/top_up" style="text-decoration: none; color: white">
                             @if(auth()->user()->points)
                                 {{ auth()->user()->points }} POINT
                             @else
                                 0 POINT
                             @endif
-                        </h3>
+                        </a>
                     </li>
                 </ul>
             @else
@@ -65,59 +72,6 @@
                 </ul>
             @endauth
 
-            {{-- <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form> --}}
-                    {{-- <a class="nav-link {{ $active === "home" ? 'active' : '' }}" aria-current="page" href="/home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ $active === "game" ? 'active' : '' }}" href="/game">Game</a>
-                </li>
-            </ul> --}}
-
-            {{-- @auth
-            <ul class="navbar-nav me-auto">
-                <!-- Shopping Cart Button -->
-                <li class="nav-item">
-                    <a href="/cart/{{ auth()->user()->username }}" class="btn btn-primary">
-                        <i class="bi bi-cart-fill"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Welcome back, {{ auth()->user()->name }}
-                    </a>
-                    <ul class="dropdown-menu">
-                        <!-- Add your dropdown menu items here -->
-                        <li>
-                            <a href="/role/request" style="text-decoration: none">
-                                <button type="" class="dropdown-item">
-                                    <i class="bi bi-arrow-up-right-square"></i> Request
-                                </button>
-                            </a>
-                        </li>
-                        <li>
-                            <form action="/logout" method="POST">
-                                @csrf
-                                <button type="submit" class="dropdown-item">
-                                    <i class="bi bi-arrow-up-right-square"></i> Logout
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            @else
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link {{ $active === "login" ? 'active' : '' }}" href="/login">
-                        <i class="bi bi-box-arrow-in-right"></i> LOGIN
-                    </a>
-                </li>
-            </ul>
-            @endauth --}}
         </div>
     </div>
 </nav>
