@@ -31,6 +31,7 @@
         <td>{{ $permission->category->name }}</td>
         <td>{{ $permission->role->name }}</td>
         <td>
+        
             <button type="button" value="{{ $permission->id }}" class="badge bg-info showbtn"><span class="bi bi-eye " style="color: black"></span></button>
             {{-- <a href="/dashboard/role/{{ $permission->id }}" class="badge bg-info"><span class="bi bi-eye " style="color: black"></span></a> --}}
         </td>
