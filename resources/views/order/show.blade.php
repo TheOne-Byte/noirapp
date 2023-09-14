@@ -38,7 +38,7 @@
 
                         <tr>
                             <td class="text-center">
-                                <input type="checkbox" class="item-checkbox" data-item-id="{{ $cartItems[0]->id }}" data-seller-name="{{ $sellerName }}" data-price="{{ $cartItems[0]->price }}">
+                                <input type="checkbox" class="item-checkbox" data-item-id="{{ $cartItems[0]->id }}" data-seller-name="{{ $sellerName }}" data-price="{{ $cartItems[0]->price }}" name="selectedItems[]" value="{{ $cartItems[0]->id }}">
                             </td>
                             <td class="text-center">{{ $sellerName }}</td>
                             <td class="text-center">{{ $cartItems[0]->price }}</td>
@@ -68,42 +68,69 @@
         <h3>Total: <span id="grand-total">${{ number_format($totalPrice, 2) }}</span></h3>
     </div>
 
-    <form id="place-order-form" action="/place-order" method="POST">
+    <form id="placeOrderForm" method="POST" class="d-flex justify-content-center">
         @csrf
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary">Place Order</button>
-        </div>
+        <button type="submit" class="btn btn-primary">Place Order</button>
     </form>
 </div>
 
 <!-- JavaScript -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#place-order-button').click(function(e) {
-            e.preventDefault(); // Prevent default form submission behavior
+$(document).ready(function() {
+    $('form#placeOrderForm').on('submit', function(e) {
+        e.preventDefault();
 
-            // Get CSRF token from meta tag
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+        // Mengumpulkan ID item yang dicheck
+        var selectedItems = [];
+        $('.item-checkbox:checked').each(function() {
+            selectedItems.push($(this).data('item-id'));
+        });
 
-            // Send POST request to /place-order endpoint with CSRF token
-            $.ajax({
-                url: '/place-order',
-                type: 'POST',
-                data: {
-                    _token: csrfToken
-                },
-                success: function(data) {
-                    // Handle response from the server (optional)
-                    console.log(data);
-                },
-                error: function(xhr, status, error) {
-                    // Handle errors (optional)
-                    console.error(xhr.responseText);
-                }
-            });
+        // Kirim data ke route 'place.order' dengan method POST
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('place.order') }}',
+            data: { selectedItems: selectedItems, _token: '{{ csrf_token() }}' },
+            success: function(data) {
+                alert('Order placed successfully!');
+                // Jika Anda ingin melakukan sesuatu setelah berhasil, tambahkan di sini.
+            },
+            error: function(error) {
+                alert('Error placing order. Please try again later.');
+                console.error(error);
+            }
         });
     });
+});
+// function submitForm() {
+//     var selectedItems = document.querySelectorAll('input.item-checkbox:checked');
+//     var itemIds = Array.from(selectedItems).map(item => item.value);
+//     // console.log(itemIds);
+
+//     var formData = new FormData();
+//     formData.append('selectedItems', itemIds.join(','));
+
+//     fetch('/orderpage', {
+//         method: 'POST',
+//         body: formData,
+//         headers: {
+//             'X-CSRF-TOKEN': '{{ csrf_token() }}'
+//         }
+//     }).then(function(response) {
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+//         return response.json();
+//     }).then(function(data) {
+//         // Lakukan manipulasi DOM atau alihkan pengguna ke halaman lain
+//         window.location.href = '/orderpage'; // Contoh mengalihkan ke halaman order
+//     }).catch(function(error) {
+//         console.error('There was a problem with the fetch operation:', error);
+//     });
+
+//     return false; // Mengembalikan false untuk mencegah formulir mengirimkan permintaan lagi
+// }
     // Get all quantity input fields
     const quantityInputs = document.querySelectorAll('.quantity-input');
     const grandTotalElement = document.getElementById('grand-total');

@@ -1,60 +1,72 @@
 @extends('layouts/main')
 
-@section('title', 'Order Details')
+{{-- @section('title', 'Order Details') --}}
 
 @section('container')
 <div class="container mt-4">
-    <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Order Summary</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Order Summary</h5>
+                    <table class="table">
+                        <tr>
+                            <th>Points</th>
+                            <td><span id="points">{{ $points }}</span></td>
+                        </tr>
+                        <tr>
+                            <th>Total Price</th>
+                            <td><span id="totalPrice">{{ number_format($totalPrice, 2) }}</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="color: red; text-align: center;" id="topUpMessage">
+                                @if ($points < $totalPrice)
+                                    You have insufficient points. <a href="{{ route('top_up') }}">Click here to top up.</a>
+                                @endif
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary mx-2" id="cancelOrder">Cancel</button>
+                        <button type="button" class="btn btn-primary mx-2" id="confirmOrder">OK</button>
+                        <form id="newButtonForm" action="/orderValidation" method="POST">
+                            @csrf
+                            <button type="button" class="btn btn-primary mx-2" id="newButton">New Button</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p>Points: <span id="points"></span></p>
-                    <p>Total Price: <span id="totalPrice"></span></p>
-                    <p id="topUpMessage" style="color: red;"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="confirmOrder">OK</button>
-                </div>
+
             </div>
+            <form id="newButtonForm" action="/orderValidation" method="POST">
+                @csrf
+                <button type="button" class="btn btn-primary mx-2" id="newButton">New Button</button>
+            </form>
         </div>
     </div>
 </div>
-@endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js">
+   $('#newButton').click(function() {
+    var selectedItems = $('input[name="selectedItems[]"]:checked');
+    var checkedItemsData = [];
 
-<script>
-    // Di dalam JavaScript Anda
-    const orderButton = document.getElementById('order-button');
-    const orderModal = new bootstrap.Modal(document.getElementById('orderModal'));
-    const confirmOrderButton = document.getElementById('confirmOrder');
-    const pointsElement = document.getElementById('points');
-    const totalPriceElement = document.getElementById('totalPrice');
-    const topUpMessage = document.getElementById('topUpMessage');
+    selectedItems.each(function() {
+        var itemId = $(this).data('item-id');
+        var sellerName = $(this).data('seller-name');
+        var price = parseFloat($(this).data('price'));
+        var quantity = parseInt($(this).closest('tr').find('.quantity-input').val());
+        var subtotal = price * quantity;
 
-    orderButton.addEventListener('click', function() {
-        // Di sini Anda harus mengatur points dan totalPrice sesuai dengan data yang Anda miliki
-        const points = 50; // Misalnya
-        const totalPrice = 100; // Misalnya
-
-        pointsElement.textContent = points;
-        totalPriceElement.textContent = totalPrice;
-
-        if (points >= totalPrice) {
-            // Lanjutkan dengan proses pesanan
-            // ...
-        } else {
-            topUpMessage.textContent = "Top up first.";
-
-            confirmOrderButton.addEventListener('click', function() {
-                // Redirect ke halaman top up jika point kurang
-                window.location.href = '/top-up'; // Ganti dengan rute yang benar
-            });
-
-            orderModal.show();
-        }
+        checkedItemsData.push({
+            itemId: itemId,
+            sellerName: sellerName,
+            price: price,
+            quantity: quantity,
+            subtotal: subtotal
+        });
     });
+
+    // Submit the form
+    $('#newButtonForm').submit();
+});
 </script>
+@endsection
