@@ -24,7 +24,8 @@ class User extends Authenticatable
         'email',
         'password',
         'username',
-        'role_id'
+        'role_id',
+        'points'
 
     ];
 
@@ -61,9 +62,6 @@ class User extends Authenticatable
         return $this->hasMany(cart::class,'buyer_id');
     }
 
-//     public function points(){
-//     return $this->hasMany(Point::class, 'username', 'username');
-// }
     public function permission(){
         return $this->belongsTo(permission::class,'permission_id');
     }

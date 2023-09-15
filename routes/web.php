@@ -70,9 +70,16 @@ Route::resource('/addtocart', OrderController::class)->middleware('auth');
 
 Route::get('/cart/{user:username}', [OrderController::class,'GetCartByUserId'])->middleware('auth');
 Route::put('/cart/{id}', [OrderController::class, 'update']);
-Route::get('/orderpage/{selectedItems}', 'OrderController@showOrderPage')->name('order.page');
+Route::post('/orderpage', [OrderController::class,'showOrderPage'])->name('order.page');
+Route::get('/test', [OrderController::class,'tes']);
+Route::get('/order-request', [OrderController::class, 'orderRequest'])->name('order.request');
 
-Route::post('/place-order', 'OrderController@placeOrder')->name('place.order');
+Route::post('/order-request/{id}/accept', [OrderController::class, 'acceptOrder'])->name('order.process');
+Route::post('/order-request/{id}/reject', [OrderController::class, 'rejectOrder'])->name('order.reject');
+Route::post('/processorder', 'OrderController@processOrder')->name('process.order');
+Route::post('/reduce-points', 'UserController@reducePoints')->name('reduce.points');
+
+Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
 Route::get('/dashboard', function(){
     return view('admin.index',
     [
@@ -80,6 +87,7 @@ Route::get('/dashboard', function(){
         'active' => 'dashboard'
     ]);
 })->middleware('auth');
+Route::post('/ordervalidation', [OrderController::class,'processOrder'])->name('order.validation');
 
 Route::resource('/role/request', RoleRequestController::class)->middleware('auth');
 Route::resource('/dashboard/categories', AdminCategoryController::class)->middleware('auth');
