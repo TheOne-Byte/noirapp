@@ -77,6 +77,7 @@ Route::get('/order-request', [OrderController::class, 'orderRequest'])->name('or
 Route::post('/order-request/{id}/accept', [OrderController::class, 'acceptOrder'])->name('order.process');
 Route::post('/order-request/{id}/reject', [OrderController::class, 'rejectOrder'])->name('order.reject');
 Route::post('/processorder', 'OrderController@processOrder')->name('process.order');
+Route::post('/reduce-points', 'UserController@reducePoints')->name('reduce.points');
 
 Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
 Route::get('/dashboard', function(){

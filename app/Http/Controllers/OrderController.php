@@ -198,25 +198,41 @@ class OrderController extends Controller
         // dd($cartItems);
 
         try {
-            // Ambil data dari Cart
-            // dd($cartItems);
+            $totalPrice = 0; // Inisialisasi total harga
 
+        // Hitung total harga
+        foreach ($cartItems as $cartItem) {
+            $totalPrice += $cartItem->price * $cartItem->quantity;
+        }
+
+        // Ambil user yang sedang login
+        $user = User::find(Auth::user()->id);
+
+        // Periksa apakah poin pengguna mencukupi
+        if ($user->points >= $totalPrice) {
+            // Kurangi poin pengguna
+            $user->points -= $totalPrice;
+            $user->save();
+
+            // Tambahkan pesanan ke database
             foreach ($cartItems as $cartItem) {
                 $orderValidation = new OrderValidation;
-                $orderValidation->buyer_id = auth()->user()->id; // Pembeli adalah user yang sedang login
-                $orderValidation->seller_id = $cartItem->user_id; // Penjual adalah pemilik item di cart
+                $orderValidation->buyer_id = $user->id;
+                $orderValidation->seller_id = $cartItem->user_id;
                 $orderValidation->price = $cartItem->price;
                 $orderValidation->quantity = $cartItem->quantity;
                 $orderValidation->total_price = $cartItem->price * $cartItem->quantity;
-                $orderValidation->status = 'REQ'; // Status awal adalah request
+                $orderValidation->status = 'REQ';
                 $orderValidation->save();
             }
-            // dd($orderValidation);
-            // Hapus item dari Cart
-            // cart::whereIn('id', $itemIds)->delete();
 
-            // Redirect atau kirim respons sesuai kebutuhan aplikasi Anda
+            // Hapus item dari Cart
+            // cart::whereIn('id', $selectedItems)->delete();
+
             return redirect()->route('home', ['active' => 'home']);
+        } else {
+            return redirect()->back()->with('error', 'Insufficient points. Please top up first.');
+        }
         } catch (\Exception $e) {
             Log::error($e->getMessage(), ['trace' => $e->getTrace()]);
 
@@ -363,7 +379,17 @@ class OrderController extends Controller
 
 public function rejectOrder($id)
 {
+
     $orderValidation = OrderValidation::findOrFail($id);
+    $user = User::find($orderValidation->buyer_id);
+
+    if (!$user) {
+        return redirect()->route('order.request')->with('error', 'User not found.');
+    }
+
+    $user->points += $orderValidation->total_price;
+    $user->save();
+
     $orderValidation->status = 'RJC';
     $orderValidation->save();
 

@@ -70,13 +70,13 @@
 
     <div class="text-center">
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#orderModal">Place Order</button>
-    </div>  
+    </div>
     <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="orderModalLabel">Order Summary</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title ms-auto" id="orderModalLabel">Order Summary</h5>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>Total Price: <span id="modal-total-price"></span></p>
@@ -87,10 +87,10 @@
                     <button id="top-up-button" class="btn btn-primary" style="display: none;">Top Up</button> <!-- New button for top-up -->
                     <form id="placeOrderForm" method="POST" class="d-flex justify-content-center">
                         @csrf
-                        <button type="submit" class="btn btn-primary" id="place-order-button">Place Order</button>
+                        <button type="submit" class="btn btn-primary" id="place-order-button">Ok</button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    
+
                 </div>
             </div>
         </div>
@@ -100,6 +100,39 @@
 <!-- JavaScript -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+// $(document).ready(function() {
+//     $('form#placeOrderForm').on('submit', function(e) {
+//         e.preventDefault();
+
+//         var selectedItems = [];
+//         $('.item-checkbox:checked').each(function() {
+//             selectedItems.push($(this).data('item-id'));
+//         });
+
+//         var totalPrice = calculateTotalPrice(selectedItems); // Ganti dengan cara Anda menghitung total harga
+
+//         $.ajax({
+//             type: 'POST',
+//             url: '{{ route('reduce.points') }}',
+//             data: {
+//                 totalPrice: totalPrice,
+//                 _token: '{{ csrf_token() }}'
+//             },
+//             success: function(data) {
+//                 if (data.success) {
+//                     alert('Points reduced successfully!');
+//                     // Lakukan pesanan atau tindakan lainnya di sini
+//                 } else {
+//                     alert(data.message);
+//                 }
+//             },
+//             error: function(error) {
+//                 alert('Error reducing points. Please try again later.');
+//                 console.error(error);
+//             }
+//         });
+//     });
+// });
 $(document).ready(function() {
     $('form#placeOrderForm').on('submit', function(e) {
         e.preventDefault();
@@ -245,26 +278,28 @@ $(document).ready(function() {
 
     // Update modal content
     const userPoints = parseFloat('{{ auth()->user()->points }}');
+    const userPointsDisplay = userPoints || userPoints === 0 ? userPoints : '0';
 
     // Update modal content
     const modalTotalPriceElement = document.getElementById('modal-total-price');
     const modalUserPointsElement = document.getElementById('modal-user-points');
 
     modalTotalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
-    modalUserPointsElement.textContent = userPoints;
+    modalUserPointsElement.textContent = userPointsDisplay;
+
     const insufficientPointsMessage = document.getElementById('insufficient-points-message');
     const topUpButton = document.getElementById('top-up-button');
     const placeOrderButton = document.getElementById('place-order-button');
 
     modalTotalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
-    modalUserPointsElement.textContent = userPoints;
+    modalUserPointsElement.textContent = userPointsDisplay;
 
     // Check if user points are insufficient
-    if (userPoints < totalPrice) {
+    if (userPoints < totalPrice || userPointsDisplay == '0') {
         insufficientPointsMessage.textContent = 'Silahkan top up dulu.';
         topUpButton.style.display = 'inline-block';
         placeOrderButton.style.display = 'none';
-    } else {
+    }else {
         insufficientPointsMessage.textContent = ''; // Clear the message if points are sufficient
         topUpButton.style.display = 'none';
         placeOrderButton.style.display = 'inline-block';
