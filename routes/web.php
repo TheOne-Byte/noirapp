@@ -15,8 +15,7 @@ use App\Http\Controllers\AdminCateController;
 use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\RoleRequestController;
 use App\Http\Controllers\AdminCategoryController;
-
-
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,3 +96,7 @@ Route::get('/top_up', [TopUpController::class, 'index'])->middleware('auth')->na
 Route::post('/top_up', [TopUpController::class, 'store'])->middleware('auth')->name('store_top_up');
 Route::get('/top_up/sukses', [TopUpController::class, 'sukses']);
 
+Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+Route::put('/transactions/{id}/mark-as-done', [TransactionController::class, 'markAsDone'])->name('transactions.markAsDone');
+Route::get('/history', [TransactionController::class, 'history'])->name('transactions.history');
+Route::get('/getcart', [OrderController::class, 'getCartData']);
