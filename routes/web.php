@@ -94,7 +94,7 @@ Route::resource('/dashboard/role', AdminRoleController::class)->middleware('auth
 Route::get('/chatify', 'ChatifyController@showChatify');
 Route::get('/top_up', [TopUpController::class, 'index'])->middleware('auth')->name('top_up');
 Route::post('/top_up', [TopUpController::class, 'store'])->middleware('auth')->name('store_top_up');
-Route::get('/top_up/sukses', [TopUpController::class, 'sukses']);
+Route::get('/top_up/sukses', [TopUpController::class, 'success'])->name('topup.sukses');
 
 Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 Route::put('/transactions/{id}/mark-as-done', [TransactionController::class, 'markAsDone'])->name('transactions.markAsDone');

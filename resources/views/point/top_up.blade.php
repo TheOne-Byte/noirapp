@@ -97,7 +97,7 @@
                     <!-- Right Column -->
                     <div
                         class="right-column d-flex flex-column align-items-lg-start align-items-center text-lg-start text-center">
-                        <form action="{{ route('top_up') }}" method="post" enctype="multipart/form-data">
+                        <form id="topUpForm">
                             @csrf
                             <h2 class="title-text text-white">Top Up Page</h2>
                             <ul style="padding: 0; margin: 0">
@@ -141,4 +141,30 @@
             </div>
         </section>
     </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('button').click(function() {
+            var formData = new FormData($('#topUpForm')[0]);
+
+            $.ajax({
+                url: "{{ route('top_up') }}",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    // Handle success here
+                    console.log(data);
+                    window.location.href = "{{ route('topup.sukses') }}";
+                },
+                error: function(error) {
+                    // Handle error here
+                    console.error('Error:', error);
+                }
+            });
+        });
+    });
+</script>
 @endsection

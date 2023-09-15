@@ -100,39 +100,6 @@
 <!-- JavaScript -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-// $(document).ready(function() {
-//     $('form#placeOrderForm').on('submit', function(e) {
-//         e.preventDefault();
-
-//         var selectedItems = [];
-//         $('.item-checkbox:checked').each(function() {
-//             selectedItems.push($(this).data('item-id'));
-//         });
-
-//         var totalPrice = calculateTotalPrice(selectedItems); // Ganti dengan cara Anda menghitung total harga
-
-//         $.ajax({
-//             type: 'POST',
-//             url: '{{ route('reduce.points') }}',
-//             data: {
-//                 totalPrice: totalPrice,
-//                 _token: '{{ csrf_token() }}'
-//             },
-//             success: function(data) {
-//                 if (data.success) {
-//                     alert('Points reduced successfully!');
-//                     // Lakukan pesanan atau tindakan lainnya di sini
-//                 } else {
-//                     alert(data.message);
-//                 }
-//             },
-//             error: function(error) {
-//                 alert('Error reducing points. Please try again later.');
-//                 console.error(error);
-//             }
-//         });
-//     });
-// });
 $(document).ready(function() {
     $('form#placeOrderForm').on('submit', function(e) {
         e.preventDefault();
@@ -151,7 +118,7 @@ $(document).ready(function() {
             success: function(data) {
                 alert('Order placed successfully!');
                 $('#orderModal').modal('hide');
-                updateCart();
+                location.reload();
                 // Jika Anda ingin melakukan sesuatu setelah berhasil, tambahkan di sini.
             },
             error: function(error) {
