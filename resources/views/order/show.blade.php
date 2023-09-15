@@ -68,10 +68,32 @@
         <h3>Total: <span id="grand-total">${{ number_format($totalPrice, 2) }}</span></h3>
     </div>
 
-    <form id="placeOrderForm" method="POST" class="d-flex justify-content-center">
-        @csrf
-        <button type="submit" class="btn btn-primary">Place Order</button>
-    </form>
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#orderModal"> Place Order</button>
+  
+    <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderModalLabel">Order Summary</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Total Price: <span id="modal-total-price"></span></p>
+                    <p>User Points: <span id="modal-user-points"></span></p>
+                    <p id="insufficient-points-message" style="color: red;"></p>
+                </div>
+                <div class="modal-footer">
+                    <button id="top-up-button" class="btn btn-primary" style="display: none;">Top Up</button> <!-- New button for top-up -->
+                    <form id="placeOrderForm" method="POST" class="d-flex justify-content-center">
+                        @csrf
+                        <button type="submit" class="btn btn-primary" id="place-order-button">Place Order</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- JavaScript -->
@@ -205,19 +227,51 @@ $(document).ready(function() {
 
     // Function to update the list of selected items
     function updateSelectedItems() {
-        selectedItems.length = 0; // Clear the array
+    selectedItems.length = 0; // Clear the array
+    let totalPrice = 0; // Initialize total price
 
-        itemCheckboxes.forEach((checkbox) => {
-            if (checkbox.checked) {
-                const itemId = checkbox.getAttribute('data-item-id');
-                selectedItems.push(itemId);
-            }
-        });
+    itemCheckboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            const itemId = checkbox.getAttribute('data-item-id');
+            const price = parseFloat(checkbox.getAttribute('data-price'));
+            const quantityInput = document.querySelector(`.quantity-input[data-item-id="${itemId}"]`);
+            const quantity = parseInt(quantityInput.value);
 
-        // Enable the "Place Order" button if items are selected
-        // const orderButton = document.getElementById('order-button');
-        // orderButton.disabled = selectedItems.length === 0;
+            selectedItems.push(itemId);
+            totalPrice += price * quantity;
+        }
+    });
+
+    // Update modal content
+    const userPoints = parseFloat('{{ auth()->user()->points }}');
+
+    // Update modal content
+    const modalTotalPriceElement = document.getElementById('modal-total-price');
+    const modalUserPointsElement = document.getElementById('modal-user-points');
+
+    modalTotalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+    modalUserPointsElement.textContent = userPoints;
+    const insufficientPointsMessage = document.getElementById('insufficient-points-message');
+    const topUpButton = document.getElementById('top-up-button');
+    const placeOrderButton = document.getElementById('place-order-button');
+
+    modalTotalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+    modalUserPointsElement.textContent = userPoints;
+
+    // Check if user points are insufficient
+    if (userPoints < totalPrice) {
+        insufficientPointsMessage.textContent = 'Silahkan top up dulu.';
+        topUpButton.style.display = 'inline-block';
+        placeOrderButton.style.display = 'none';
+    } else {
+        insufficientPointsMessage.textContent = ''; // Clear the message if points are sufficient
+        topUpButton.style.display = 'none';
+        placeOrderButton.style.display = 'inline-block';
     }
+    topUpButton.addEventListener('click', function() {
+        window.location.href = '/top_up';
+    });
+}
 
     // // Handle the "Place Order" button click
     // const orderButton = document.getElementById('order-button');
