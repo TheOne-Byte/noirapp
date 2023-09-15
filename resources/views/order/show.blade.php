@@ -150,6 +150,8 @@ $(document).ready(function() {
             data: { selectedItems: selectedItems, _token: '{{ csrf_token() }}' },
             success: function(data) {
                 alert('Order placed successfully!');
+                $('#orderModal').modal('hide');
+                updateCart();
                 // Jika Anda ingin melakukan sesuatu setelah berhasil, tambahkan di sini.
             },
             error: function(error) {
@@ -159,6 +161,19 @@ $(document).ready(function() {
         });
     });
 });
+
+function updateCart() {
+    $.ajax({
+        url: '/getcart', // Ganti dengan rute yang tepat untuk mendapatkan data keranjang
+        success: function(data) {
+
+            console.log(data);
+        },
+        complete: function() {
+            setTimeout(updateCart, 5000); // Memanggil kembali fungsi ini setiap 5 detik
+        }
+    });
+}
 // function submitForm() {
 //     var selectedItems = document.querySelectorAll('input.item-checkbox:checked');
 //     var itemIds = Array.from(selectedItems).map(item => item.value);
