@@ -43,7 +43,23 @@
                                     </button>
                                 </a>
                             </li>
+                            <li>
+                                <a href="/transactions" style="text-decoration: none">
+                                    <button type="button" class="dropdown-item">
+                                        <i class="bi bi-arrow-up-right-square"></i> Transactions
+                                    </button>
+                                </a>
+                            </li>
                              @endif
+                             @if (auth()->user()->role_id == 4)
+                            <li>
+                                <a href="/history" style="text-decoration: none">
+                                    <button type="button" class="dropdown-item">
+                                        <i class="bi bi-arrow-up-right-square"></i> History
+                                    </button>
+                                </a>
+                            </li>
+                        @endif
                             <li>
                                 <a href="/role/request" style="text-decoration: none">
                                     <button type="" class="dropdown-item">
@@ -51,6 +67,7 @@
                                     </button>
                                 </a>
                             </li>
+
                             <li>
                                 <form action="/logout" method="POST">
                                     @csrf

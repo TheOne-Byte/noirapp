@@ -227,7 +227,7 @@ class OrderController extends Controller
             }
 
             // Hapus item dari Cart
-            // cart::whereIn('id', $selectedItems)->delete();
+            cart::whereIn('id', $selectedItems)->delete();
 
             return redirect()->route('home', ['active' => 'home']);
         } else {
@@ -238,7 +238,12 @@ class OrderController extends Controller
 
         }
     }
+    public function getCartData()
+    {
+        $cartItems = cart::where('user_id', auth()->user()->id)->get();
 
+        return response()->json(['cartItems' => $cartItems]);
+    }
     public function processOrder(Request $request)
     {
         $selectedItems = $request->input('selectedItems');
