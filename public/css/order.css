@@ -61,29 +61,29 @@
     border:10px solid transparent;
     border-bottom-color:#fff;
   }
-  
+
   .thumbnail {
     position: relative;
     padding: 0px;
     margin-bottom: 20px;
   }
-  
+
   .thumbnail img {
     width: 100%;
   }
-  
+
   .thumbnail .caption{
     margin: 7px;
   }
-  
+
   .page {
     margin-top: 50px;
   }
-  
+
   .btn-holder{
     text-align: center;
   }
-  
+
   .table>tbody>tr>td, .table>tfoot>tr>td{
     vertical-align: middle;
   }
@@ -96,14 +96,16 @@
         width:36%;
         margin:1.5em 0;
     }
-  
+
     .actions .btn-info{
         float:left;
     }
     .actions .btn-danger{
         float:right;
     }
-  
+    .modal-header .btn-close {
+        margin: -1rem -1rem -1rem auto; /* Adjust margins as needed */
+    }
     table#cart thead { display: none; }
     table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
     table#cart tbody tr td:first-child { background: #333; color: #fff; }
@@ -111,10 +113,10 @@
         content: attr(data-th); font-weight: bold;
         display: inline-block; width: 8rem;
     }
-  
-  
-  
+
+
+
     table#cart tfoot td{display:block; }
     table#cart tfoot td .btn{display:block;}
-  
+
   }

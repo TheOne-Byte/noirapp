@@ -35,6 +35,15 @@
                             Welcome back, {{ auth()->user()->name }}
                         </a>
                         <ul class="dropdown-menu">
+                            @if (in_array(auth()->user()->role_id, [1, 2])) <!-- Periksa role_id -->
+                            <li>
+                                <a href="/order-request" style="text-decoration: none">
+                                    <button type="button" class="dropdown-item">
+                                        <i class="bi bi-arrow-up-right-square"></i> Order Request
+                                    </button>
+                                </a>
+                            </li>
+                             @endif
                             <li>
                                 <a href="/role/request" style="text-decoration: none">
                                     <button type="" class="dropdown-item">
