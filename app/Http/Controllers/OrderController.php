@@ -229,7 +229,7 @@ class OrderController extends Controller
             // Hapus item dari Cart
             cart::whereIn('id', $selectedItems)->delete();
 
-            return redirect()->route('home', ['active' => 'home']);
+            return response()->view('your_view')->with(['refresh' => true]);
         } else {
             return redirect()->back()->with('error', 'Insufficient points. Please top up first.');
         }

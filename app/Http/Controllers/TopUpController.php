@@ -20,6 +20,13 @@ class TopUpController extends Controller
         ]);
     }
 
+    public function success(){
+
+        return view('point.success', [
+            'active' => 'point.success'
+        ]);
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [
