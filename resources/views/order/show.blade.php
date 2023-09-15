@@ -68,8 +68,9 @@
         <h3>Total: <span id="grand-total">${{ number_format($totalPrice, 2) }}</span></h3>
     </div>
 
-        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#orderModal"> Place Order</button>
-  
+    <div class="text-center">
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#orderModal">Place Order</button>
+    </div>  
     <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
