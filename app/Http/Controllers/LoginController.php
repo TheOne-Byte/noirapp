@@ -27,7 +27,12 @@ class LoginController extends Controller
         if(Auth::attempt($credential)){
             $request->session()->regenerate(); //regenerate itu untuk keamanaan biar ga kena session fixation (wikipedia)
 
-            return redirect()->intended('/game');
+            if(Auth()->user()->role_id != 3){
+                return redirect()->intended('/game');
+            }
+            else{
+                return redirect()->intended('/dashboard');
+            }
         }
 
         // return back()->withErrors();

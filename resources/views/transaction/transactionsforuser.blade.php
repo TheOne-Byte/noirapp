@@ -1,21 +1,28 @@
+{{-- BUAT ONGOIN TRANSACTION DI SISI USER --}}
 @extends('layouts.main')
 
 @section('container')
-    <h2 class="text-center">Transaction History</h2>
+<div class="container mt-5">
+    <h2 class="text-center">Transaction</h2>
+
+    @if(session()->has('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     @if ($transactions->isEmpty())
-    <p class="text-center text-danger">No transaction available.</p>
+            <p class="text-center text-danger">No transaction available.</p>
     @else
     <table class="table text-white">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Username</th>
-                <th>Player/Coach</th>
+                <th>Order For</th>
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Total Price</th>
                 <th>Status</th>
-                <th>Review</th>
             </tr>
         </thead>
         <tbody>
@@ -23,15 +30,15 @@
                 <tr>
                     <td>{{ $loop ->iteration }}</td>
                     <td>{{ $transaction->seller->name }}</td>
-                    <td>{{ $transaction->seller->role->name }}</td>
-                    <td>{{ $transaction->quantity }}</td>
-                    <td>{{ $transaction->price }}</td>
-                    <td>{{ $transaction->total_price }}</td>
-                    <td>{{ $status[$loop ->iteration-1] }}</td>
-                    <td></td>
+                    <td>{{ $transaction->seller->role->name}}</td>
+                    <td>{{ $transaction->quantity}}</td>
+                    <td>{{ $transaction->price}}</td>
+                    <td>{{ $transaction->total_price}}</td>
+                    <td>{{ $status[$loop ->iteration-1]}}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
     @endif
+</div>
 @endsection
