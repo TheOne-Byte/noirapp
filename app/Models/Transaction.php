@@ -9,6 +9,7 @@ class Transaction extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'slug',
         'buyer_id',
         'seller_id',
         'price',
@@ -26,5 +27,9 @@ class Transaction extends Model
     public function seller()
     {
         return $this->belongsTo(User::class, 'seller_id');
+    }
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

@@ -116,7 +116,6 @@ $(document).ready(function() {
             url: '{{ route('place.order') }}',
             data: { selectedItems: selectedItems, _token: '{{ csrf_token() }}' },
             success: function(data) {
-                alert('Order placed successfully!');
                 $('#orderModal').modal('hide');
                 location.reload();
                 // Jika Anda ingin melakukan sesuatu setelah berhasil, tambahkan di sini.
