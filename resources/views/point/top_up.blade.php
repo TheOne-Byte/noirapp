@@ -112,6 +112,8 @@
                                             <option value="50">50 Point</option>
                                             <option value="100">100 Point</option>
                                             <option value="150">150 Point</option>
+                                            <option value="500">500 Point</option>
+                                            <option value="1000">1000 Point</option>
                                         </select>
                                     </h4>
 
@@ -145,25 +147,32 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('button').click(function() {
-            var formData = new FormData($('#topUpForm')[0]);
+        $('button').click(function(e) {
+            e.preventDefault(); // Prevent the form from submitting
 
-            $.ajax({
-                url: "{{ route('top_up') }}",
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    // Handle success here
-                    console.log(data);
-                    window.location.href = "{{ route('topup.sukses') }}";
-                },
-                error: function(error) {
-                    // Handle error here
-                    console.error('Error:', error);
-                }
-            });
+            var pointTopUp = $('select[name="point_top_up"]').val();
+            var paymentMethod = $('select[name="payment_method"]').val();
+
+            if (pointTopUp !== 'Silahkan Pilih Point' && paymentMethod !== 'Silahkan pilih Metode pembayaran') {
+                var formData = new FormData($('#topUpForm')[0]);
+
+                $.ajax({
+                    url: "{{ route('top_up') }}",
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        console.log(data);
+                        window.location.href = "{{ route('topup.sukses') }}";
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            } else {
+                alert('Please select both Point and Payment Method.');
+            }
         });
     });
 </script>

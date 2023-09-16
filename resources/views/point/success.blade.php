@@ -54,6 +54,7 @@
                 }
             }
         </style>
+        @if(session('topup_success'))
         <div class="empty-3-2" style="font-family: 'Poppins', sans-serif;">
             <div class="mx-auto d-flex align-items-center justify-content-center flex-column">
                 <img class="main-img"
@@ -70,6 +71,11 @@
                 </div>
             </div>
         </div>
+        @else
+        <div class="alert alert-danger" role="alert">
+            You are not authorized to access this page.
+        </div>
+    @endif
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">

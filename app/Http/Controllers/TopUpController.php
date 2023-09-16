@@ -39,6 +39,7 @@ class TopUpController extends Controller
         $user = User::where('username', $request->input('username'))->first();
         $user->points += $request->input('point_top_up');
         $user->save();
+        $request->session()->put('topup_success', true);
         return view('point.success', [
             'active' => 'top_up'
         ]);
