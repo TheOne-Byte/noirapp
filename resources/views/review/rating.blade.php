@@ -22,13 +22,13 @@
                     <label class="star star-2" for="star-2"></label>
                     <input class="star star-1" value="1" id="star-1" type="radio" name="star"/>
                     <label class="star star-1" for="star-1"></label>
-                    </div>        
+                    </div>
                 </div>
-                    
+
                 <div class="col-md-4">
                     <button type="submit">Submit</button>
                 </div>
-            </form>  
+            </form>
             </div>
         </div>
     </div>
@@ -39,3 +39,4 @@
     });
 </script>
   @endsection
+
