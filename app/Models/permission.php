@@ -23,4 +23,9 @@ class permission extends Model
     public function category (){
         return $this->belongsTo(category::class,'category_id');
     }
+
+    public function getRouteKeyId()
+    {
+        return 'id';
+    }
 }

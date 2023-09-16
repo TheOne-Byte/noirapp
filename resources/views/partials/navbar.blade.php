@@ -46,12 +46,33 @@
                             <li>
                                 <a href="/transactions" style="text-decoration: none">
                                     <button type="button" class="dropdown-item">
-                                        <i class="bi bi-arrow-up-right-square"></i> Transactions
+                                        <i class="bi bi-arrow-up-right-square"></i> Order Transactions
+                                    </button>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/usertransaction" style="text-decoration: none">
+                                    <button type="button" class="dropdown-item">
+                                        <i class="bi bi-arrow-up-right-square"></i> Your Transactions
+                                    </button>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/history" style="text-decoration: none">
+                                    <button type="button" class="dropdown-item">
+                                        <i class="bi bi-arrow-up-right-square"></i> History
                                     </button>
                                 </a>
                             </li>
                              @endif
                              @if (auth()->user()->role_id == 4)
+                             <li>
+                                <a href="/usertransaction" style="text-decoration: none">
+                                    <button type="button" class="dropdown-item">
+                                        <i class="bi bi-arrow-up-right-square"></i> Your Transactions
+                                    </button>
+                                </a>
+                            </li>
                             <li>
                                 <a href="/history" style="text-decoration: none">
                                     <button type="button" class="dropdown-item">
