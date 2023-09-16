@@ -103,3 +103,5 @@ Route::put('/transactions/{id}/mark-as-done', [TransactionController::class, 'ma
 Route::get('/history', [TransactionController::class, 'history'])->name('transactions.history')->middleware('auth')->middleware('exceptAdmin');
 Route::get('/getcart', [OrderController::class, 'getCartData']);
 Route::resource('/rating', RatingController::class);
+Route::get('/rating', [RatingController::class, 'index']);
+
