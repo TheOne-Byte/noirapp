@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-
+use Illuminate\Support\Str;
 class OrderController extends Controller
 {
     /**
@@ -330,9 +330,13 @@ class OrderController extends Controller
             if ($this->hasEnoughPoints($orderValidation->buyer, $amount)) {
                 $orderValidation->status = 'APV';
                 $orderValidation->save();
-
+                $slug = Str::slug('TRX'.str::random(3).random_int(1,9999));
+                // while($data){
+                //     $slug = Str::slug('TRX'.str::random(3).random_int(1,9999));
+                // }
                 // Masukkan ke transaksi
                 Transaction::create([
+                    'slug' => $slug,
                     'buyer_id' => $orderValidation->buyer_id,
                     'seller_id' => $orderValidation->seller_id,
                     'price' => $orderValidation->price,
@@ -371,7 +375,14 @@ class OrderController extends Controller
     $orderValidation = OrderValidation::findOrFail($id);
     $orderValidation->status = 'APV';
     $orderValidation->save();
+    $slug = Str::slug('TRX'.str::random(3).random_int(1,9999));
+
+    $data = Transaction::where('slug', $slug);
+    // while($data){
+    //     $slug = Str::slug('TRX'.str::random(3).random_int(1,9999));
+    // }
     Transaction::create([
+        'slug' => $slug,
         'buyer_id' => $orderValidation->buyer->id,
         'seller_id' => $orderValidation->seller_id,
         'price' => $orderValidation->price,
