@@ -41,10 +41,10 @@
                 <input type="hidden" name="id" value="{{  $permission->id  }}">
                 <button type="submit" class="badge bg-success border-0" onclick="return confirm('Accept This User Role Request?')"><i class="bi bi-check2" style="color: black"></i></button>
             </form>
-            <form action="/dashboard/role/{{ $permission->id }}" method="POST" class="d-inline">
+            <form action="/dashboard/role/{{$permission->id}}" method="POST" class="d-inline">
               @method('delete')
               @csrf
-              <button class="badge bg-danger border-0" onclick="return confirm('are you sure deleting this?')"><i class="bi bi-x"></i></button>
+              <button type="submit" class="badge bg-danger border-0" onclick="return confirm('are you sure deleting this?')"><span class="bi bi-trash " style="color: white"></span></button>
             </form>
         </td>
       </tr>

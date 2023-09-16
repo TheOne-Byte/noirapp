@@ -97,8 +97,10 @@ class AdminRoleController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(permission $permi)
     {
-        //
+        dd($permi->id);
+        permission::destroy($permission->id);
+        return redirect('/dashboard/role')->with('success','Permission Rejected!'); 
     }
 }
