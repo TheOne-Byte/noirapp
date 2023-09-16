@@ -1,4 +1,13 @@
 @extends('admin.layouts.main')
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
 @section('container')
 <h1 class="h2">ROLE REQUEST</h1>
 
@@ -9,7 +18,6 @@
 @endif
 
 <div class="table-responsive small col-lg-5">
-  {{-- <a class="btn btn-primary mb-3" href="/dashboard/categories/create">CREATE NEW CATEGORY</a> --}}
   <table class="table table-striped table-sm ">
     <thead>
       <tr class="text-center">
@@ -26,14 +34,11 @@
     @foreach($permissions as $permission)
       <tr class="text-center">
         <td>{{ $loop ->iteration }}</td>
-        {{-- bs dipake krn dlm foreach --}}
         <td>{{ $permission->user->name }}</td>
         <td>{{ $permission->category->name }}</td>
         <td>{{ $permission->role->name }}</td>
         <td>
-        
-            <button type="button" value="{{ $permission->id }}" class="badge bg-info showbtn"><span class="bi bi-eye " style="color: black"></span></button>
-            {{-- <a href="/dashboard/role/{{ $permission->id }}" class="badge bg-info"><span class="bi bi-eye " style="color: black"></span></a> --}}
+            <button type="button" value="{{ $permission->id }}" class="badge bg-info showbtn" data-image-src="{{ asset('storage/' . $permission->image_url) }}"><span class="bi bi-eye " style="color: black"></span></button>
         </td>
         <td>
             <form action="/dashboard/role" method="POST" class="d-inline">
@@ -49,21 +54,38 @@
         </td>
       </tr>
     </tbody>
-
-    
     @endforeach
   </table>
 </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="imagePreview" src="" alt="Image Preview" width="100%">
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
-    $( document ).ready(function() {
-        $(document).on('click','.showbtn',function(){
-            var permi_id = $(this).val();
-            alert();
-        });
+$(document).ready(function () {
+    $(document).on('click', '.showbtn', function () {
+        var imageSrc = $(this).data('image-src');
+        $('#imagePreview').attr('src', imageSrc);
+        $('#imageModal').modal('show');
     });
-</script>
+});
+
+    </script>
+
 
 @endsection
 
@@ -72,7 +94,6 @@
     $( document ).ready(function() {
         $(document).on('click','.showbtn',function(){
             var permi_id = $(this).val();
-            alert();
         });
     });
 </script>
