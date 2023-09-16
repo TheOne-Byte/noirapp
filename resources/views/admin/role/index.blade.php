@@ -79,9 +79,7 @@
 $(document).ready(function () {
     $(document).on('click', '.showbtn', function () {
         var imageSrc = $(this).data('image-src');
-        var imageText = $(this).data('image-text'); // Assuming you have a data attribute for text
         $('#imagePreview').attr('src', imageSrc);
-        $('#imageText').text(imageText); // Set the text content
         $('#imageModal').modal('show');
     });
 });
