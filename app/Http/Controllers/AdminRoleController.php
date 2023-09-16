@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminRoleController extends Controller
 {
@@ -53,7 +54,7 @@ class AdminRoleController extends Controller
         permission::where('id',$data->id)
         ->update($validatedpermission);
 
-        return redirect('/dashboard/role')->with('success','User Role Request Has Been Approved!');    
+        return redirect('/dashboard/role')->with('success','User Role Request Has Been Approved!');
 
     }
 
@@ -76,7 +77,7 @@ class AdminRoleController extends Controller
      */
     public function edit(User $user)
     {
-        
+
     }
 
     /**
@@ -97,10 +98,11 @@ class AdminRoleController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(permission $permi)
+    public function destroy($id)
     {
-        dd($permi->id);
-        permission::destroy($permission->id);
-        return redirect('/dashboard/role')->with('success','Permission Rejected!'); 
+        $permission = permission::findOrFail($id);
+        $permission->delete();
+
+        return redirect('/dashboard')->with('success', 'Role request deleted successfully');
     }
 }
