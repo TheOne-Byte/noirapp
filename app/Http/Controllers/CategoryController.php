@@ -23,7 +23,7 @@ class CategoryController extends Controller
             abort(404); // or handle the error in another way
         }
 
-        $users = $category->user()->whereIn('role_id', [2, 3])->where('id', '!=', auth()->user()->id)->get(); // Keep it as provided
+        $users = $category->user()->whereIn('role_id', [1, 2])->where('id', '!=', auth()->user()->id)->get(); // Keep it as provided
 
         return view('users', [
             'title' => "User by category",

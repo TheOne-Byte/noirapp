@@ -12,10 +12,15 @@
     @if ($transactions->isEmpty())
             <p class="text-center text-danger">No transaction available.</p>
     @else
-    <table class="table text-danger">
+    <table class="table text-white">
         <thead>
             <tr>
-                <th>Transaction ID</th>
+                <th>#</th>
+                <th>Username</th>
+                <th>Order For</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total Price</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
@@ -23,8 +28,13 @@
         <tbody>
             @foreach ($transactions as $transaction)
                 <tr>
-                    <td>{{ $transaction->id }}</td>
-                    <td>{{ $transaction->status }}</td>
+                    <td>{{ $loop ->iteration }}</td>
+                    <td>{{ $transaction->buyer->name }}</td>
+                    <td>{{ $transaction->seller->role->name}}</td>
+                    <td>{{ $transaction->quantity}}</td>
+                    <td>{{ $transaction->price}}</td>
+                    <td>{{ $transaction->total_price}}</td>
+                    <td>{{ $transaction->status}}</td>
                     <td>
                         <form action="{{ route('transactions.markAsDone', $transaction->id) }}" method="POST">
                             @csrf
