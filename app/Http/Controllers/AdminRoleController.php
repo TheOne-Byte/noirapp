@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\permission;
 use Illuminate\Http\Request;
+use App\Models\AvailableTime;
 use Illuminate\Support\Facades\Storage;
 
 class AdminRoleController extends Controller
@@ -102,6 +103,7 @@ class AdminRoleController extends Controller
     {
         $permission = permission::findOrFail($id);
         $permission->delete();
+        AvailableTime::where('user_id', $permission->user_id)->delete();
 
         return redirect('/dashboard')->with('success', 'Role request deleted successfully');
     }

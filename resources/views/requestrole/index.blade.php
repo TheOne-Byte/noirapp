@@ -14,7 +14,7 @@
       </div>
     @endif
     <main class="form-registration">
-        
+
       <h1 class="h3 mb-3 fw-normal text-center" id="registertext">Request Role Form</h1>
         <form action="/role/request" method="POST" enctype="multipart/form-data">
           @csrf
@@ -45,7 +45,7 @@
                 <label for="price">Price</label>
             </div>
             <input style="border-radius: 5px"  value="{{ old('price',100) }}" type="number" class="mb-2 form-control @error('price') is-invalid @enderror" id="price" placeholder="price" name="price">
-  
+
             @error('price')
             <div class="invalid-feedback">{{$message }}</div>
             @enderror
@@ -63,10 +63,47 @@
             </div>
         @enderror
         </div>
-          
+        <div class="form-floating mt-2">
+            <div class="text-white">
+                <label for="available_times">Available Times</label>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    @for ($i = 0; $i < 7; $i++)
+                        @php
+                            $dayName = date('l', strtotime("Sunday +$i days"));
+                        @endphp
+                        <label for="{{ $dayName }}" class="form-check-label text-white">
+                            {{ $dayName }}<br>
+                            <input type="checkbox" name="available_days[{{ $dayName }}]" value="{{ $dayName }}">
+                        </label>
+                    @endfor
+                    <div class="form-floating mt-2">
+                        <div class="text-white">
+                            <label for="available_times">Choose Time</label>
+                        </div>
+                        <select name="available_time_start" class="form-select mb-2">
+                            @for ($hour = 0; $hour <= 23; $hour++)
+                                @for ($minute = 0; $minute <= 59; $minute += 15)
+                                    <option value="{{ sprintf('%02d:%02d', $hour, $minute) }}">{{ sprintf('%02d:%02d', $hour, $minute) }}</option>
+                                @endfor
+                            @endfor
+                        </select>
+                        <select name="available_time_end" class="form-select mb-2">
+                            @for ($hour = 0; $hour <= 23; $hour++)
+                                @for ($minute = 0; $minute <= 59; $minute += 15)
+                                    <option value="{{ sprintf('%02d:%02d', $hour, $minute) }}">{{ sprintf('%02d:%02d', $hour, $minute) }}</option>
+                                @endfor
+                            @endfor
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
           <button class="btn btn-primary w-50" type="submit" id="register">Request now</button>
         </form>
-  
+
     </main>
     </div>
 

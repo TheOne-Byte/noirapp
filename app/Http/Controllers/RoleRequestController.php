@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\role;
 use App\Models\User;
 use App\Models\category;
 use App\Models\permission;
-use App\Models\role;
 
 use Illuminate\Http\Request;
+use App\Models\AvailableTime;
 
 class RoleRequestController extends Controller
 {
@@ -64,25 +65,30 @@ class RoleRequestController extends Controller
 
         if($data){
             if($data->statcode ==="REQ"){
-                return redirect('/role/request')->with('danger','You Already Have Pending Request!');    
+                return redirect('/role/request')->with('danger','You Already Have Pending Request!');
             }
             else if($data->statcode ==="APV"){
                 if($data->role_id == $request->role_id){
-                    return redirect('/role/request')->with('danger','Nothing To Change!');    
+                    return redirect('/role/request')->with('danger','Nothing To Change!');
                 }
                 permission::where('id',$data->id)
                 ->update($validated);
-                return redirect('/role/request')->with('success','Changing Role Request Has Been Submitted!');    
+                return redirect('/role/request')->with('success','Changing Role Request Has Been Submitted!');
             }
             else if($data->statcode ==="RJC"){
                 permission::where('id',$data->id)
                 ->update($validated);
-                return redirect('/role/request')->with('success','Role Request Again Has Been Submitted!');   
+                return redirect('/role/request')->with('success','Role Request Again Has Been Submitted!');
             }
         }
-
+        foreach ($request->input('available_days', []) as $day => $value) {
+            AvailableTime::updateOrCreate(
+                ['user_id' => auth()->user()->id, 'day' => $day],
+                ['start_time' => $request->input('available_time_start', '00:00'), 'end_time' => $request->input('available_time_end', '23:59')]
+            );
+        }
         permission::create($validated);
-        return redirect('/role/request')->with('success','Request Has Been Submitted!');    
+        return redirect('/role/request')->with('success','Request Has Been Submitted!');
     }
 
     /**
