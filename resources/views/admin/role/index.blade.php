@@ -38,7 +38,7 @@
         <td>{{ $permission->category->name }}</td>
         <td>{{ $permission->role->name }}</td>
         <td>
-            <button type="button" value="{{ $permission->id }}" class="badge bg-info showbtn" data-image-src="{{ asset('storage/' . $permission->image_url) }}"><span class="bi bi-eye " style="color: black"></span></button>
+            <button type="button" class="badge bg-info showbtn" data-toggle="modal" data-target="#imageModal{{ $permission->id }}"><span class="bi bi-eye " style="color: black"></span></button>
         </td>
         <td>
             <form action="/dashboard/role" method="POST" class="d-inline">
@@ -54,37 +54,27 @@
         </td>
       </tr>
     </tbody>
+    <!-- Modal for Image -->
+  <div class="modal fade" id="imageModal{{ $permission->id }}" tabindex="-1" aria-labelledby="imageModalLabel{{ $permission->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imageModalLabel{{ $permission->id }}">Image Preview</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <img src="{{ asset('storage/' . $permission->image) }}" alt="Uploaded Image" style="max-width: 100%;">
+        </div>
+      </div>
+    </div>
+  </div>
     @endforeach
   </table>
 </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <img id="imagePreview" src="" alt="Image Preview" width="100%">
-            </div>
-        </div>
-    </div>
-</div>
 
-<script>
-$(document).ready(function () {
-    $(document).on('click', '.showbtn', function () {
-        var imageSrc = $(this).data('image-src');
-        $('#imagePreview').attr('src', imageSrc);
-        $('#imageModal').modal('show');
-    });
-});
-
-    </script>
 
 
 @endsection
@@ -96,5 +86,12 @@ $(document).ready(function () {
             var permi_id = $(this).val();
         });
     });
+    $(document).ready(function () {
+    $(document).on('click', '.showbtn', function () {
+        var imageSrc = $(this).data('image-src');
+        $('#imagePreview').attr('src', imageSrc);
+        $('#imageModal').modal('show');
+    });
+});
 </script>
 @endsection
