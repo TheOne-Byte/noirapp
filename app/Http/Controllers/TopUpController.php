@@ -45,6 +45,26 @@ class TopUpController extends Controller
         ]);
     }
 
+    public function idnumcardreq(Request $request){
+
+        $data = User::where('id',auth()->user()->id)->first();
+
+        if($data->idcardstatcode !== 'RJC'){
+            return redirect('/top_up')->with('danger','You Have Pending Id Card Number Request');    
+        }
+
+        $validated = $request->validate([
+            'idcardnumber' =>'required|min:16|max:16|unique:users'
+        ]);
+        $validated["idcardstatcode"] = "REQ";
+
+        User::where('id',$data->id)
+        ->update($validated);
+
+        return redirect('/top_up')->with('success','Your Id Card Number Request Has Been Submitted');    
+
+    }
+
     // public function getUserPoints()
     // {
     //     $username = auth()->user()->username;

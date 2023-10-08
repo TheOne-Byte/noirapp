@@ -25,7 +25,9 @@ class User extends Authenticatable
         'password',
         'username',
         'role_id',
-        'points'
+        'points',
+        'idcardnumber',
+        'idcardstatcode'
 
     ];
 
