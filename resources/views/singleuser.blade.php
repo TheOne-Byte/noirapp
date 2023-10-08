@@ -14,7 +14,7 @@
                 <div class="col-md-4 d-inline">
                     <a href="/addtocart/{{ $user->username }}" class="btn">Order</a>
                     <button type="submit" class="btn-chat" data-chat-with="{{ $user->id }}" onclick="window.location.href='/chatify'"><i class="bi bi-chat-heart"></i> Chat</button>
-                    <i class="bi bi-calendar" onclick="openSchedulePage('{{ $user->id }}')"></i>
+
 
                 </div>
             </div>
@@ -39,14 +39,30 @@
                 <div class="informasi">
                         <p>{{ $user->body }}</p>
                 </div>
+                <p class="mt-4" style="font-size: 2rem; color:orange; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Available Times</p>
+                <hr>
+                <div class="informasi">
+                    <ul>
+                        @foreach($availableTimes as $availableTime)
+                        @php
+                            $startTime = strtotime($availableTime->start_time);
+                            $endTime = strtotime($availableTime->end_time);
+                            $day = $availableTime->day;
+                        @endphp
 
+                        <li>
+                            {{ date('H:i', $startTime) }} - {{ date('H:i', $endTime) }}
+                            ({{ date('l', strtotime($day)) }})
+                        </li>
+                    @endforeach
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
+
     <script>
-        function openSchedulePage(userId) {
-            window.open(`/schedule/${userId}`, '_blank');
-        }
+//
     </script>
 @endsection
 
