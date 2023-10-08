@@ -14,6 +14,7 @@
                 <div class="col-md-4 d-inline">
                     <a href="/addtocart/{{ $user->username }}" class="btn">Order</a>
                     <button type="submit" class="btn-chat" data-chat-with="{{ $user->id }}" onclick="window.location.href='/chatify'"><i class="bi bi-chat-heart"></i> Chat</button>
+                    <i class="bi bi-calendar" onclick="openSchedulePage('{{ $user->id }}')"></i>
 
                 </div>
             </div>
@@ -42,7 +43,11 @@
             </div>
         </div>
     </div>
-
+    <script>
+        function openSchedulePage(userId) {
+            window.open(`/schedule/${userId}`, '_blank');
+        }
+    </script>
 @endsection
 
 

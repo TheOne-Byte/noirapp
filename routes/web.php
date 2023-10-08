@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Models\category;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ChatifyController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AdminCateController;
 use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\RoleRequestController;
@@ -104,4 +106,8 @@ Route::get('/history', [TransactionController::class, 'history'])->name('transac
 Route::get('/getcart', [OrderController::class, 'getCartData']);
 Route::resource('/rating', RatingController::class);
 Route::get('/rating', [RatingController::class, 'index']);
+
+Route::get('/schedule/{user_id}', [ScheduleController::class,'showSchedule']);
+
+
 
