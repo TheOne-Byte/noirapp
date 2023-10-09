@@ -128,14 +128,6 @@
             });
         });
 
-        $(document).ready(function() {
 
-            $(document).on('click', '.show-video-btn', function() {
-                var videoSrc = $(this).data(
-                    'video-src');
-                $('#videoPreview{{ $permission->id }}').attr('src', videoSrc);
-                $('#videoModal{{ $permission->id }}').modal('show');
-            });
-        });
     </script>
 @endsection
