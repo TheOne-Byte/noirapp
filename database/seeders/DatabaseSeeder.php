@@ -54,6 +54,8 @@ class DatabaseSeeder extends Seeder
             "body" => "halo semua nama aku venicia, yuk main bareng guys aku ini anaknya mage banget jadi bisa buat gendong kalian! cus order",
             'category_id' => 2,
             'role_id' => 1,
+            'idcardnumber' => 1234567890123451,
+            'idcardstatcode' => "APV",
             "password" => bcrypt('password')
         ]);
         User::create([
@@ -65,6 +67,8 @@ class DatabaseSeeder extends Seeder
             "body" => "halo semua nama aku venicia, yuk main bareng guys aku ini anaknya duelist banget jadi bisa buat gendong kalian! cus order",
             'category_id' => 1,
             'role_id' => 2,
+            'idcardnumber' => 1234567890123452,
+            'idcardstatcode' => "APV",
             "password" => bcrypt('password')
         ]);
         User::create([
@@ -76,6 +80,8 @@ class DatabaseSeeder extends Seeder
             "body" => "halo semua nama aku venicia, yuk main bareng guys aku ini anaknya marksman banget jadi bisa buat gendong kalian! cus order",
             'category_id' => 2,
             'role_id' => 3,
+            'idcardnumber' => 1234567890123453,
+            'idcardstatcode' => "APV",
             "password" => bcrypt('password')
         ]);
         User::create([
@@ -87,6 +93,8 @@ class DatabaseSeeder extends Seeder
             "body" => null,
             'category_id' => 2,
             'role_id' => 3,
+            'idcardnumber'=>1234567890123454,
+            'idcardstatcode' => "APV",
             "password" => bcrypt('password')
         ]);
         // cart::create([

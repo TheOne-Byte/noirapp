@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Models\User;
 use App\Models\OrderValidation;
 use Illuminate\Http\Request;
 
@@ -42,17 +43,18 @@ class TransactionController extends Controller
     }
 
     public function foruser(){
-        $transaction = OrderValidation::where('buyer_id', auth()->user()->id)->whereNotIn('status',['REQ','APV'])->get();
+        $transaction = OrderValidation::where('buyer_id', auth()->user()->id)->get();
         $status = [""];
         for($i = 0; $i < Count($transaction) ; $i++) {
+            $seller = User::where('id',$transaction[$i]->seller_id)->get();
             if($transaction[$i]->status == "REQ"){
-                $status[$i] = 'Waiting';
+                $status[$i] = 'Waiting To Be Accepted By ' . $seller[$i]->username;
             }
             else if($transaction[$i]->status == "RJC"){
                 $status[$i] = 'Rejected, Refund Done';
             }
             else if($transaction[$i]->status == "APV"){
-                $status[$i] = 'Accepted';
+                $status[$i] = 'Accepted By ' . $seller[$i]->username;
             }   
         }
         return view('transaction.transactionsforuser', [

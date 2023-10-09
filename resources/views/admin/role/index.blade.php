@@ -49,7 +49,7 @@
             <form action="/dashboard/role/{{$permission->id}}" method="POST" class="d-inline">
               @method('delete')
               @csrf
-              <button type="submit" class="badge bg-danger border-0" onclick="return confirm('are you sure deleting this?')"><span class="bi bi-trash " style="color: white"></span></button>
+              <button type="submit" class="badge bg-danger border-0" onclick="return confirm('are you sure deleting this?')"><i class="bi bi-x" style="color: white"></i></button>
             </form>
         </td>
       </tr>

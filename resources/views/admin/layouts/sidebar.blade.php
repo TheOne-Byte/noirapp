@@ -28,6 +28,13 @@
               Role Request
             </a>
           </li>
+
+          <li class="nav-item" style="background-color: #ffee93;">
+            <a class="nav-link  {{ $active == 'dashboardidcard' ? 'active' : ''}}" href="/dashboard/idcard">
+              <svg class="bi"><use xlink:href="#file-earmark"/></svg>
+              Id Card Number Request
+            </a>
+          </li>
          
         </ul>
 

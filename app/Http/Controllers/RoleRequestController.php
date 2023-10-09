@@ -51,7 +51,8 @@ class RoleRequestController extends Controller
             'role_id' =>'required',
             'price' => 'required',
             'image' => 'required|image|file|max:1024',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'body' => 'required|max:30'
         ]);
 
         if($request->file('image')){
