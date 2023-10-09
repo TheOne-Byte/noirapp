@@ -43,11 +43,7 @@
             <button type="button" class="badge bg-info showbtn" data-toggle="modal" data-target="#imageModal{{ $permission->id }}"><span class="bi bi-eye " style="color: black"></span></button>
         </td>
         <td>
-            <button type="button" class="badge bg-info show-video-btn" data-toggle="modal"
-                data-target="#videoModal{{ $permission->id }}"
-                data-video-src="{{ asset('storage/' . $permission->video) }}">
-                <span class="bi bi-eye" style="color: black"></span> Video
-            </button>
+            <button type="button" class="badge bg-info showbtn" data-toggle="modal" data-target="#videoModal{{ $permission->id }}"><span class="bi bi-play " style="color: black"></span></button>
         </td>
         <td>
             <form action="/dashboard/role" method="POST" class="d-inline">
