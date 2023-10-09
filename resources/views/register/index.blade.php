@@ -32,6 +32,13 @@
           @enderror
         </div>
         <div class="form-floating">
+          <input value="{{ old('idcardnumber') }}" type="idcardnumber" class="mb-2 form-control  @error('idcardnumber') is-invalid @enderror rounded-bottom" id="idcardnumber" placeholder="idcardnumber" name="idcardnumber">
+          <label for="idcardnumber">Identity Card Number</label>
+          @error('idcardnumber')
+          <div class="invalid-feedback">{{$message }}</div>
+          @enderror
+        </div>
+        <div class="form-floating">
           <input value="{{ old('email') }}" type="email" class="mb-2 form-control  @error('email') is-invalid @enderror rounded-bottom" id="email" placeholder="name@example.com" name="email">
           <label for="email">Email address</label>
           @error('email')

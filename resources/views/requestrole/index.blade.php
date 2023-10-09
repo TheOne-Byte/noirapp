@@ -43,18 +43,27 @@
                         </select>
                     </div>
 
-                    <div class="form-floating mt-2">
-                        <div class="text-white">
-                            <label for="price">Price</label>
-                        </div>
-                        <input style="border-radius: 5px" value="{{ old('price', 100) }}" type="number"
-                            class="mb-2 form-control @error('price') is-invalid @enderror" id="price"
-                            placeholder="price" name="price">
+          <div class="form-floating mt-2">
+            <div class="text-white">
+                <label for="price">Price</label>
+            </div>
+            <input style="border-radius: 5px"  value="{{ old('price',100) }}" type="number" class="mb-2 form-control @error('price') is-invalid @enderror" id="price" placeholder="price" name="price">
 
-                        @error('price')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+            @error('price')
+            <div class="invalid-feedback">{{$message }}</div>
+            @enderror
+          </div>
+
+          <div class="form-floating mt-2">
+            <div class="text-white">
+                <label for="body">Bio (pengalaman/skill)</label>
+            </div>
+            <input style="border-radius: 5px"  value="{{ old('body') }}" type="text" class="mb-2 form-control @error('body') is-invalid @enderror" id="body" placeholder="body" name="body">
+
+            @error('body')
+            <div class="invalid-feedback">{{$message }}</div>
+            @enderror
+          </div>
 
                     <div class="mb-3 text-white">
                         <label for="image" class="form-label">Upload Your Game Skill Image</label>

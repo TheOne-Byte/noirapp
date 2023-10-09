@@ -26,6 +26,8 @@ return new class extends Migration
             $table->foreignId('role_id');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->bigInteger('idcardnumber')->nullable();
+            $table->string('idcardstatcode');
             $table->integer('points')->nullable();
             $table->rememberToken();
             $table->timestamps();

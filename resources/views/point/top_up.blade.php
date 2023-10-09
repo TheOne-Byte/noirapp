@@ -1,5 +1,51 @@
 @extends('layouts/main')
 @section('container')
+@if(auth()->user()->idcardstatcode == 'REQ')
+@if(session()->has('danger'))
+      <div class="alert alert-danger col-lg-5" role="alert">
+          {{ session('danger') }}
+      </div>
+@else
+<div class="row justify-content-center text-center">
+    <div class="col-md-12 mt-5">
+      <div class="alert alert-success col-md-12" role="alert">
+          <h3 style="color: #141432">Your Id Card Number Has Not Been Approved Yet!</h3>
+      </div>
+    </div>
+</div>
+@endif
+@elseif (auth()->user()->idcardstatcode == 'RJC')
+
+    <div class="row justify-content-center text-center">
+        <div class="col-md-12 mt-5">
+        <form action="/idcardnumber/request" method="POST">
+        @csrf
+        <div class="alert alert-danger col-md-12" role="alert">
+            <h3 style="color: #141432">Your Id Card Number Has Been Rejected, Please Request Again</h3>
+        </div>
+        </div>
+        <div class="col-md-4 mt-5 text-center">
+            <div class="form-floating">
+                <input value="{{ old('idcardnumber') }}" type="number" class="mb-2 form-control  @error('idcardnumber') is-invalid @enderror rounded-bottom" id="idcardnumber" placeholder="idcardnumber" name="idcardnumber">
+                <label for="idcardnumber">Identity Card Number</label>
+                @error('idcardnumber')
+                <div class="invalid-feedback">{{$message }}</div>
+                @enderror
+                
+            </div>
+        </div>        
+    </div>     
+    
+    <div class="row justify-content-center text-center">
+        <div class="col-md-5">
+
+        <button class="btn btn-primary w-30 " type="submit" id="idnumcardreq">Register</button>
+    </div>
+
+    </div>
+</form>
+
+@else
     <section class="contact-us-light-lick position-relative">
         <section class="h-100 w-100" style="box-sizing: border-box; background-color: #141432">
             <style scoped>
@@ -144,36 +190,38 @@
         </section>
     </section>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('button').click(function(e) {
-            e.preventDefault(); // Prevent the form from submitting
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('button').click(function(e) {
+                e.preventDefault(); // Prevent the form from submitting
 
-            var pointTopUp = $('select[name="point_top_up"]').val();
-            var paymentMethod = $('select[name="payment_method"]').val();
+                var pointTopUp = $('select[name="point_top_up"]').val();
+                var paymentMethod = $('select[name="payment_method"]').val();
 
-            if (pointTopUp !== 'Silahkan Pilih Point' && paymentMethod !== 'Silahkan pilih Metode pembayaran') {
-                var formData = new FormData($('#topUpForm')[0]);
+                if (pointTopUp !== 'Silahkan Pilih Point' && paymentMethod !== 'Silahkan pilih Metode pembayaran') {
+                    var formData = new FormData($('#topUpForm')[0]);
 
-                $.ajax({
-                    url: "{{ route('top_up') }}",
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(data) {
-                        console.log(data);
-                        window.location.href = "{{ route('topup.sukses') }}";
-                    },
-                    error: function(error) {
-                        console.error('Error:', error);
-                    }
-                });
-            } else {
-                alert('Please select both Point and Payment Method.');
-            }
+                    $.ajax({
+                        url: "{{ route('top_up') }}",
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(data) {
+                            console.log(data);
+                            window.location.href = "{{ route('topup.sukses') }}";
+                        },
+                        error: function(error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                } else {
+                    alert('Please select both Point and Payment Method.');
+                }
+            });
         });
-    });
-</script>
+    </script>
+
+@endif
 @endsection

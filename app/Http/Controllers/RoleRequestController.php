@@ -52,7 +52,8 @@ class RoleRequestController extends Controller
             'price' => 'required',
             'image' => 'required|image|file|max:1024',
             'video' => 'required|mimes:mp4,avi,wmv|max:10240',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'body' => 'required|max:30'
         ]);
 
         if($request->file('image')){
