@@ -16,16 +16,12 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('quantity');
             $table->decimal('price')->nullable();
-            $table->decimal('subtotal', 10, 2)->default(0.00); // Add the 'subtotal' column
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('buyer_id');
             $table->foreign('buyer_id')->references('id')->on('users');
         });
-
-
     }
 
     /**

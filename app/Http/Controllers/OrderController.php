@@ -48,41 +48,27 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'quantity' => 'min:1|required'
-        ]);
-
-        // Add some logging for debugging
-        Log::info('Store method is being called.'); // Check if this log is shown in your logs
-
         $user_id = $request->user_id;
         $buyer_id = auth()->user()->id;
-        $price = $request->price;
-        $quantity = $validated['quantity'];
-        $subtotal = $price * $quantity; // Calculate the subtotal
 
         // Check if the product already exists in the cart for the current user
-        $existingCartItem = cart::where('user_id', $user_id)
+        $existingCartItem = Cart::where('user_id', $user_id)
             ->where('buyer_id', $buyer_id)
             ->first();
 
         if ($existingCartItem) {
-            // If the product exists, update the quantity and subtotal
-            $existingCartItem->increment('quantity', $quantity);
-            $existingCartItem->subtotal += $subtotal;
-            $existingCartItem->save();
+            // If the product exists in the cart, return a message
+            return redirect('/game')->with('error', 'Item already in Cart!');
         } else {
-            // If the product doesn't exist, create a new cart item
-            cart::create([
+            // If the product doesn't exist in the cart, create a new cart item
+            Cart::create([
                 'user_id' => $user_id,
-                'quantity' => $quantity,
-                'price' => $price,
+                'price' => $request->price, // Assuming you want to store the price
                 'buyer_id' => $buyer_id,
-                'subtotal' => $subtotal,
             ]);
-        }
 
-        return redirect('/game')->with('success', 'Added to Cart!');
+            return redirect('/game')->with('success', 'Added to Cart! Continue Shopping.');
+        }
     }
 
     public function update(Request $request, $id)
