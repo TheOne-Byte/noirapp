@@ -66,5 +66,8 @@ class User extends Authenticatable
         return $this->belongsTo(permission::class,'permission_id');
     }
 
-
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }

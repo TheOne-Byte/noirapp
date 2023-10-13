@@ -10,23 +10,21 @@ class OrderValidation extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'buyer_id',
-        'seller_id',
         'price',
-        'quantity',
-        'total_price',
-        'status',
+        'schedule_id'
     ];
 
-    // Relationship dengan User (pembeli)
-    public function buyer()
-    {
-        return $this->belongsTo(User::class, 'buyer_id');
+    public function buyer(){
+        return $this->belongsTo(User::class,'buyer_id');
     }
 
-    // Relationship dengan User (penjual)
-    public function seller()
-    {
-        return $this->belongsTo(User::class, 'seller_id');
+    public function seller(){
+        return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function schedule(){
+        return $this->belongsTo(Schedule::class,'schedule_id');
     }
 }

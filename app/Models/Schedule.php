@@ -9,11 +9,14 @@ class Schedule extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'date', 'time'];
+    protected $fillable = ['user_id','buyer_id','date', 'start_time','end_time'];
 
     // Relasi dengan user
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+    public function buyer(){
+        return $this->belongsTo(User::class,'buyer_id');
+    }
+
+    public function seller(){
+        return $this->belongsTo(User::class,'user_id');
     }
 }

@@ -12,9 +12,8 @@ class Transaction extends Model
         'slug',
         'buyer_id',
         'seller_id',
+        'schedule_id',
         'price',
-        'quantity',
-        'total_price',
         'status'
     ];
 
@@ -27,6 +26,9 @@ class Transaction extends Model
     public function seller()
     {
         return $this->belongsTo(User::class, 'seller_id');
+    }
+    public function schedule(){
+        return $this->belongsTo(Schedule::class,'schedule_id');
     }
     public function getRouteKeyName()
     {

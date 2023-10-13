@@ -107,7 +107,7 @@ Route::get('/getcart', [OrderController::class, 'getCartData']);
 Route::resource('/rating', RatingController::class);
 Route::get('/rating', [RatingController::class, 'index']);
 
-Route::get('/schedule/{user_id}', [ScheduleController::class,'showSchedule']);
+Route::post('/schedule', [ScheduleController::class,'store']);
 
 
 

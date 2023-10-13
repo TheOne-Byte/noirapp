@@ -61,8 +61,29 @@
         </div>
     </div>
 
+
+
     <script>
-//
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('scheduleForm');
+            form.addEventListener('submit', function(event) {
+                const dateInput = document.getElementById('date');
+                const selectedDate = new Date(dateInput.value);
+
+                const availableDays = [@foreach($availableTimes as $availableTime) '{{ date("D", strtotime($availableTime->day)) }}', @endforeach];
+
+                const selectedDay = selectedDate.toLocaleDateString('en-US', { weekday: 'short' });
+
+                if (!availableDays.includes(selectedDay)) {
+                    event.preventDefault();
+                    alert('Tanggal tidak tersedia. Silakan pilih tanggal lain.');
+                }
+            });
+        });
+        @if(session('error'))
+        // Show a JavaScript alert with the error message
+        alert('{{ session('error') }}');
+        @endif
     </script>
 @endsection
 

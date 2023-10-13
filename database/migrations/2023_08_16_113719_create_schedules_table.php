@@ -16,11 +16,13 @@ return new class extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->date('date');
-            $table->time('time');
-            $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->date('date')->nullable();
+            $table->string('start_time')->nullable();
+            $table->string('end_time')->nullable();
+            $table->timestamps();
+            $table->unsignedBigInteger('buyer_id');
+            $table->foreign('buyer_id')->references('id')->on('users');
         });
     }
 
