@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\points;
+use App\Models\point;
+use App\Models\User;
+
 use Illuminate\Http\Request;
 
 class WithdrawalController extends Controller
@@ -14,12 +16,10 @@ class WithdrawalController extends Controller
      */
     public function index()
     {
-        return view('requestrole.index',
+        return view('withdraw.withdrawal',
         [
-            "title" => "request role",
-            'active' => 'request role',
-            'categories' => category::all(),
-            'roles' => role::whereNotIn('name',['user','admin'])->get()
+            "title" => "withdrawal gatcha",
+            'active' => 'withdrawal gatcha',
 
         ]);
     }
@@ -42,7 +42,19 @@ class WithdrawalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->Withdrawal > auth()->user()->points){
+            return redirect('/withdrawal')->with('error', 'Withdrawal Exceed The Maximum Balance!');
+        }
+        $data =  User::find(auth()->user()->id);
+        $validated["points"] = $data->points - $request->Withdrawal;
+
+        User::where('id',auth()->user()->id)
+        ->update($validated);
+
+        $request -> session() ->flash('success','Withdrawal Successful , Please Check Your Bank!');
+        return redirect('/withdrawal');
+       
+
     }
 
     /**
