@@ -16,11 +16,12 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AdminCateController;
 use App\Http\Controllers\AdminRoleController;
+use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\AdminIdCardController;
+use App\Http\Controllers\AdminUpdateSingleUser;
 use App\Http\Controllers\RoleRequestController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\AdminCategoryController;
-use App\Http\Controllers\AdminUpdateSingleUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -113,12 +114,18 @@ Route::get('/getcart', [OrderController::class, 'getCartData']);
 Route::resource('/rating', RatingController::class);
 Route::get('/rating', [RatingController::class, 'index']);
 
+
 Route::post('/schedule', [ScheduleController::class,'store']);
 
 
 
 Route::get('/userschedule', [ScheduleController::class,'userSchedules'])->name('user.schedules');
 Route::get('/sellerschedule', [ScheduleController::class,'sellerSchedules'])->name('user.schedules');
+
+Route::resource('/withdrawal', WithdrawalController::class)->middleware('auth')->middleware('exceptAdmin');
+
+
+
 
 Route::get('/updatesingleuser', [UserController::class, 'showUpdateForm'])->name('profile.update');
 Route::put('/updatesingleuser', [UserController::class, 'updateSingleUser']);
