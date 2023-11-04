@@ -32,32 +32,29 @@
                 </div>
 
                 <!-- Right Column -->
-                <div
-                    class="right-column d-flex flex-column align-items-lg-start align-items-center text-lg-start text-center">
+                <div class="right-column d-flex flex-column align-items-lg-start align-items-center text-lg-start text-center">
                     <h2 class="title-text text-white">About Us</h2>
                     <ul style="padding:0;margin:0">
                         <li class="list-unstyled" style="margin-bottom: 2rem;">
-                            <h4
-                                class="title-caption text-white d-flex flex-lg-row flex-column align-items-center justify-content-lg-start justify-content-center">
+                            <h4 class="title-caption text-white d-flex flex-lg-row flex-column align-items-center justify-content-lg-start justify-content-center">
                                 <span class="circle d-flex align-items-center justify-content-center">
                                     1
                                 </span>
                                 Vision
                             </h4>
-                            <p class="text-caption">
-                                Support every gamer to develop a better in terms of esports and and creating a healthy gamer environment
+                            <p class="text-caption" style="text-align: left;">
+                                Support every gamer to develop a better in terms of esports and creating a healthy gamer environment
                             </p>
                         </li>
                         <li class="list-unstyled" style="margin-bottom: 2rem;">
-                            <h4
-                                class="title-caption text-white d-flex flex-lg-row flex-column align-items-center justify-content-lg-start justify-content-center">
+                            <h4 class="title-caption text-white d-flex flex-lg-row flex-column align-items-center justify-content-lg-start justify-content-center">
                                 <span class="circle d-flex align-items-center justify-content-center">
                                     2
                                 </span>
                                 Mission
                             </h4>
-                            <p class="text-caption text-left">
-                                Become a leading service provider platform in the esports sector and 
+                            <p class="text-caption" style="text-align: left;">
+                                Become a leading service provider platform in the esports sector and
                                 support the new generation to become quality gamers
                             </p>
                         </li>
@@ -87,7 +84,7 @@
                         </div>
                         <h3 class="icon-title">Fun</h3>
                         <p class="icon-caption">
-                            Creating Fun environment between player and user 
+                            Creating Fun environment between player and user
                         </p>
                     </div>
                     <div class="col-lg-4 column">
