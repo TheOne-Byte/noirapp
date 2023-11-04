@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
       .content-3-4 .btn:focus,
       .content-3-4 .btn:active {
@@ -84,7 +86,6 @@
       }
 
       /* Style Home Page */
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
             .content-2-2 .btn:focus,
             .content-2-2 .btn:active {
@@ -254,7 +255,6 @@
             }
 
             /* Style Homepage 2 */
-            @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
             .footer-2-4 .list-space {
                 margin-bottom: 1.25rem;
@@ -399,10 +399,10 @@ body {
     border: none;
     color: white;
   }
-  
+
   .btn{
     background-color: #786778;
-      border: none;      
+      border: none;
       margin-top: -10px;
       color: black;
       padding: 10px 25px;
@@ -479,5 +479,9 @@ body {
 
 #registertext{
   color: #C3A4C3;
+}
 
+
+#idnumcardreq{
+ margin-right: -12px;
 }

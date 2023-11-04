@@ -13,7 +13,7 @@
               Dashboard
             </a>
           </li>
-          
+
 
           <li class="nav-item" style="background-color: #cde8e6;">
             <a class="nav-link  {{ $active == 'dashcategory' ? 'active' : ''}}" href="/dashboard/categories">
@@ -28,12 +28,27 @@
               Role Request
             </a>
           </li>
-         
+
+          <li class="nav-item" style="background-color: #ffee93;">
+            <a class="nav-link  {{ $active == 'dashboardidcard' ? 'active' : ''}}" href="/dashboard/idcard">
+              <svg class="bi"><use xlink:href="#file-earmark"/></svg>
+              Id Card Number Request
+            </a>
+          </li>
+
+          <li class="nav-item" style="background-color: #ffee93;">
+            <a class="nav-link {{ $active == 'editdisplayeditem' ? 'active' : ''}}" href="{{ route('admin.pending-updates') }}">
+                <svg class="bi"><use xlink:href="#file-earmark"/></svg>
+                Update Item Displayed
+            </a>
+        </li>
+
+
         </ul>
 
-        @can('admin') 
+        @can('admin')
         {{-- ini dari appserviceprovider yakni gates --}}
-          
+
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>ADMINISTRATOR</span>
         </h6>
@@ -41,21 +56,21 @@
         <ul class="nav flex-column">
           <li class="nav-item">
             <a  class="nav-link {{ $active == 'dashboardcategories' ? 'active' : ''}}" href="/dashboard/categories">
-              <i class="bi bi-box-fill"></i>              
+              <i class="bi bi-box-fill"></i>
               POST CATEGORIES
             </a>
           </li>
         </ul>
 
-       
+
         @endcan
 
         {{-- <a href="/dash" class="nav-link {{ (request()->is('dashboard/posts')) ? 'active' : ''}}">ven</a> --}}
-       
+
 
         <hr class="my-3">
 
-      
+
       </div>
     </div>
   </div>

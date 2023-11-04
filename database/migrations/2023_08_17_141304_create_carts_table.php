@@ -25,8 +25,6 @@ return new class extends Migration
             $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade'); // Assuming you have a 'schedules' table
 
         });
-
-
     }
 
     /**

@@ -16,9 +16,11 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AdminCateController;
 use App\Http\Controllers\AdminRoleController;
+use App\Http\Controllers\AdminIdCardController;
 use App\Http\Controllers\RoleRequestController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminUpdateSingleUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,10 +96,14 @@ Route::post('/ordervalidation', [OrderController::class,'processOrder'])->name('
 Route::resource('/role/request', RoleRequestController::class)->middleware('exceptAdmin');
 Route::resource('/dashboard/categories', AdminCategoryController::class)->middleware('isAdmin');
 Route::resource('/dashboard/role', AdminRoleController::class)->middleware('isAdmin');
+Route::resource('/dashboard/idcard', AdminIdCardController::class)->middleware('isAdmin');
+
 Route::get('/chatify', 'ChatifyController@showChatify');
 Route::get('/top_up', [TopUpController::class, 'index'])->middleware('exceptAdmin')->name('top_up')->middleware('auth');
 Route::post('/top_up', [TopUpController::class, 'store'])->middleware('exceptAdmin')->name('store_top_up')->middleware('auth');
+Route::post('/top_up', [TopUpController::class, 'store'])->middleware('exceptAdmin')->name('store_top_up')->middleware('auth');
 Route::get('/top_up/sukses', [TopUpController::class, 'success'])->name('topup.sukses')->middleware('exceptAdmin')->middleware('auth');
+Route::post('/idcardnumber/request', [TopUpController::class, 'idnumcardreq'])->name('idnumreq')->middleware('exceptAdmin')->middleware('auth');
 
 Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 Route::get('/usertransaction', [TransactionController::class, 'foruser'])->name('transactions.foruser');
@@ -107,9 +113,12 @@ Route::get('/getcart', [OrderController::class, 'getCartData']);
 Route::resource('/rating', RatingController::class);
 Route::get('/rating', [RatingController::class, 'index']);
 
-Route::post('/schedule', [ScheduleController::class,'store']);
+
+Route::get('/updatesingleuser', [UserController::class, 'showUpdateForm'])->name('profile.update');
+Route::put('/updatesingleuser', [UserController::class, 'updateSingleUser']);
 
 
 
-Route::get('/userschedule', [ScheduleController::class,'userSchedules'])->name('user.schedules');
-Route::get('/sellerschedule', [ScheduleController::class,'sellerSchedules'])->name('user.schedules');
+Route::get('/admin/pending-updates', [AdminUpdateSingleUser::class, 'showPendingUpdates'])->name('admin.pending-updates');
+Route::put('/admin/approve-update/{id}', [AdminUpdateSingleUser::class, 'approveUpdate'])->name('admin.approve-update');
+

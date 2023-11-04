@@ -52,12 +52,20 @@ class RoleRequestController extends Controller
             'role_id' =>'required',
             'price' => 'required',
             'image' => 'required|image|file|max:1024',
-            'category_id' => 'required'
+            'video' => 'required|mimes:mp4,avi,wmv|max:10240',
+            'category_id' => 'required',
+            'body' => 'required|max:30'
         ]);
 
         if($request->file('image')){
             $validated['image'] = $request->file('image')->store('role-request-images');
         }
+
+        if ($request->file('video')) {
+            $validated['video'] = $request->file('video')->store('role-request-videos');
+        }
+
+
         $validated['user_id'] = auth()->user()->id;
         $validated['statcode'] = "REQ";
 

@@ -23,10 +23,13 @@ class RegisterController extends Controller
             'email' => 'required|email:dns|unique:users',
             'password' => 'required|min:5',
             'name' =>'required|max:255',
+            'idcardnumber' =>'required|max:16|min:16|unique:users'
         ]);
 
         $validated["password"] = bcrypt($validated['password']);
         $validated["role_id"] = 4;
+        $validated["idcardstatcode"] = "REQ";
+
         User::create($validated);
 
         $request -> session() ->flash('success','Registration Successful , Please Login!');

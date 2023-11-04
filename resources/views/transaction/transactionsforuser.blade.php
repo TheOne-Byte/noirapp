@@ -10,9 +10,9 @@
             {{ session('success') }}
         </div>
     @endif
-    @if ($transactions->isEmpty())
+    {{-- @if ($transactions->isEmpty())
             <p class="text-center text-danger">No transaction available.</p>
-    @else
+    @else --}}
     <table class="table text-white">
         <thead>
             <tr>
@@ -27,7 +27,7 @@
             @foreach ($transactions as $transaction)
                 <tr>
                     <td>{{ $loop ->iteration }}</td>
-                    <td>{{ $transaction->seller->name }}</td>
+                    <td>{{ $transaction->seller->username }}</td>
                     <td>{{ $transaction->seller->role->name}}</td>
                     <td>{{ $transaction->price}}</td>
                     <td>{{ $status[$loop ->iteration-1]}}</td>
@@ -35,6 +35,6 @@
             @endforeach
         </tbody>
     </table>
-    @endif
+    {{-- @endif --}}
 </div>
 @endsection

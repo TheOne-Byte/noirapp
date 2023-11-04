@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\permission;
 use Illuminate\Http\Request;
-use App\Models\AvailableTime;
-use Illuminate\Support\Facades\Storage;
 
-class AdminRoleController extends Controller
+class AdminIdCardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +14,10 @@ class AdminRoleController extends Controller
      */
     public function index()
     {
-        return view('admin.role.index', [
-            'title' => "Request Role",
-            'active' => 'request role',
-            'permissions' => permission::all()->where('statcode','REQ') // Use the correct model name
+        return view('admin.idcard.index', [
+            'title' => "Id Card Role",
+            'active' => 'Id Card Role',
+            'users' => User::all()->where('idcardstatcode','REQ') // Use the correct model name
         ]);
     }
 
@@ -42,21 +39,12 @@ class AdminRoleController extends Controller
      */
     public function store(Request $request)
     {
-        $data = permission::find($request->id);
-        $validated['role_id'] = $data->role_id;
-        $validated['category_id'] = $data->category_id;
-        $validated['price'] = $data->price;
-        $validated['body'] = $data->body;
-        $validatedpermission['statcode'] = "APV";
+        $validated['idcardstatcode'] = "APV";
 
-
-        User::where('id',$data->user_id)
+        User::where('id',$request->id)
         ->update($validated);
 
-        permission::where('id',$data->id)
-        ->update($validatedpermission);
-
-        return redirect('/dashboard/role')->with('success','User Role Request Has Been Approved!');
+        return redirect('/dashboard/idcard')->with('success','User Id Card Number Request Has Been Approved!');
 
     }
 
@@ -79,7 +67,7 @@ class AdminRoleController extends Controller
      */
     public function edit(User $user)
     {
-
+        //
     }
 
     /**
@@ -91,7 +79,7 @@ class AdminRoleController extends Controller
      */
     public function update(Request $request, User $user)
     {
-
+        //
     }
 
     /**
@@ -102,10 +90,10 @@ class AdminRoleController extends Controller
      */
     public function destroy($id)
     {
-        $permission = permission::findOrFail($id);
-        $permission->delete();
-        AvailableTime::where('user_id', $permission->user_id)->delete();
+        $validated['idcardstatcode'] = "RJC";
+        User::where('id',$id)
+        ->update($validated);
 
-        return redirect('/dashboard')->with('success', 'Role request deleted successfully');
+        return redirect('/dashboard/idcard')->with('success', 'User Id Card Number Request Has Been Rejected');
     }
 }

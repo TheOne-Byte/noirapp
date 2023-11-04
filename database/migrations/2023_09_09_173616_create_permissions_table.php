@@ -20,7 +20,9 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->decimal('price');
             $table->string('image');
+            $table->string('video');
             $table->string('statcode');
+            $table->string('body');
             $table->timestamps();
         });
     }
