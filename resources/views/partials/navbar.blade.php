@@ -39,28 +39,35 @@
                             <li>
                                 <a href="/order-request" style="text-decoration: none">
                                     <button type="button" class="dropdown-item">
-                                        <i class="bi bi-arrow-up-right-square"></i> Order Request
+                                        <i class="bi bi-arrow-down-left-square"></i> Order Request
                                     </button>
                                 </a>
                             </li>
                             <li>
                                 <a href="/transactions" style="text-decoration: none">
                                     <button type="button" class="dropdown-item">
-                                        <i class="bi bi-arrow-up-right-square"></i> Order Transactions
+                                        <i class="bi bi-cart-check"></i> Order Transactions
                                     </button>
                                 </a>
                             </li>
                             <li>
                                 <a href="/usertransaction" style="text-decoration: none">
                                     <button type="button" class="dropdown-item">
-                                        <i class="bi bi-arrow-up-right-square"></i> Your Transactions
+                                        <i class="bi bi-clipboard2-check"></i> Your Transactions
                                     </button>
                                 </a>
                             </li>
                             <li>
                                 <a href="/history" style="text-decoration: none">
                                     <button type="button" class="dropdown-item">
-                                        <i class="bi bi-arrow-up-right-square"></i> History
+                                        <i class="bi bi-clock-history"></i> History
+                                    </button>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/withdrawal" style="text-decoration: none">
+                                    <button type="button" class="dropdown-item">
+                                        <i class="bi bi-cash-coin"></i> Gatcha withdrawal
                                     </button>
                                 </a>
                             </li>
@@ -69,22 +76,22 @@
                              <li>
                                 <a href="/usertransaction" style="text-decoration: none">
                                     <button type="button" class="dropdown-item">
-                                        <i class="bi bi-arrow-up-right-square"></i> Your Transactions
+                                        <i class="bi bi-clipboard2-check"></i> Your Transactions
                                     </button>
                                 </a>
                             </li>
                             <li>
                                 <a href="/history" style="text-decoration: none">
                                     <button type="button" class="dropdown-item">
-                                        <i class="bi bi-arrow-up-right-square"></i> History
+                                        <i class="bi bi-clock-history"></i> History
                                     </button>
                                 </a>
                             </li>
-                        @endif
+                            @endif
                             <li>
                                 <a href="/role/request" style="text-decoration: none">
                                     <button type="" class="dropdown-item">
-                                        <i class="bi bi-arrow-up-right-square"></i> Request
+                                        <i class="bi bi-file-person"></i> Request Role
                                     </button>
                                 </a>
                             </li>

@@ -110,6 +110,9 @@ Route::get('/getcart', [OrderController::class, 'getCartData']);
 Route::resource('/rating', RatingController::class);
 Route::get('/rating', [RatingController::class, 'index']);
 
+Route::get('/withdrawal', [WithdrawalController::class, 'withdraw'])->middleware('auth')->middleware('exceptAdmin');
+
+
 
 
 
