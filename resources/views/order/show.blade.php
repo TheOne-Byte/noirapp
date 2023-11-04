@@ -18,8 +18,6 @@
                         <th class="white-text text-center">Check</th>
                         <th class="white-text text-center">Product</th>
                         <th class="white-text text-center">Price</th>
-                        <th class="white-text text-center">Quantity</th>
-                        <th class="white-text text-center">Subtotal</th>
                         <th class="white-text text-center">Actions</th>
                     </tr>
                 </thead>
@@ -29,26 +27,12 @@
                     @endphp
 
                     @foreach ($cart->groupBy('seller.name') as $sellerName => $cartItems)
-                        @php
-                            $sellerSubtotal = $cartItems->sum(function ($item) {
-                                return $item->quantity * $item->price;
-                            });
-                            $totalPrice += $sellerSubtotal;
-                        @endphp
-
                         <tr>
                             <td class="text-center">
                                 <input type="checkbox" class="item-checkbox" data-item-id="{{ $cartItems[0]->id }}" data-seller-name="{{ $sellerName }}" data-price="{{ $cartItems[0]->price }}" name="selectedItems[]" value="{{ $cartItems[0]->id }}">
                             </td>
                             <td class="text-center">{{ $sellerName }}</td>
                             <td class="text-center">{{ $cartItems[0]->price }}</td>
-                            <td class="text-center">
-                                <!-- Use number input to allow quantity changes with custom styles -->
-                                <input type="number" class="form-control quantity-input text-center" value="{{ $cartItems[0]->quantity }}" min="1" data-item-id="{{ $cartItems[0]->id }}" oninput="updateQuantityInDatabase(this); updateSubtotal(this);">
-                            </td>
-                            <td class="text-center subtotal">
-                                ${{ number_format($sellerSubtotal, 2) }}
-                            </td>
                             <td class="text-center">
                                 <form action="/addtocart/{{ $cartItems[0]->id }}" method="POST" class="d-inline">
                                     @method('delete')
@@ -169,20 +153,11 @@ function updateCart() {
 //     return false; // Mengembalikan false untuk mencegah formulir mengirimkan permintaan lagi
 // }
     // Get all quantity input fields
-    const quantityInputs = document.querySelectorAll('.quantity-input');
     const grandTotalElement = document.getElementById('grand-total');
     const itemCheckboxes = document.querySelectorAll('.item-checkbox');
 
     // Array to store selected item IDs
     const selectedItems = [];
-
-    // Add input event listener to each input
-    quantityInputs.forEach((input) => {
-        input.addEventListener('input', function() {
-            updateQuantityInDatabase(input);
-            updateSubtotal(input);
-        });
-    });
 
     // Add change event listener to each checkbox
     itemCheckboxes.forEach((checkbox) => {
@@ -199,46 +174,13 @@ function updateCart() {
         itemCheckboxes.forEach((checkbox) => {
             if (checkbox.checked) {
                 const price = parseFloat(checkbox.getAttribute('data-price'));
-                const quantityInput = document.querySelector(`.quantity-input[data-item-id="${checkbox.getAttribute('data-item-id')}"]`);
-                const quantity = parseInt(quantityInput.value);
-                grandTotal += price * quantity;
+                grandTotal += price;
             }
         });
 
         grandTotalElement.textContent = `$${grandTotal.toFixed(2)}`;
     }
 
-    // Function to update quantity in the database
-    function updateQuantityInDatabase(input) {
-        const itemId = input.getAttribute('data-item-id');
-        const quantity = input.value;
-
-        // Send an AJAX request to update the quantity in the database
-        $.ajax({
-            type: 'PUT', // Use PUT to update the resource
-            url: `/cart/${itemId}`, // Use the correct URL based on your routes
-            data: {
-                _token: '{{ csrf_token() }}', // Include the CSRF token
-                quantity: quantity
-            },
-            success: function(response) {
-                console.log('Quantity updated successfully in the database.');
-            },
-            error: function(error) {
-                console.error('Error updating quantity in the database:', error);
-            }
-        });
-    }
-
-    // Function to update the subtotal based on quantity change
-    function updateSubtotal(input) {
-        const row = input.closest('tr');
-        const price = parseFloat(row.querySelector('.item-checkbox').getAttribute('data-price'));
-        const quantity = parseInt(input.value);
-        const subtotal = row.querySelector('.subtotal');
-        const newSubtotal = (price * quantity).toFixed(2);
-        subtotal.textContent = `$${newSubtotal}`;
-    }
 
     // Function to update the list of selected items
     function updateSelectedItems() {
@@ -249,11 +191,8 @@ function updateCart() {
         if (checkbox.checked) {
             const itemId = checkbox.getAttribute('data-item-id');
             const price = parseFloat(checkbox.getAttribute('data-price'));
-            const quantityInput = document.querySelector(`.quantity-input[data-item-id="${itemId}"]`);
-            const quantity = parseInt(quantityInput.value);
-
             selectedItems.push(itemId);
-            totalPrice += price * quantity;
+            totalPrice += price;
         }
     });
 
