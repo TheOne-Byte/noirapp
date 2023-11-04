@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\category;
 use App\Models\cart;
+use App\Models\EditDisplayed;
 
 class User extends Authenticatable
 {
@@ -67,6 +68,13 @@ class User extends Authenticatable
     public function permission(){
         return $this->belongsTo(permission::class,'permission_id');
     }
+
+    public function updateSingleBlade()
+    {
+        return $this->hasOne(EditDisplayed::class, 'user_id');
+    }
+
+
 
 
 }
