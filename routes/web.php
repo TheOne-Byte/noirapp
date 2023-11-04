@@ -111,3 +111,5 @@ Route::post('/schedule', [ScheduleController::class,'store']);
 
 
 
+Route::get('/userschedule', [ScheduleController::class,'userSchedules'])->name('user.schedules');
+Route::get('/sellerschedule', [ScheduleController::class,'sellerSchedules'])->name('user.schedules');

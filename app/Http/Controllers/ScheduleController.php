@@ -60,4 +60,18 @@ class ScheduleController extends Controller
 
         return redirect()->back()->with('success', 'Schedule saved successfully!');
     }
+
+    public function userSchedules()
+    {
+        $userSchedules = Schedule::where('buyer_id',auth()->user()->id)->get();
+
+        return view('schedule.userschedule', ['schedules' => $userSchedules,'active' => 'userschedule']);
+    }
+
+    public function sellerSchedules()
+    {
+        $userSchedules = Schedule::where('user_id',auth()->user()->id)->get();
+
+        return view('schedule.sellerschedule', ['schedules' => $userSchedules,'active' => 'userschedule']);
+    }
 }

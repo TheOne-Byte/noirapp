@@ -58,6 +58,13 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="/sellerschedule" style="text-decoration: none">
+                                    <button type="button" class="dropdown-item">
+                                        <i class="bi bi-arrow-up-right-square"></i> Schedule
+                                    </button>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="/history" style="text-decoration: none">
                                     <button type="button" class="dropdown-item">
                                         <i class="bi bi-arrow-up-right-square"></i> History
@@ -77,6 +84,13 @@
                                 <a href="/history" style="text-decoration: none">
                                     <button type="button" class="dropdown-item">
                                         <i class="bi bi-arrow-up-right-square"></i> History
+                                    </button>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/userschedule" style="text-decoration: none">
+                                    <button type="button" class="dropdown-item">
+                                        <i class="bi bi-arrow-up-right-square"></i> Schedule
                                     </button>
                                 </a>
                             </li>
