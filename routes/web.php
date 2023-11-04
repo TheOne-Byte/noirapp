@@ -18,6 +18,7 @@ use App\Http\Controllers\AdminIdCardController;
 use App\Http\Controllers\RoleRequestController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminUpdateSingleUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,6 +112,11 @@ Route::resource('/rating', RatingController::class);
 Route::get('/rating', [RatingController::class, 'index']);
 
 
+Route::get('/updatesingleuser', [UserController::class, 'showUpdateForm'])->name('profile.update');
+Route::put('/updatesingleuser', [UserController::class, 'updateSingleUser']);
 
 
+
+Route::get('/admin/pending-updates', [AdminUpdateSingleUser::class, 'showPendingUpdates'])->name('admin.pending-updates');
+Route::put('/admin/approve-update/{id}', [AdminUpdateSingleUser::class, 'approveUpdate'])->name('admin.approve-update');
 

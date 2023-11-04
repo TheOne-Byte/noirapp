@@ -51,6 +51,7 @@ class RoleRequestController extends Controller
             'role_id' =>'required',
             'price' => 'required',
             'image' => 'required|image|file|max:1024',
+            'video' => 'required|mimes:mp4,avi,wmv|max:10240',
             'category_id' => 'required',
             'body' => 'required|max:30'
         ]);
@@ -58,6 +59,12 @@ class RoleRequestController extends Controller
         if($request->file('image')){
             $validated['image'] = $request->file('image')->store('role-request-images');
         }
+
+        if ($request->file('video')) {
+            $validated['video'] = $request->file('video')->store('role-request-videos');
+        }
+
+
         $validated['user_id'] = auth()->user()->id;
         $validated['statcode'] = "REQ";
 
@@ -65,25 +72,25 @@ class RoleRequestController extends Controller
 
         if($data){
             if($data->statcode ==="REQ"){
-                return redirect('/role/request')->with('danger','You Already Have Pending Request!');    
+                return redirect('/role/request')->with('danger','You Already Have Pending Request!');
             }
             else if($data->statcode ==="APV"){
                 if($data->role_id == $request->role_id){
-                    return redirect('/role/request')->with('danger','Nothing To Change!');    
+                    return redirect('/role/request')->with('danger','Nothing To Change!');
                 }
                 permission::where('id',$data->id)
                 ->update($validated);
-                return redirect('/role/request')->with('success','Changing Role Request Has Been Submitted!');    
+                return redirect('/role/request')->with('success','Changing Role Request Has Been Submitted!');
             }
             else if($data->statcode ==="RJC"){
                 permission::where('id',$data->id)
                 ->update($validated);
-                return redirect('/role/request')->with('success','Role Request Again Has Been Submitted!');   
+                return redirect('/role/request')->with('success','Role Request Again Has Been Submitted!');
             }
         }
 
         permission::create($validated);
-        return redirect('/role/request')->with('success','Request Has Been Submitted!');    
+        return redirect('/role/request')->with('success','Request Has Been Submitted!');
     }
 
     /**
