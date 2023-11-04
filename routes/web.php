@@ -113,6 +113,12 @@ Route::get('/getcart', [OrderController::class, 'getCartData']);
 Route::resource('/rating', RatingController::class);
 Route::get('/rating', [RatingController::class, 'index']);
 
+Route::post('/schedule', [ScheduleController::class,'store']);
+
+
+
+Route::get('/userschedule', [ScheduleController::class,'userSchedules'])->name('user.schedules');
+Route::get('/sellerschedule', [ScheduleController::class,'sellerSchedules'])->name('user.schedules');
 
 Route::get('/updatesingleuser', [UserController::class, 'showUpdateForm'])->name('profile.update');
 Route::put('/updatesingleuser', [UserController::class, 'updateSingleUser']);
