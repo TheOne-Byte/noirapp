@@ -42,12 +42,10 @@
                                 <span class="circle d-flex align-items-center justify-content-center">
                                     1
                                 </span>
-                                Quality
+                                Vision
                             </h4>
                             <p class="text-caption">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae officia atque sapiente enim
-                                iusto, minus odit quidem autem eum dignissimos tenetur ad quos id aliquid, commodi fugit
-                                quia reiciendis cumque.
+                                Support every gamer to develop a better in terms of esports and and creating a healthy gamer environment
                             </p>
                         </li>
                         <li class="list-unstyled" style="margin-bottom: 2rem;">
@@ -56,26 +54,11 @@
                                 <span class="circle d-flex align-items-center justify-content-center">
                                     2
                                 </span>
-                                Cheap
+                                Mission
                             </h4>
-                            <p class="text-caption">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati dicta distinctio
-                                consequuntur, inventore eligendi ea quasi dignissimos doloremque adipisci a impedit, eveniet
-                                sequi nihil magnam sit veritatis repudiandae suscipit illo.
-                            </p>
-                        </li>
-                        <li class="list-unstyled" style="margin-bottom: 4rem;">
-                            <h4
-                                class="title-caption text-white d-flex flex-lg-row flex-column align-items-center justify-content-lg-start justify-content-center">
-                                <span class="circle d-flex align-items-center justify-content-center">
-                                    3
-                                </span>
-                                Fast
-                            </h4>
-                            <p class="text-caption">
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt iste eum quis numquam,
-                                molestias at est consequuntur eius corporis error. Nulla necessitatibus modi fugiat at animi
-                                quod iure aperiam iusto!
+                            <p class="text-caption text-left">
+                                Become a leading service provider platform in the esports sector and 
+                                support the new generation to become quality gamers
                             </p>
                         </li>
                     </ul>
@@ -92,7 +75,7 @@
             <div class="text-center title-text">
                 <h1 class="text-title">Why Us ?</h1>
                 <p class="text-caption" style="margin-left: 3rem; margin-right: 3rem">
-                    You can easily find your Menthor!
+                    Easily find your gaming buddy
                 </p>
             </div>
 
@@ -102,9 +85,9 @@
                         <div class="icon">
                             <img src="/img/chibi2.png" style="height:200px" alt="" />
                         </div>
-                        <h3 class="icon-title">Easy</h3>
+                        <h3 class="icon-title">Fun</h3>
                         <p class="icon-caption">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, natus?
+                            Creating Fun environment between player and user 
                         </p>
                     </div>
                     <div class="col-lg-4 column">
@@ -113,44 +96,21 @@
                         </div>
                         <h3 class="icon-title">Quality</h3>
                         <p class="icon-caption">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum id soluta, deleniti officia
-                            sapiente nulla?
+                            Give a good quality of service from guaranteed players choosed by selection process
                         </p>
                     </div>
                     <div class="col-lg-4 column">
                         <div class="icon">
                             <img src="/img/chibi4.webp" style="height:200px" alt="" />
                         </div>
-                        <h3 class="icon-title">Powerful</h3>
+                        <h3 class="icon-title">Secure</h3>
                         <p class="icon-caption">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit nobis quo amet facere, cumque
-                            velit?
+                            Guaranteed a safe security in the transaction process
                         </p>
                     </div>
                 </div>
             </div>
 
-            <div class="card-block">
-                <div class="card">
-                    <div class="d-flex flex-lg-row flex-column align-items-center">
-                        <div class="me-lg-3">
-                        </div>
-                        <div class="flex-grow-1 text-lg-start text-center card-text">
-                            <h3 class="card-title">
-                                Fast & Trusted
-                            </h3>
-                            <p class="card-caption">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, minus rerum numquam nobis
-                                consectetur nesciunt!
-                            </p>
-                            <button class="btn btn-card text-white">Find Now</button>
-                        </div>
-                        <div class="card-btn-space">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
     {{-- footer section --}}

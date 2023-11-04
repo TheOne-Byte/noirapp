@@ -14,11 +14,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminCateController;
 use App\Http\Controllers\AdminRoleController;
+use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\AdminIdCardController;
+use App\Http\Controllers\AdminUpdateSingleUser;
 use App\Http\Controllers\RoleRequestController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\AdminCategoryController;
-use App\Http\Controllers\AdminUpdateSingleUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,6 +111,9 @@ Route::get('/history', [TransactionController::class, 'history'])->name('transac
 Route::get('/getcart', [OrderController::class, 'getCartData']);
 Route::resource('/rating', RatingController::class);
 Route::get('/rating', [RatingController::class, 'index']);
+
+Route::resource('/withdrawal', WithdrawalController::class)->middleware('auth')->middleware('exceptAdmin');
+
 
 
 Route::get('/updatesingleuser', [UserController::class, 'showUpdateForm'])->name('profile.update');
