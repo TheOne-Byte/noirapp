@@ -97,6 +97,28 @@ class DatabaseSeeder extends Seeder
             'idcardstatcode' => "APV",
             "password" => bcrypt('password')
         ]);
+        User::create([
+            'name' => 'alexnc',
+            'username' => 'alex',
+            'price' => null,
+            'email' => "alexsantoso278@gmail.com",
+            'excerpt' => null,
+            "body" => null,
+            'category_id' => 2,
+            'role_id' => 4,
+            "password" => bcrypt('rafael123')
+        ]);
+        User::create([
+            'name' => 'pujo',
+            'username' => 'pujos',
+            'price' => null,
+            'email' => "pujo@gmail.com",
+            'excerpt' => null,
+            "body" => null,
+            'category_id' => 2,
+            'role_id' => 4,
+            "password" => bcrypt('password123')
+        ]);
         // cart::create([
         //     'user_id' => 1,
         //     'buyer_id' => 4,

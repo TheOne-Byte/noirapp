@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\cart;
 use App\Models\Item;
 use App\Models\User;
+use App\Models\Schedule;
 use App\Models\Transaction;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\AvailableTime;
 use App\Models\OrderValidation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Str;
+
 class OrderController extends Controller
 {
     /**
@@ -22,7 +25,16 @@ class OrderController extends Controller
      */
 
      public function index(User $user){
-        return view('order.index', [
+
+        $scheduleCount = Schedule::where('buyer_id', auth()->user()->id)->count();
+        $availableTimes = AvailableTime::where('user_id', $user->id)->get();
+        $availableDays = $availableTimes->pluck('day')->unique()->values()->toArray();
+        $schedules = Schedule::where('buyer_id',auth()->user()->id)->get();
+
+        $schedule = Schedule::where('buyer_id', auth()->user()->id)->first();
+
+        // dd($scheduleCount);
+        return view('order.index',compact('scheduleCount','availableTimes','availableDays','schedules','schedule'), [
             "title" => "order",
             'active' => 'order',
             'user' => $user
@@ -50,7 +62,7 @@ class OrderController extends Controller
     {
         $user_id = $request->user_id;
         $buyer_id = auth()->user()->id;
-
+        $schedule_id = $request->input('schedule_id');
         // Check if the product already exists in the cart for the current user
         $existingCartItem = Cart::where('user_id', $user_id)
             ->where('buyer_id', $buyer_id)
@@ -65,6 +77,7 @@ class OrderController extends Controller
                 'user_id' => $user_id,
                 'price' => $request->price, // Assuming you want to store the price
                 'buyer_id' => $buyer_id,
+                'schedule_id' => $schedule_id
             ]);
 
             return redirect('/game')->with('success', 'Added to Cart! Continue Shopping.');
@@ -101,9 +114,12 @@ class OrderController extends Controller
     public function GetCartByUserId(User $user)
     {
         // Retrieve the cart items for the user
-        $cart = $user->cart;
+        $cart = $user->cart()->with('seller', 'schedule')->get();
 
-        return view('order.show', [
+
+        $scheduleCount = Schedule::where('buyer_id', $user->id)->count();
+
+        return view('order.show',compact('scheduleCount'), [
             "title" => "order show",
             'active' => 'order show',
             'cart' => $cart // Pass the cart items to the view
@@ -139,7 +155,18 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        cart::destroy($id);
+        $cartItem = Cart::findOrFail($id);
+
+    // Retrieve the associated schedule
+    $schedule = $cartItem->schedule;
+
+    // Delete the cart item
+    $cartItem->delete();
+
+    // Check if the schedule exists and delete it
+    if ($schedule) {
+        $schedule->delete();
+    }
         return redirect()->back()->with('success','Item Deleted!');
     }
     public function showOrderPage(Request $request)
@@ -172,8 +199,10 @@ class OrderController extends Controller
 
     public function placeOrder(Request $request)
     {
-
+        // dd($request->all());
         $selectedItems = $request->input('selectedItems');
+        // $selectedSchedule = $request->input('selectedSchedule');
+
         // dd($selectedItems);
 
         // Validasi apakah ada item yang dipilih
@@ -188,7 +217,7 @@ class OrderController extends Controller
 
         // Hitung total harga
         foreach ($cartItems as $cartItem) {
-            $totalPrice += $cartItem->price * $cartItem->quantity;
+            $totalPrice += $cartItem->price;
         }
 
         // Ambil user yang sedang login
@@ -205,9 +234,8 @@ class OrderController extends Controller
                 $orderValidation = new OrderValidation;
                 $orderValidation->buyer_id = $user->id;
                 $orderValidation->seller_id = $cartItem->user_id;
+                $orderValidation->schedule_id = $cartItem->schedule_id; // Save the selected schedule ID
                 $orderValidation->price = $cartItem->price;
-                $orderValidation->quantity = $cartItem->quantity;
-                $orderValidation->total_price = $cartItem->price * $cartItem->quantity;
                 $orderValidation->status = 'REQ';
                 $orderValidation->save();
             }
@@ -361,6 +389,8 @@ class OrderController extends Controller
     $orderValidation = OrderValidation::findOrFail($id);
     $orderValidation->status = 'APV';
     $orderValidation->save();
+    // dd($schedule);
+
     $slug = Str::slug('TRX'.str::random(3).random_int(1,9999));
 
     $data = Transaction::where('slug', $slug);
@@ -371,9 +401,8 @@ class OrderController extends Controller
         'slug' => $slug,
         'buyer_id' => $orderValidation->buyer->id,
         'seller_id' => $orderValidation->seller_id,
+        'schedule_id' => $orderValidation->schedule_id,
         'price' => $orderValidation->price,
-        'quantity' => $orderValidation->quantity,
-        'total_price' => $orderValidation->total_price,
         'status' => 'ON_GOING'
     ]);
     return redirect()->route('order.request')->with('success', 'Order accepted.');
@@ -389,7 +418,7 @@ public function rejectOrder($id)
         return redirect()->route('order.request')->with('error', 'User not found.');
     }
 
-    $user->points += $orderValidation->total_price;
+    $user->points += $orderValidation->price;
     $user->save();
 
     $orderValidation->status = 'RJC';

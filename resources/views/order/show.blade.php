@@ -18,6 +18,7 @@
                         <th class="white-text text-center">Check</th>
                         <th class="white-text text-center">Product</th>
                         <th class="white-text text-center">Price</th>
+                        <th class="white-text text-center">Schedule</th>
                         <th class="white-text text-center">Actions</th>
                     </tr>
                 </thead>
@@ -26,23 +27,33 @@
                         $totalPrice = 0; // Initialize total price outside the loop
                     @endphp
 
-                    @foreach ($cart->groupBy('seller.name') as $sellerName => $cartItems)
+                    @for ($i = 0; $i < count($cart); $i++)
+                        @php
+                            $cartItem = $cart[$i];
+                        @endphp
+
                         <tr>
                             <td class="text-center">
-                                <input type="checkbox" class="item-checkbox" data-item-id="{{ $cartItems[0]->id }}" data-seller-name="{{ $sellerName }}" data-price="{{ $cartItems[0]->price }}" name="selectedItems[]" value="{{ $cartItems[0]->id }}">
+                                <input type="checkbox" class="item-checkbox" data-item-id="{{ $cartItem->id }}" data-seller-name="{{ $cartItem->seller->name }}" data-price="{{ $cartItem->price }}" data-schedule-id="{{ $cartItem->schedule_id }}" name="selectedItems[]" value="{{ $cartItem->id }}">
                             </td>
-                            <td class="text-center">{{ $sellerName }}</td>
-                            <td class="text-center">{{ $cartItems[0]->price }}</td>
+                            <td class="text-center">{{ $cartItem->seller->name }}</td>
+                            <td class="text-center">{{ $cartItem->price }}</td>
                             <td class="text-center">
-                                <form action="/addtocart/{{ $cartItems[0]->id }}" method="POST" class="d-inline">
+                                @if ($cartItem->schedule)
+                                    Date: {{ $cartItem->schedule->date }},
+                                    Time: {{ $cartItem->schedule->start_time }} - {{ $cartItem->schedule->end_time }}
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                <form action="/addtocart/{{ $cartItem->id }}" method="POST" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button class="badge bg-danger border-0" onclick="return confirm('are you sure deleting this?')"><span class="bi bi-trash " style="color: white"></span></button>
                                   </form>
-                                {{-- <a href="#" class="badge bg-danger border-0 delete-item" data-item-id="{{ $cartItems[0]->id }}"><span class="bi bi-trash" style="color: white"></span></a> --}}
+                                {{-- <a href="#" class="badge bg-danger border-0 delete-item" data-item-id="{{ $cartItem->id }}"><span class="bi bi-trash" style="color: white"></span></a> --}}
                             </td>
                         </tr>
-                    @endforeach
+                    @endfor
                 </tbody>
             </table>
         </div>
@@ -88,21 +99,22 @@ $(document).ready(function() {
     $('form#placeOrderForm').on('submit', function(e) {
         e.preventDefault();
 
-        // Mengumpulkan ID item yang dicheck
         var selectedItems = [];
+
         $('.item-checkbox:checked').each(function() {
             selectedItems.push($(this).data('item-id'));
         });
 
-        // Kirim data ke route 'place.order' dengan method POST
         $.ajax({
             type: 'POST',
             url: '{{ route('place.order') }}',
-            data: { selectedItems: selectedItems, _token: '{{ csrf_token() }}' },
+            data: {
+                selectedItems: selectedItems,
+                _token: '{{ csrf_token() }}'
+            },
             success: function(data) {
                 $('#orderModal').modal('hide');
                 location.reload();
-                // Jika Anda ingin melakukan sesuatu setelah berhasil, tambahkan di sini.
             },
             error: function(error) {
                 alert('Error placing order. Please try again later.');

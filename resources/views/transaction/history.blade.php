@@ -21,9 +21,7 @@
                 <th>#</th>
                 <th>Username</th>
                 <th>Player/Coach</th>
-                <th>Quantity</th>
                 <th>Price</th>
-                <th>Total Price</th>
                 <th>Status</th>
                 <th>Review</th>
             </tr>
@@ -34,11 +32,9 @@
                     <td>{{ $loop ->iteration }}</td>
                     <td>{{ $transaction->seller->name }}</td>
                     <td>{{ $transaction->seller->role->name }}</td>
-                    <td>{{ $transaction->quantity }}</td>
                     <td>{{ $transaction->price }}</td>
-                    <td>{{ $transaction->total_price }}</td>
                     <td>{{ $status[$loop ->iteration-1] }}</td>
-                    
+
                     <td>
                         @if( $status[$loop ->iteration-1]  == 'Done')
                         <a href="/rating?TrxNo={{ $transaction->slug }}">
@@ -46,7 +42,7 @@
                         </a>
                         @endif
                     </td>
-                    
+
                 </tr>
             @endforeach
         </tbody>

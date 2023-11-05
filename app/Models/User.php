@@ -69,7 +69,10 @@ class User extends Authenticatable
         return $this->belongsTo(permission::class,'permission_id');
     }
 
-    public function updateSingleBlade()
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }    public function updateSingleBlade()
     {
         return $this->hasOne(EditDisplayed::class, 'user_id');
     }

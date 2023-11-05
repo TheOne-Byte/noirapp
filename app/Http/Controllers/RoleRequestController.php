@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\role;
 use App\Models\User;
 use App\Models\category;
 use App\Models\permission;
-use App\Models\role;
 
 use Illuminate\Http\Request;
+use App\Models\AvailableTime;
 
 class RoleRequestController extends Controller
 {
@@ -88,7 +89,12 @@ class RoleRequestController extends Controller
                 return redirect('/role/request')->with('success','Role Request Again Has Been Submitted!');
             }
         }
-
+        foreach ($request->input('available_days', []) as $day => $value) {
+            AvailableTime::updateOrCreate(
+                ['user_id' => auth()->user()->id, 'day' => $day],
+                ['start_time' => $request->input('available_time_start', '00:00'), 'end_time' => $request->input('available_time_end', '23:59')]
+            );
+        }
         permission::create($validated);
         return redirect('/role/request')->with('success','Request Has Been Submitted!');
     }

@@ -13,8 +13,7 @@
                         <th>Order ID</th>
                         <th>Buyer</th>
                         <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total Price</th>
+                        <th>Schedule</th> <!-- Ganti Quantity dengan Schedule -->
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -25,8 +24,12 @@
                             <td>{{ $orderValidation->id }}</td>
                             <td>{{ $orderValidation->buyer->name }}</td>
                             <td>{{ $orderValidation->price }}</td>
-                            <td>{{ $orderValidation->quantity }}</td>
-                            <td>{{ $orderValidation->total_price }}</td>
+                            <td>
+                                @if ($orderValidation->schedule)
+                                    Date: {{ $orderValidation->schedule->date }},
+                                    Time: {{ $orderValidation->schedule->start_time }} - {{ $orderValidation->schedule->end_time }}
+                                @endif
+                            </td>
                             <td>{{ $orderValidation->status }}</td>
                             <td>
                                 <form action="{{ route('order.process', $orderValidation->id) }}" method="POST">
