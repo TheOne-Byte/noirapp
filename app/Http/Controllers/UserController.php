@@ -7,16 +7,21 @@ use App\Models\EditDisplayed;
 use App\Models\permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     public function showsingleuser(User $user){
+        $permissions = DB::table('permissions')
+                        ->select('image', 'video','statcode')
+                        ->where('user_id', $user->id)
+                        ->get();
+
         return view('singleuser', [
             'title' => "User Information",
             'active' => 'singleuser',
-            'user' => $user -> load('category','role','cart','permission') //ini category sm author karena di html nya dipanggil catgory sm author
-            // Post::find($id)
-
+            'user' => $user->load('category', 'role', 'cart', 'permission'),
+            'permissions' => $permissions,
         ]);
     }
 
@@ -75,7 +80,7 @@ public function updateSingleUser(Request $request)
 
 
     // Redirect the user back with a success message or show a confirmation message
-    return redirect()->route('profile.update')->with('success', 'Update request submitted successfully. Waiting for admin approval.');
+    return redirect('/updatesingleuser')->with('success', 'Update request submitted successfully. Waiting for admin approval.');
 }
 
 public function showRequestDetails($requestId)
