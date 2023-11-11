@@ -146,7 +146,72 @@
                         <p>{{ $user->body }}</p>
                     @endif
                 </div>
+                <p class="mt-4" style="font-size: 2rem; color:orange; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Available Times</p>
+                <hr>
+                <div class="informasi">
+                    <ul>
+                        @foreach($availableTimes as $availableTime)
+                        @php
+                            $startTime = strtotime($availableTime->start_time);
+                            $endTime = strtotime($availableTime->end_time);
+                            $day = $availableTime->day;
+                        @endphp
+
+                        <li>
+                            {{ date('H:i', $startTime) }} - {{ date('H:i', $endTime) }}
+                            ({{ date('l', strtotime($day)) }})
+                        </li>
+                    @endforeach
+                    </ul>
+                </div>
+
+
+                @if (isset($image) && isset($video))
+                    <!-- Display image and video for role request -->
+                    <img src="{{ asset('storage/' . $image) }}" alt="Image">
+                    <video controls>
+                        <source src="{{ asset('storage/' . $video) }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                @elseif(isset($bio) && isset($image) && isset($video))
+                    <!-- Display updated data for update request -->
+                    <p>Bio: {{ $bio }}</p>
+                    <img src="{{ asset('storage/' . $image) }}" alt="Image">
+                    <video controls>
+                        <source src="{{ asset('storage/' . $video) }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                @else
+                    <!-- Handle other cases or show an error message -->
+                    <p>Error: Invalid request</p>
+                @endif
+
             </div>
         </div>
     </div>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('scheduleForm');
+            form.addEventListener('submit', function(event) {
+                const dateInput = document.getElementById('date');
+                const selectedDate = new Date(dateInput.value);
+
+                const availableDays = [@foreach($availableTimes as $availableTime) '{{ date("D", strtotime($availableTime->day)) }}', @endforeach];
+
+                const selectedDay = selectedDate.toLocaleDateString('en-US', { weekday: 'short' });
+
+                if (!availableDays.includes(selectedDay)) {
+                    event.preventDefault();
+                    alert('Tanggal tidak tersedia. Silakan pilih tanggal lain.');
+                }
+            });
+        });
+        @if(session('error'))
+        // Show a JavaScript alert with the error message
+        alert('{{ session('error') }}');
+        @endif
+    </script>
 @endsection

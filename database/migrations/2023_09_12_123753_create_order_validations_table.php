@@ -17,9 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('buyer_id');
             $table->unsignedBigInteger('seller_id');
+            $table->unsignedBigInteger('schedule_id');
             $table->decimal('price', 8, 2);
-            $table->integer('quantity');
-            $table->decimal('total_price', 8, 2);
             $table->enum('status', ['REQ', 'APV', 'RJC']);
             $table->timestamps();
         });
