@@ -1,69 +1,115 @@
 {{-- BUAT HALAMAN DETAIL POST --}}
 @extends('layouts/main')
 
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
 @section('container')
     <style>
-        .carousel-image,
-        .carousel-video {
-            height: 300px;
-            /* Set the desired height for your images and videos */
-            object-fit: cover;
-            /* Ensures the content is completely covered while maintaining aspect ratio */
+        .carousel-control-prev, .carousel-control-next {
+            background-color: orange;
+        }
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1;
         }
 
-        /* Adjust the position of carousel controls */
-        .carousel-control-prev,
+        .carousel-control-prev {
+            left: 1em;
+            margin-left: 325px;
+        }
+
         .carousel-control-next {
-            width: auto;
-            /* Allow the buttons to adjust their width based on the content */
-            padding: 0 15px;
-            /* Add some padding to the buttons */
+            right: 1em;
+            margin-right: 350px;
+
         }
 
         .carousel-control-prev-icon,
         .carousel-control-next-icon {
             width: 30px;
-            /* Set the width of the carousel control icons */
             height: 30px;
-            /* Set the height of the carousel control icons */
+            background-size: 100%;
+            filter: invert(1);
+        }
+
+        .carousel-item img,
+        .carousel-item video {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
         }
     </style>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
     <div class="container">
         <div class="row justify-content-center mb-5">
             <div class="col-md-4 d-inline-block justify-content-right">
-                <div id="imageVideoCarousel" class="carousel slide" data-ride="carousel">
+                <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        @if ($user->updateSingleBlade->image_path != NULL)
+                        @if (
+                            !empty($user->updateSingleBlade->image_path) &&
+                                !empty($user->updateSingleBlade->video_path) &&
+                                $user->updateSingleBlade->is_approved === 1)
+                            <!-- Display content when both image_path and video_path are not empty and is_approved is 1 -->
                             <div class="carousel-item active">
                                 <img src="{{ asset('storage/' . $user->updateSingleBlade->image_path) }}"
-                                    class="d-block w-100 carousel-image" alt="Profile Image">
+                                    class="d-block w-100" alt="Profile Image">
                             </div>
-                        @endif
-                        @if ($user->updateSingleBlade->video_path)
-                            <div class="carousel-item @unless ($user->updateSingleBlade->image_path) active @endunless">
-                                <video class="d-block w-100 carousel-video" controls>
+                            <div class="carousel-item">
+                                <video class="d-block w-100" controls>
                                     <source src="{{ asset('storage/' . $user->updateSingleBlade->video_path) }}"
                                         type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
                             </div>
+                        @elseif (!$permissions->isEmpty())
+                            <!-- Display content based on permissions -->
+                            @foreach ($permissions as $permission)
+                                @if ($permission->statcode === 'APV')
+                                    <div class="carousel-item active">
+                                        <img src="{{ asset('storage/' . $permission->image) }}" alt="Uploaded Image"
+                                            class="d-block w-100">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <video class="d-block w-100" controls>
+                                            <source src="{{ asset('storage/' . $permission->video) }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                @endif
+                            @endforeach
+                        @else
+                            <!-- Display default image when both permissions and updateSingleBlade data are empty -->
+                            <div class="carousel-item active">
+                                <img src="https://source.unsplash.com/800x400/?game" class="d-block w-100"
+                                    alt="Default Image">
+                            </div>
                         @endif
                     </div>
-                    <a class="carousel-control-prev" href="#imageVideoCarousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#imageVideoCarousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                    <div class="carousel-controls">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
+
                 <h2 class="mb-3 mt-2">{{ $user->username }}</h2>
                 <div class="col-md-4 d-inline">
                     <a href="/addtocart/{{ $user->username }}" class="btn">Order</a>
@@ -138,7 +184,6 @@
                     <!-- Handle other cases or show an error message -->
                     <p>Error: Invalid request</p>
                 @endif
-
             </div>
         </div>
     </div>
