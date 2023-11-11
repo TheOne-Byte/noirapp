@@ -19,9 +19,7 @@
                 <th>#</th>
                 <th>Username</th>
                 <th>Order For</th>
-                <th>Quantity</th>
                 <th>Price</th>
-                <th>Total Price</th>
                 <th>Status</th>
             </tr>
         </thead>
@@ -31,9 +29,7 @@
                     <td>{{ $loop ->iteration }}</td>
                     <td>{{ $transaction->seller->username }}</td>
                     <td>{{ $transaction->seller->role->name}}</td>
-                    <td>{{ $transaction->quantity}}</td>
                     <td>{{ $transaction->price}}</td>
-                    <td>{{ $transaction->total_price}}</td>
                     <td>{{ $status[$loop ->iteration-1]}}</td>
                 </tr>
             @endforeach

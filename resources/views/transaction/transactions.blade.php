@@ -18,9 +18,7 @@
                 <th>#</th>
                 <th>Username</th>
                 <th>Order For</th>
-                <th>Quantity</th>
                 <th>Price</th>
-                <th>Total Price</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
@@ -31,9 +29,7 @@
                     <td>{{ $loop ->iteration }}</td>
                     <td>{{ $transaction->buyer->name }}</td>
                     <td>{{ $transaction->seller->role->name}}</td>
-                    <td>{{ $transaction->quantity}}</td>
                     <td>{{ $transaction->price}}</td>
-                    <td>{{ $transaction->total_price}}</td>
                     <td>{{ $transaction->status}}</td>
                     <td>
                         <form action="{{ route('transactions.markAsDone', $transaction->id) }}" method="POST">

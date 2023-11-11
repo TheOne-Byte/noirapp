@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\OrderValidation;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -21,7 +22,10 @@ class TransactionController extends Controller
     public function markAsDone($id)
     {
         $transaction = Transaction::findOrFail($id);
+        $schedule = $transaction->schedule;
+
         $transaction->status = 'DONE';
+        $schedule->delete();
         $transaction->save();
 
         return redirect()->route('transactions.index')->with('success', 'Transaction marked as done.');
@@ -55,7 +59,7 @@ class TransactionController extends Controller
             }
             else if($transaction[$i]->status == "APV"){
                 $status[$i] = 'Accepted By ' . $seller[$i]->username;
-            }   
+            }
         }
         return view('transaction.transactionsforuser', [
             'title' => "User by category",

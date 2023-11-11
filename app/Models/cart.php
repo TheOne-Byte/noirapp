@@ -13,7 +13,8 @@ class cart extends Model
         'user_id',
         'buyer_id',
         'quantity',
-        'price'
+        'price',
+        'schedule_id'
 
     ];
     public function buyer(){
@@ -22,5 +23,9 @@ class cart extends Model
 
     public function seller(){
         return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function schedule(){ // Tambahkan relasi dengan Schedule
+        return $this->belongsTo(Schedule::class,'schedule_id');
     }
 }
