@@ -90,7 +90,7 @@
                             </div>
                         @enderror
                     </div>
-                        
+
             <div class="form-floating mt-2">
                 <div class="text-white">
                     <label for="available_times">Available Times</label>
@@ -142,17 +142,7 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3 text-white">
-                        <label for="video" class="form-label">Upload Your Game Skill Video</label>
-                        <input class="form-control @error('video') is-invalid @enderror" style="border-radius: 5px"
-                            type="file" id="video" name="video" onchange="previewVideo()">
 
-                        @error('video')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
 
                     <button class="btn btn-primary w-50" type="submit" >Request now</button>
                 </form>

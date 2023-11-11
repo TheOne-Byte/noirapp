@@ -112,7 +112,7 @@
 
                 <h2 class="mb-3 mt-2">{{ $user->username }}</h2>
                 <div class="col-md-4 d-inline">
-                    <a href="/addtocart/{{ $user->username }}" class="btn">Order</a>
+                    <a href="/addtocart/{{ $user->username }}" class="btn btn-lg">Order</a>
                     <button type="submit" class="btn-chat" data-chat-with="{{ $user->id }}"
                         onclick="window.location.href='/chatify'"><i class="bi bi-chat-heart"></i> Chat</button>
                 </div>
@@ -164,6 +164,7 @@
                     @endforeach
                     </ul>
                 </div>
+
 
                 @if (isset($image) && isset($video))
                     <!-- Display image and video for role request -->
