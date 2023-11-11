@@ -39,7 +39,7 @@
             <div class="col-md-4 d-inline-block justify-content-right">
                 <div id="imageVideoCarousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
-                        @if ($user->updateSingleBlade->image_path)
+                        @if ($user->updateSingleBlade->image_path != NULL)
                             <div class="carousel-item active">
                                 <img src="{{ asset('storage/' . $user->updateSingleBlade->image_path) }}"
                                     class="d-block w-100 carousel-image" alt="Profile Image">

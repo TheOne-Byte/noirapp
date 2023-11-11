@@ -16,7 +16,12 @@ class UserController extends Controller
     public function showsingleuser(User $user){
         $availableTimes = AvailableTime::where('user_id', $user->id)->get();
         $availableDays = $availableTimes->pluck('day')->unique()->values()->toArray();
-        $schedules = Schedule::where('buyer_id',auth()->user()->id)->get();
+        if(auth()->user() != null){
+            $schedules = Schedule::where('buyer_id',auth()->user()->id)->get();
+        }
+        else {
+            return redirect('/login');
+        }
         // Ambil hari yang tersedia
         // $userSelectedDates = Schedule::where('user_id', $user->id)->pluck('date');
         // $formattedDates = $userSelectedDates->map(function ($date) {
@@ -67,8 +72,8 @@ public function updateSingleUser(Request $request)
     // Validate the request data
     $request->validate([
         'bio' => 'required|string|max:255', // Add more validation rules as needed
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Max size 2MB for images
-        'video' => 'nullable|mimes:mp4,mov,avi|max:20480', // Max size 20MB for videos
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Max size 2MB for images
+        'video' => 'required|mimes:mp4,mov,avi|max:20480', // Max size 20MB for videos
     ]);
 
     // Create a new update request
