@@ -98,8 +98,7 @@ Route::resource('/role/request', RoleRequestController::class)->middleware('exce
 Route::resource('/dashboard/categories', AdminCategoryController::class)->middleware('isAdmin');
 Route::resource('/dashboard/role', AdminRoleController::class)->middleware('isAdmin');
 Route::resource('/dashboard/idcard', AdminIdCardController::class)->middleware('isAdmin');
-
-Route::get('/chatify', 'ChatifyController@showChatify');
+Route::get('/chatify', [ChatifyController::class, 'showChatify'])->middleware(['web', 'auth']);
 Route::get('/top_up', [TopUpController::class, 'index'])->middleware('exceptAdmin')->name('top_up')->middleware('auth');
 Route::post('/top_up', [TopUpController::class, 'store'])->middleware('exceptAdmin')->name('store_top_up')->middleware('auth');
 Route::post('/top_up', [TopUpController::class, 'store'])->middleware('exceptAdmin')->name('store_top_up')->middleware('auth');
