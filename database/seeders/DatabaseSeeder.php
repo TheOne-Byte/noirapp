@@ -106,6 +106,8 @@ class DatabaseSeeder extends Seeder
             "body" => null,
             'category_id' => 2,
             'role_id' => 4,
+            'idcardnumber'=>1234567890123454,
+            'idcardstatcode' => "APV",
             "password" => bcrypt('rafael123')
         ]);
         User::create([
@@ -117,6 +119,8 @@ class DatabaseSeeder extends Seeder
             "body" => null,
             'category_id' => 2,
             'role_id' => 4,
+            'idcardnumber'=>1234567890123454,
+            'idcardstatcode' => "APV",
             "password" => bcrypt('password123')
         ]);
         // cart::create([

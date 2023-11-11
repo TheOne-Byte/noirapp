@@ -185,7 +185,6 @@
                     <!-- Handle other cases or show an error message -->
                     <p>Error: Invalid request</p>
                 @endif
-
             </div>
         </div>
     </div>
