@@ -1,5 +1,17 @@
 @extends('layouts/main')
 @section('container')
+    <style>
+        /* Gaya untuk label "available days" */
+        .form-check-label {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px;
+            background-color: #ffffff; /* Ganti dengan warna latar belakang yang diinginkan */
+            color: #a20000; /* Warna teks untuk kontras */
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
     <div class="row justify-content-center">
         <div class="col-lg-5">
             @if (session()->has('success'))
@@ -102,7 +114,7 @@
                         @php
                             $dayName = date('l', strtotime("Sunday +$i days"));
                         @endphp
-                        <label for="{{ $dayName }}" class="form-check-label text-white">
+                        <label for="{{ $dayName }}" class="form-check-label text-black">
                             {{ $dayName }}<br>
                             <input type="checkbox" name="available_days[{{ $dayName }}]" value="{{ $dayName }}">
                         </label>
