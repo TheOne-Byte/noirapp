@@ -87,8 +87,8 @@
                                             </button>
                                         </a>
                                     </li>
-                                    
-                                    
+
+
                                 @endif
                                 @if (auth()->user()->role_id == 4)
                                     <li>
@@ -106,13 +106,13 @@
                                         </a>
                                     </li>
 
-                                    <li>
-                                <a href="/userschedule" style="text-decoration: none">
-                                    <button type="button" class="dropdown-item">
-                                        <i class="bi bi-arrow-up-right-square"></i> Schedule
-                                    </button>
-                                </a>
-                            </li>
+                                    {{-- <li>
+                                        <a href="/userschedule" style="text-decoration: none">
+                                            <button type="button" class="dropdown-item">
+                                                <i class="bi bi-arrow-up-right-square"></i> Schedule
+                                            </button>
+                                        </a>
+                                    </li> --}}
                         @endif
                                 <li>
                                     <a href="/role/request" style="text-decoration: none">

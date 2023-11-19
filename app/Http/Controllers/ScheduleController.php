@@ -35,13 +35,17 @@ class ScheduleController extends Controller
             'date' => 'required|date',
             'selectedTime' => 'required', // Pastikan selectedTime tersedia dalam request
         ]);
+        $buyer_id = auth()->user()->id;
         $selectedDate = $request->input('date');
         $selectedTime = $request->input('selectedTime');
         $existingSchedule = Schedule::where('date', $selectedDate)
         ->where('start_time', $selectedTime)
         ->exists();
+        $existingSchedule2 = Schedule::where('buyer_id', $buyer_id)->first();
 
-        if ($existingSchedule) {
+        if ($existingSchedule2) {
+            return redirect()->back()->with('error', 'You already have a schedule.');
+        } else if ($existingSchedule) {
             return redirect()->back()->with('error', 'The selected date and time are not available.');
         }
         $user_id = $validated['user_id'];
@@ -50,7 +54,7 @@ class ScheduleController extends Controller
         $start_time = $validated['selectedTime'];
         $end_time = date('H:i', strtotime($start_time) + 7200); // Menambah 2 jam ke waktu mulai
 
-    Schedule::create([
+    $newSchedule = Schedule::create([
         'user_id' => $user_id,
         'buyer_id' => $buyer_id,
         'date' => $date,
@@ -58,7 +62,7 @@ class ScheduleController extends Controller
         'end_time' => $end_time,
     ]);
 
-        return redirect()->back()->with('success', 'Schedule saved successfully!');
+        return redirect()->back()->with('schedule_id', $newSchedule->id)->with('success', 'Schedule saved successfully!');
     }
 
     public function userSchedules()

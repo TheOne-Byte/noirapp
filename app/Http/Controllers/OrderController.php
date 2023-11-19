@@ -62,8 +62,9 @@ class OrderController extends Controller
     {
         $user_id = $request->user_id;
         $buyer_id = auth()->user()->id;
-        $schedule_id = $request->input('schedule_id');
+        // $schedule_id = $request->input('schedule_id');
         // Check if the product already exists in the cart for the current user
+        $schedule = Schedule::where('buyer_id', $buyer_id)->first();
         $existingCartItem = Cart::where('user_id', $user_id)
             ->where('buyer_id', $buyer_id)
             ->first();
@@ -71,16 +72,19 @@ class OrderController extends Controller
         if ($existingCartItem) {
             // If the product exists in the cart, return a message
             return redirect('/game')->with('error', 'Item already in Cart!');
-        } else {
-            // If the product doesn't exist in the cart, create a new cart item
+        } else if ($schedule) {
+            // Jika jadwal ditemukan, buat entitas baru di dalam Cart
             Cart::create([
                 'user_id' => $user_id,
-                'price' => $request->price, // Assuming you want to store the price
+                'price' => $request->price,
                 'buyer_id' => $buyer_id,
-                'schedule_id' => $schedule_id
+                'schedule_id' => $schedule->id
             ]);
 
             return redirect('/game')->with('success', 'Added to Cart! Continue Shopping.');
+        } else {
+            // Jika jadwal tidak ditemukan, tampilkan pesan atau lakukan penanganan lain sesuai kebutuhan aplikasi Anda
+            return redirect()->back()->with('error', 'Schedule not found!');
         }
     }
 
