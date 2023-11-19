@@ -36,7 +36,7 @@
             </a>
           </li>
 
-          <li class="nav-item" style="background-color: #ffee93;">
+          <li class="nav-item" style="background-color: rgb(255, 197, 231);">
             <a class="nav-link {{ $active == 'editdisplayeditem' ? 'active' : ''}}" href="{{ route('admin.pending-updates') }}">
                 <svg class="bi"><use xlink:href="#file-earmark"/></svg>
                 Update Item Displayed
