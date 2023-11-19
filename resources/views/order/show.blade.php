@@ -60,7 +60,7 @@
     </div>
 
     <div class="text-center">
-        <h3>Total: <span id="grand-total">${{ number_format($totalPrice, 2) }}</span></h3>
+        <h3>Total Token: <span id="grand-total">{{ number_format($totalPrice, 2) }}</span></h3>
     </div>
 
     <div class="text-center">
