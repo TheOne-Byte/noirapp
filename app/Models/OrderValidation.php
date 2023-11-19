@@ -21,7 +21,7 @@ class OrderValidation extends Model
     }
 
     public function seller(){
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class,'seller_id');
     }
 
     public function schedule(){

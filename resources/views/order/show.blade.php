@@ -190,7 +190,7 @@ function updateCart() {
             }
         });
 
-        grandTotalElement.textContent = `$${grandTotal.toFixed(2)}`;
+        grandTotalElement.textContent = `${grandTotal.toFixed(2)}`;
     }
 
 
@@ -216,14 +216,14 @@ function updateCart() {
     const modalTotalPriceElement = document.getElementById('modal-total-price');
     const modalUserPointsElement = document.getElementById('modal-user-points');
 
-    modalTotalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+    modalTotalPriceElement.textContent = `${totalPrice.toFixed(2)}`;
     modalUserPointsElement.textContent = userPointsDisplay;
 
     const insufficientPointsMessage = document.getElementById('insufficient-points-message');
     const topUpButton = document.getElementById('top-up-button');
     const placeOrderButton = document.getElementById('place-order-button');
 
-    modalTotalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+    modalTotalPriceElement.textContent = `${totalPrice.toFixed(2)}`;
     modalUserPointsElement.textContent = userPointsDisplay;
 
     // Check if user points are insufficient
