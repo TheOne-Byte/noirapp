@@ -107,13 +107,6 @@ class UserController extends Controller
             $updateRequest->save();
         }
 
-        foreach ($request->input('available_days', []) as $day => $value) {
-
-            $updateRequest->day = $day;
-            $updateRequest->start_time = $request->input('available_time_start', '00:00');
-            $updateRequest->end_time = $request->input('available_time_end', '23:59');
-            $updateRequest->save();
-        }
         // Redirect the user back with a success message or show a confirmation message
         return redirect('/updatesingleuser')->with('success', 'Update request submitted successfully. Waiting for admin approval.');
     }
