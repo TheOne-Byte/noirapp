@@ -23,7 +23,13 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::findOrFail($id);
         $schedule = $transaction->schedule;
+        $authUserId = auth()->user()->id;
 
+    // Mendapatkan pengguna berdasarkan ID yang terautentikasi
+        $user = User::where('id', $authUserId)->first();
+
+        $user->points += $transaction->price;
+        $user->save();
         $transaction->status = 'DONE';
         $schedule->delete();
         $transaction->save();
