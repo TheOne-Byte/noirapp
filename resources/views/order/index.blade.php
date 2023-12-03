@@ -130,8 +130,14 @@
                 const tempSchedule = localStorage.getItem('tempSchedule');
                 if (tempSchedule) {
                     const scheduleData = JSON.parse(tempSchedule);
+                    const currentDate = new Date(); // Mendapatkan tanggal saat ini
                     const dateInput = document.getElementById('date');
                     const selectedDate = new Date(dateInput.value);
+                    if (selectedDate <= currentDate) {
+                        shouldPreventSubmit = false;
+                        alert('Silakan pilih tanggal setelah hari ini.');
+                        return;
+                    }
                     if (!dateInput.value) {
                         shouldPreventSubmit = false;
                         event.preventDefault();
