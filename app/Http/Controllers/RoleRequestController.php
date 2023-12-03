@@ -54,6 +54,7 @@ class RoleRequestController extends Controller
             'image' => 'required|image|file|max:1024',
             'video' => 'required|mimes:mp4,avi,wmv|max:10240',
             'category_id' => 'required',
+            'norekening' =>'required|max:16|min:16|unique:users',
             'body' => 'required|max:30'
         ]);
 

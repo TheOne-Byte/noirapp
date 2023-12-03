@@ -140,7 +140,13 @@
                     </div>
                 </div>
             </div>
-
+            <div class="form-floating">
+                <input value="{{ old('norekening') }}" type="norekening" class="mb-2 form-control  @error('norekening') is-invalid @enderror rounded-bottom" id="norekening" placeholder="norekening" name="norekening">
+                <label for="norekening">Nomor Rekening</label>
+                @error('norekening')
+                <div class="invalid-feedback">{{$message }}</div>
+                @enderror
+              </div>
             </div>
           <button class="btn btn-primary w-50" type="submit" id="register">Request now</button>
         </form>

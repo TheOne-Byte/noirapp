@@ -26,6 +26,7 @@
                     <th scope="col">Username</th>
                     <th scope="col">Game Category</th>
                     <th scope="col">Role</th>
+                    <th scope="col">Nomor Rekening</th>
                     <th scope="col">Image</th>
                     <th scope="col">Video</th>
                     <th scope="col">Action</th>
@@ -39,6 +40,7 @@
         <td>{{ $permission->user->name }}</td>
         <td>{{ $permission->category->name }}</td>
         <td>{{ $permission->role->name }}</td>
+        <td>{{ $permission->norekening }}</td>
         <td>
             <button type="button" class="badge bg-info showbtn" data-toggle="modal" data-target="#imageModal{{ $permission->id }}"><span class="bi bi-eye " style="color: black"></span></button>
         </td>
