@@ -89,4 +89,35 @@ class ScheduleController extends Controller
 
         return view('schedule.sellerschedule', ['schedules' => $userSchedules,'active' => 'userschedule']);
     }
+
+    public function showEditSchedule()
+    {
+        $active = 'editschedule';
+        return view('schedule.editavailabletimes', compact('active')); // Pass the $active variable to the view
+    }
+
+    public function updateSchedule(Request $request)
+    {
+        $user_id = auth()->user()->id;
+
+        AvailableTime::where('user_id', $user_id)->delete();
+
+
+        foreach ($request->input('available_days', []) as $day => $value) {
+            AvailableTime::updateOrCreate(
+                ['user_id' => auth()->user()->id, 'day' => $day],
+                ['start_time' => $request->input('available_time_start', '00:00'), 'end_time' => $request->input('available_time_end', '23:59')]
+            );
+        }
+        // $availableTimes = AvailableTime::find($user_id);
+
+        // foreach ($request->input('available_days', []) as $day => $value) {
+
+        //     $availableTimes->day = $day;
+        //     $availableTimes->start_time = $request->input('available_time_start', '00:00');
+        //     $availableTimes->end_time = $request->input('available_time_end', '23:59');
+        //     $availableTimes->save();
+        // }
+        return redirect()->route('schedule.viewedit')->with('success', 'Update Schedule successfully.');
+    }
 }
