@@ -6,8 +6,10 @@
             display: inline-block;
             padding: 5px 10px;
             margin: 5px;
-            background-color: #ffffff; /* Ganti dengan warna latar belakang yang diinginkan */
-            color: #a20000; /* Warna teks untuk kontras */
+            background-color: #ffffff;
+            /* Ganti dengan warna latar belakang yang diinginkan */
+            color: #a20000;
+            /* Warna teks untuk kontras */
             border-radius: 5px;
             cursor: pointer;
         }
@@ -20,26 +22,28 @@
                 </div>
             @endif
 
-    @if(session()->has('danger'))
-      <div class="alert alert-danger col-lg-5" role="alert">
-          {{ session('danger') }}
-      </div>
-    @endif
-    <main class="form-registration">
+            @if (session()->has('danger'))
+                <div class="alert alert-danger col-lg-5" role="alert">
+                    {{ session('danger') }}
+                </div>
+            @endif
+            <main class="form-registration">
 
-      <h1 class="h3 mb-3 fw-normal text-center" id="registertext">Request Role Form</h1>
-        <form action="/role/request" method="POST" enctype="multipart/form-data">
-          @csrf
-          <div class="form-floating">
-            <div class="">
-                <label for="gamecategory" class="text-white">Game Category</label>
-            </div>
-                <select class="form-select" id="category" name="category_id" >
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? ' selected' : ' ' }}>{{ $category->name }}</option>
-                    @endforeach
-                </select>
-          </div>
+                <h1 class="h3 mb-3 fw-normal text-center" id="registertext">Request Role Form</h1>
+                <form action="/role/request" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-floating">
+                        <div class="">
+                            <label for="gamecategory" class="text-white">Game Category</label>
+                        </div>
+                        <select class="form-select" id="category" name="category_id">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"
+                                    {{ old('category_id') == $category->id ? ' selected' : ' ' }}>{{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     <div class="form-floating mt-2">
                         <div class="text-white">
@@ -80,6 +84,18 @@
                     </div>
 
                     <div class="mb-3 text-white">
+                        <label for="image" class="form-label">Upload Your Profile Image</label>
+                        {{-- ini bawah, biar bisa preview image --}}
+                        <img class="img-preview img-fluid mb-3 col-sm-5">
+                        <input class="form-control @error('imageprofile') is-invalid @enderror" style="border-radius: 5px"
+                            type="file" id="imageprofile" name="imageprofile" onchange="previewImageProfile()">
+
+                        @error('imageprofile')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 text-white">
                         <label for="image" class="form-label">Upload Your Game Skill Image</label>
                         {{-- ini bawah, biar bisa preview image --}}
                         <img class="img-preview img-fluid mb-3 col-sm-5">
@@ -103,51 +119,54 @@
                         @enderror
                     </div>
 
-            <div class="form-floating mt-2">
-                <div class="text-white">
-                    <label for="available_times">Available Times</label>
-                </div>
-
-            <div class="row">
-                <div class="col">
-                    @for ($i = 0; $i < 7; $i++)
-                        @php
-                            $dayName = date('l', strtotime("Sunday +$i days"));
-                        @endphp
-                        <label for="{{ $dayName }}" class="form-check-label text-black">
-                            {{ $dayName }}<br>
-                            <input type="checkbox" name="available_days[{{ $dayName }}]" value="{{ $dayName }}">
-                        </label>
-                    @endfor
                     <div class="form-floating mt-2">
                         <div class="text-white">
-                            <label for="available_times">Choose Time</label>
+                            <label for="available_times">Available Times</label>
                         </div>
-                        <select name="available_time_start" class="form-select mb-2">
-                            @for ($hour = 0; $hour <= 23; $hour++)
-                                @for ($minute = 0; $minute <= 59; $minute += 15)
-                                    <option value="{{ sprintf('%02d:%02d', $hour, $minute) }}">{{ sprintf('%02d:%02d', $hour, $minute) }}</option>
+
+                        <div class="row">
+                            <div class="col">
+                                @for ($i = 0; $i < 7; $i++)
+                                    @php
+                                        $dayName = date('l', strtotime("Sunday +$i days"));
+                                    @endphp
+                                    <label for="{{ $dayName }}" class="form-check-label text-black">
+                                        {{ $dayName }}<br>
+                                        <input type="checkbox" name="available_days[{{ $dayName }}]"
+                                            value="{{ $dayName }}">
+                                    </label>
                                 @endfor
-                            @endfor
-                        </select>
-                        <select name="available_time_end" class="form-select mb-2">
-                            @for ($hour = 0; $hour <= 23; $hour++)
-                                @for ($minute = 0; $minute <= 59; $minute += 15)
-                                    <option value="{{ sprintf('%02d:%02d', $hour, $minute) }}">{{ sprintf('%02d:%02d', $hour, $minute) }}</option>
-                                @endfor
-                            @endfor
-                        </select>
+                                <div class="form-floating mt-2">
+                                    <div class="text-white">
+                                        <label for="available_times">Choose Time</label>
+                                    </div>
+                                    <select name="available_time_start" class="form-select mb-2">
+                                        @for ($hour = 0; $hour <= 23; $hour++)
+                                            @for ($minute = 0; $minute <= 59; $minute += 15)
+                                                <option value="{{ sprintf('%02d:%02d', $hour, $minute) }}">
+                                                    {{ sprintf('%02d:%02d', $hour, $minute) }}</option>
+                                            @endfor
+                                        @endfor
+                                    </select>
+                                    <select name="available_time_end" class="form-select mb-2">
+                                        @for ($hour = 0; $hour <= 23; $hour++)
+                                            @for ($minute = 0; $minute <= 59; $minute += 15)
+                                                <option value="{{ sprintf('%02d:%02d', $hour, $minute) }}">
+                                                    {{ sprintf('%02d:%02d', $hour, $minute) }}</option>
+                                            @endfor
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
-            </div>
+                    <button class="btn btn-primary w-50" type="submit" id="register">Request now</button>
+                </form>
 
-            </div>
-          <button class="btn btn-primary w-50" type="submit" id="register">Request now</button>
-        </form>
-
-    </main>
-    </div>
-                        {{-- @error('image')
+            </main>
+        </div>
+        {{-- @error('image')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -176,6 +195,19 @@
                 }
             }
 
+            function previewImageProfile() {
+                const imageProfile = document.querySelector('#imageprofile');
+                const imgProfilePreview = document.querySelector('.img-profile-preview');
+
+                imgProfilePreview.style.display = 'block';
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(imageProfile.files[0]);
+
+                fileReader.onload = function(oFREvent) {
+                    imgProfilePreview.src = oFREvent.target.result;
+                }
+            }
+
             function previewVideo() {
                 const video = document.querySelector('#video');
                 const videoPreview = document.querySelector('.video-preview');
@@ -191,4 +223,3 @@
 
     </div>
 @endsection
-

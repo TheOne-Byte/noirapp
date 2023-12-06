@@ -9,6 +9,7 @@ use App\Models\EditDisplayed;
 use App\Models\permission;
 use Illuminate\Http\Request;
 use App\Models\AvailableTime;
+use App\Models\category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -16,9 +17,10 @@ class UserController extends Controller
 {
     public function showsingleuser(User $user){
         $permissions = DB::table('permissions')
-                        ->select('image', 'video','statcode')
+                        ->select('image', 'video','statcode', 'imageprofile')
                         ->where('user_id', $user->id)
                         ->get();
+
 
         $availableTimes = AvailableTime::where('user_id', $user->id)->get();
         $availableDays = $availableTimes->pluck('day')->unique()->values()->toArray();
@@ -47,8 +49,9 @@ class UserController extends Controller
             'active' => 'singleuser',
             'user' => $user->load('category', 'role', 'cart', 'permission'),
             'permissions' => $permissions,
+            'categories' => $user->category,
         ]);
-        
+
     }
 
     public function reducePoints(Request $request) {

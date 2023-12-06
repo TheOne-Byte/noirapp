@@ -67,12 +67,12 @@
                                             </button>
                                         </a>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="/updatesingleuser" style="text-decoration: none">
                                             <button type="button" class="dropdown-item">
                                                 <i class="bi bi-arrow-up-right-square"></i> Edit Displayed Item
                                             </button></a>
-                                    </li>
+                                    </li> --}}
                                     <li>
                                 <a href="/sellerschedule" style="text-decoration: none">
                                     <button type="button" class="dropdown-item">

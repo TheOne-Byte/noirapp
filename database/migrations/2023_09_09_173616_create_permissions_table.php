@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('role_id');
             $table->foreignId('user_id');
             $table->decimal('price');
+            $table->string('imageprofile');
             $table->string('image');
             $table->string('video');
             $table->string('statcode');

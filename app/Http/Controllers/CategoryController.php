@@ -24,8 +24,13 @@ class CategoryController extends Controller
         }
 
         if(auth()->user()){
-            $users = $category->user()->whereIn('role_id', [1, 2])->where('id', '!=', auth()->user()->id)->get(); // Keep it as provided
-        }
+            $users = $category->user()
+            ->with('permissions') // Eager load the permissions relationship
+            ->whereIn('role_id', [1, 2])
+            ->where('id', '!=', auth()->user()->id)
+            ->get();
+            // dd($users->pluck('permissions'));
+            }
         else{
             $users = $category->user()->whereIn('role_id', [1, 2])->get();
         }
