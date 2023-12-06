@@ -27,6 +27,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->bigInteger('idcardnumber')->nullable();
+            $table->bigInteger('norekening')->nullable();
             $table->string('idcardstatcode');
             $table->integer('points')->nullable();
             $table->rememberToken();

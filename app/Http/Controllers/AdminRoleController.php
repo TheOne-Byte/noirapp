@@ -46,6 +46,7 @@ class AdminRoleController extends Controller
         $validated['role_id'] = $data->role_id;
         $validated['category_id'] = $data->category_id;
         $validated['price'] = $data->price;
+        $validated['norekening'] = $data->norekening;
         $validated['body'] = $data->body;
         $validatedpermission['statcode'] = "APV";
 

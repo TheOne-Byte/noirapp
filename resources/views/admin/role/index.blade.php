@@ -26,6 +26,7 @@
                     <th scope="col">Username</th>
                     <th scope="col">Game Category</th>
                     <th scope="col">Role</th>
+                    <th scope="col">Nomor Rekening</th>
                     <th scope="col">Image Profile</th>
                     <th scope="col">Image Skill</th>
                     <th scope="col">Video</th>
@@ -40,6 +41,7 @@
                         <td>{{ $permission->user->name }}</td>
                         <td>{{ $permission->category->name }}</td>
                         <td>{{ $permission->role->name }}</td>
+                        <td>{{ $permission->norekening }}</td>
                         <td>
                             <button type="button" class="badge bg-info showbtn" data-toggle="modal"
                                 data-target="#imageModalProfile{{ $permission->id }}"><span class="bi bi-eye "
@@ -73,7 +75,7 @@
                         </td>
                     </tr>
             </tbody>
-            <!-- Modal for Image Skill-->
+            <!-- Modal for Image -->
             <div class="modal fade" id="imageModal{{ $permission->id }}" tabindex="-1"
                 aria-labelledby="imageModalLabel{{ $permission->id }}" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">

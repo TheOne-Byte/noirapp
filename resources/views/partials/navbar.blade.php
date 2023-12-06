@@ -74,6 +74,13 @@
                                             </button></a>
                                     </li> --}}
                                     <li>
+                                        <a href="/editavailabletimes" style="text-decoration: none">
+                                            <button type="button" class="dropdown-item">
+                                                <i class="bi bi-arrow-down-left-square"></i> Edit Schedule
+                                            </button>
+                                        </a>
+                                    </li>
+                                    <li>
                                 <a href="/sellerschedule" style="text-decoration: none">
                                     <button type="button" class="dropdown-item">
                                         <i class="bi bi-arrow-up-right-square"></i> Schedule
