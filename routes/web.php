@@ -131,6 +131,10 @@ Route::get('/updatesingleuser', [UserController::class, 'showUpdateForm'])->name
 Route::put('/updatesingleuser', [UserController::class, 'updateSingleUser']);
 
 
+Route::put('/updateavailabletimes', [ScheduleController::class, 'updateSchedule']);
+Route::get('/editavailabletimes', [ScheduleController::class, 'showEditSchedule'])->name('schedule.viewedit');
+
+
 
 Route::get('/admin/pending-updates', [AdminUpdateSingleUser::class, 'showPendingUpdates'])->name('admin.pending-updates');
 Route::put('/admin/approve-update/{id}', [AdminUpdateSingleUser::class, 'approveUpdate'])->name('admin.approve-update');

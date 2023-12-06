@@ -22,7 +22,7 @@ class UserController extends Controller
 
         $availableTimes = AvailableTime::where('user_id', $user->id)->get();
         $availableDays = $availableTimes->pluck('day')->unique()->values()->toArray();
-        $schedules = Schedule::where('buyer_id',auth()->user()->id)->get();
+        // $schedules = Schedule::where('buyer_id',auth()->user()->id)->get();
         if(auth()->user() == null){
             return redirect('/login');
         }
@@ -42,13 +42,13 @@ class UserController extends Controller
         // ->get();
         //  dd($existingTimes);
 
-        return view('singleuser',compact('availableTimes','availableDays','schedules'), [
+        return view('singleuser',compact('availableTimes','availableDays'), [
             'title' => "User Information",
             'active' => 'singleuser',
             'user' => $user->load('category', 'role', 'cart', 'permission'),
             'permissions' => $permissions,
         ]);
-        
+
     }
 
     public function reducePoints(Request $request) {
@@ -106,7 +106,6 @@ class UserController extends Controller
             $updateRequest->video_path = $videoPath;
             $updateRequest->save();
         }
-
 
         // Redirect the user back with a success message or show a confirmation message
         return redirect('/updatesingleuser')->with('success', 'Update request submitted successfully. Waiting for admin approval.');

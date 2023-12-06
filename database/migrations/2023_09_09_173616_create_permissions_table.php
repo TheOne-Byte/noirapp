@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('price');
             $table->string('image');
             $table->string('video');
+            $table->string('norekening');
             $table->string('statcode');
             $table->string('body');
             $table->timestamps();

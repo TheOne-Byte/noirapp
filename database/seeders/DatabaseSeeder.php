@@ -55,6 +55,7 @@ class DatabaseSeeder extends Seeder
             'category_id' => 2,
             'role_id' => 1,
             'idcardnumber' => 1234567890123451,
+            'norekening' => 1234567890123451,
             'idcardstatcode' => "APV",
             "password" => bcrypt('password')
         ]);
@@ -68,6 +69,7 @@ class DatabaseSeeder extends Seeder
             'category_id' => 1,
             'role_id' => 2,
             'idcardnumber' => 1234567890123452,
+            'norekening' => 1234567890123452,
             'idcardstatcode' => "APV",
             "password" => bcrypt('password')
         ]);
@@ -81,6 +83,7 @@ class DatabaseSeeder extends Seeder
             'category_id' => 2,
             'role_id' => 3,
             'idcardnumber' => 1234567890123453,
+            'norekening' => 1234567890123453,
             'idcardstatcode' => "APV",
             "password" => bcrypt('password')
         ]);
@@ -94,6 +97,7 @@ class DatabaseSeeder extends Seeder
             'category_id' => 2,
             'role_id' => 3,
             'idcardnumber'=>1234567890123454,
+            'norekening'=>1234567890123454,
             'idcardstatcode' => "APV",
             "password" => bcrypt('password')
         ]);
@@ -107,6 +111,7 @@ class DatabaseSeeder extends Seeder
             'category_id' => 2,
             'role_id' => 4,
             'idcardnumber'=>1234567890123454,
+            'norekening'=>1234567890123454,
             'idcardstatcode' => "APV",
             "password" => bcrypt('rafael123')
         ]);
@@ -120,6 +125,7 @@ class DatabaseSeeder extends Seeder
             'category_id' => 2,
             'role_id' => 4,
             'idcardnumber'=>1234567890123454,
+            'norekening'=>1234567890123454,
             'idcardstatcode' => "APV",
             "password" => bcrypt('password123')
         ]);
