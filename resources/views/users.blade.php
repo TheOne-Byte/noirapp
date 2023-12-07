@@ -1,16 +1,23 @@
 @extends('layouts/main')
 @section('container')
 
-{{-- @dd($category) --}}
+{{-- @dd($users[0]->permissions) --}}
 @if ($users->count())
     <div class="card mb-3 text-center">
 
-        @if ($users[0]->image)
+        @if ($users[0]->imageprofile)
             <div style="max-height:350px; overflow:hidden;">
-                <img src="{{ asset('storage/' . $users[0]->image) }}" class="img-fluid" alt="{{ $users[0]->category ? $users[0]->category->name : '' }}">
+                <img src="{{ asset('storage/' . $users[0]->imageprofile) }}" class="img-fluid" alt="{{ $users[0]->category ? $users[0]->category->name : '' }}">
             </div>
         @else
-            <img src="https://source.unsplash.com/1200x400/?{{ $users[0]->category ? $users[0]->category->name : '' }}" class="card-img-top" alt="...">
+            @php
+                $firstPermission = $users[0]->permissions->first();
+            @endphp
+            @if ($firstPermission && $firstPermission->statcode === 'APV')
+                <img src="{{ asset('storage/' . $firstPermission->imageprofile) }}" alt="Uploaded Image">
+            @else
+                <img src="https://source.unsplash.com/1200x400/?{{ $users[0]->category ? $users[0]->category->name : '' }}" class="card-img-top" alt="...">
+            @endif
         @endif
 
         <div class="card-body">
@@ -39,10 +46,17 @@
                         <div class="position-absolute px-3 py-2 text-white" style="background-color: rgba(217, 56, 56, 0.5); border-radius: 5px"><a class="text-decoration-none text-white" href="/categories/{{ $user->category ? $user->category->slug : '' }}">{{ $user->category ? $user->category->name : '' }}</a></div>
                         <div class="position-absolute px-4 py-2 text-white" style="background-color: rgba(113, 43, 137, 0.5); right: 0px; border-radius: 5px;"><a class="text-decoration-none text-white" href="/categories/{{ $user->category ? $user->category->slug : '' }}">{{ $user->role->name }}</a></div>
 
-                        @if ($user->image)
-                            <img src="{{ asset('storage/' . $user->image) }}" class="img-fluid" alt="{{ $user->category ? $user->category->name : '' }}">
+                        @if ($user->imageprofile)
+                            <img src="{{ asset('storage/' . $user->imageprofile) }}" class="img-fluid" alt="{{ $user->category ? $user->category->name : '' }}">
                         @else
-                            <img src="https://source.unsplash.com/500x400?{{ $user->category ? $user->category->name : '' }}" class="card-img-top" alt="{{ $user->category ? $user->category->name : '' }}">
+                            @php
+                                $firstPermission = $user->permissions->first();
+                            @endphp
+                            @if ($firstPermission && $firstPermission->statcode === 'APV')
+                                <img src="{{ asset('storage/' . $firstPermission->imageprofile) }}" alt="Uploaded Image">
+                            @else
+                                <img src="https://source.unsplash.com/500x400?{{ $user->category ? $user->category->name : '' }}" class="card-img-top" alt="{{ $user->category ? $user->category->name : '' }}">
+                            @endif
                         @endif
                         <div class="card-body">
                             <h3>{{ $user->username }}</h3>
@@ -65,28 +79,3 @@
 @endif
 
 @endsection
-
-
-
-
-{{-- @foreach ($posts->skip(1) as $post)
-
-<article class="mb-5 border-bottom">
-    <h2>
-        <a class="text-decoration-none" href="/posts/{{ $post->slug }}">
-            {{ $post['title'] }}
-        </a>
-    </h2>
-    By <a class="text-decoration-none" href="/authors/{{ $post -> author -> username }}"> {{  $post -> author -> name }}
-        in
-        <a class="text-decoration-none" href="/categories/{{ $post -> category -> slug}}"> {{  $post -> category-> name  }} </a></p>
-
-    <p>{{ $post['excerpt'] }}</p>
-
-    <a class="text-decoration-none" href="/posts/{{ $post->slug }}">
-       read more..
-    </a>
-</article>
-
-
-@endforeach --}}

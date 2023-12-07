@@ -35,32 +35,43 @@ class ScheduleController extends Controller
             'date' => 'required|date',
             'selectedTime' => 'required', // Pastikan selectedTime tersedia dalam request
         ]);
-        $buyer_id = auth()->user()->id;
+        // $buyer_id = auth()->user()->id;
         $selectedDate = $request->input('date');
         $selectedTime = $request->input('selectedTime');
-        $existingSchedule = Schedule::where('date', $selectedDate)
-        ->where('start_time', $selectedTime)
-        ->exists();
-        $existingSchedule2 = Schedule::where('buyer_id', $buyer_id)->first();
+        // $existingSchedule = Schedule::where('user_id',$request->input('user_id'))->where('date', $selectedDate)
+        // ->where('start_time', $selectedTime)
+        // ->exists();
+        // $existingSchedule2 = Schedule::where('buyer_id', $buyer_id)->first();
 
-        if ($existingSchedule2) {
-            return redirect()->back()->with('error', 'You already have a schedule.');
-        } else if ($existingSchedule) {
-            return redirect()->back()->with('error', 'The selected date and time are not available.');
-        }
+        // if ($existingSchedule2) {
+        //     return redirect()->back()->with('error', 'You already have a schedule.');
+        // }
+        // if ($existingSchedule) {
+        //     return redirect()->back()->with('error', 'The selected date and time are not available.');
+        // }
         $user_id = $validated['user_id'];
         $buyer_id = auth()->user()->id;
         $date = $validated['date'];
         $start_time = $validated['selectedTime'];
         $end_time = date('H:i', strtotime($start_time) + 7200); // Menambah 2 jam ke waktu mulai
+        $existingSchedule = Schedule::where('user_id',$user_id)->where('date', $date)
+        ->where('start_time', $start_time)
+        ->exists();
+        $existingSchedule2 = Schedule::where('buyer_id', $buyer_id)->first();
 
-    $newSchedule = Schedule::create([
-        'user_id' => $user_id,
-        'buyer_id' => $buyer_id,
-        'date' => $date,
-        'start_time' => $start_time,
-        'end_time' => $end_time,
-    ]);
+        if ($existingSchedule2) {
+            return redirect()->back()->with('error', 'You already have a schedule.');
+        }
+        if ($existingSchedule) {
+            return redirect()->back()->with('error', 'The selected date and time are not available.');
+        }
+        $newSchedule = Schedule::create([
+            'user_id' => $user_id,
+            'buyer_id' => $buyer_id,
+            'date' => $date,
+            'start_time' => $start_time,
+            'end_time' => $end_time,
+        ]);
 
         return redirect()->back()->with('schedule_id', $newSchedule->id)->with('success', 'Schedule saved successfully!');
     }
@@ -77,5 +88,36 @@ class ScheduleController extends Controller
         $userSchedules = Schedule::where('user_id',auth()->user()->id)->get();
 
         return view('schedule.sellerschedule', ['schedules' => $userSchedules,'active' => 'userschedule']);
+    }
+
+    public function showEditSchedule()
+    {
+        $active = 'editschedule';
+        return view('schedule.editavailabletimes', compact('active')); // Pass the $active variable to the view
+    }
+
+    public function updateSchedule(Request $request)
+    {
+        $user_id = auth()->user()->id;
+
+        AvailableTime::where('user_id', $user_id)->delete();
+
+
+        foreach ($request->input('available_days', []) as $day => $value) {
+            AvailableTime::updateOrCreate(
+                ['user_id' => auth()->user()->id, 'day' => $day],
+                ['start_time' => $request->input('available_time_start', '00:00'), 'end_time' => $request->input('available_time_end', '23:59')]
+            );
+        }
+        // $availableTimes = AvailableTime::find($user_id);
+
+        // foreach ($request->input('available_days', []) as $day => $value) {
+
+        //     $availableTimes->day = $day;
+        //     $availableTimes->start_time = $request->input('available_time_start', '00:00');
+        //     $availableTimes->end_time = $request->input('available_time_end', '23:59');
+        //     $availableTimes->save();
+        // }
+        return redirect()->route('schedule.viewedit')->with('success', 'Update Schedule successfully.');
     }
 }

@@ -9,6 +9,7 @@ use App\Models\EditDisplayed;
 use App\Models\permission;
 use Illuminate\Http\Request;
 use App\Models\AvailableTime;
+use App\Models\category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -16,13 +17,14 @@ class UserController extends Controller
 {
     public function showsingleuser(User $user){
         $permissions = DB::table('permissions')
-                        ->select('image', 'video','statcode')
+                        ->select('image', 'video','statcode', 'imageprofile')
                         ->where('user_id', $user->id)
                         ->get();
 
+
         $availableTimes = AvailableTime::where('user_id', $user->id)->get();
         $availableDays = $availableTimes->pluck('day')->unique()->values()->toArray();
-        $schedules = Schedule::where('buyer_id',auth()->user()->id)->get();
+        // $schedules = Schedule::where('buyer_id',auth()->user()->id)->get();
         if(auth()->user() == null){
             return redirect('/login');
         }
@@ -42,13 +44,14 @@ class UserController extends Controller
         // ->get();
         //  dd($existingTimes);
 
-        return view('singleuser',compact('availableTimes','availableDays','schedules'), [
+        return view('singleuser',compact('availableTimes','availableDays'), [
             'title' => "User Information",
             'active' => 'singleuser',
             'user' => $user->load('category', 'role', 'cart', 'permission'),
             'permissions' => $permissions,
+            'categories' => $user->category,
         ]);
-        
+
     }
 
     public function reducePoints(Request $request) {
@@ -106,7 +109,6 @@ class UserController extends Controller
             $updateRequest->video_path = $videoPath;
             $updateRequest->save();
         }
-
 
         // Redirect the user back with a success message or show a confirmation message
         return redirect('/updatesingleuser')->with('success', 'Update request submitted successfully. Waiting for admin approval.');

@@ -28,6 +28,7 @@ class User extends Authenticatable
         'role_id',
         'points',
         'idcardnumber',
+        'norekening',
         'idcardstatcode'
 
     ];
@@ -63,6 +64,10 @@ class User extends Authenticatable
 
     public function cart(){
         return $this->hasMany(cart::class,'buyer_id');
+    }
+
+    public function permissions(){
+    return $this->hasMany(permission::class, 'user_id');
     }
 
     public function permission(){

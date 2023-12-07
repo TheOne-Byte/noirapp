@@ -51,11 +51,17 @@ class RoleRequestController extends Controller
         $validated = $request->validate([
             'role_id' =>'required',
             'price' => 'required',
+            'imageprofile' => 'required|image|file|max:1024',
             'image' => 'required|image|file|max:1024',
             'video' => 'required|mimes:mp4,avi,wmv|max:10240',
             'category_id' => 'required',
+            'norekening' =>'required|max:16|min:16|unique:users',
             'body' => 'required|max:30'
         ]);
+
+        if($request->file('imageprofile')){
+            $validated['imageprofile'] = $request->file('imageprofile')->store('role-profile-images');
+        }
 
         if($request->file('image')){
             $validated['image'] = $request->file('image')->store('role-request-images');
