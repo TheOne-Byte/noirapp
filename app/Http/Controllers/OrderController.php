@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\cart;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Schedule;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
+use App\Jobs\ReduceTimerJob;
 use Illuminate\Http\Request;
 use App\Models\AvailableTime;
 use App\Models\OrderValidation;
@@ -74,19 +76,25 @@ class OrderController extends Controller
             return redirect('/game')->with('error', 'Item already in Cart!');
         } else if ($schedule) {
             // Jika jadwal ditemukan, buat entitas baru di dalam Cart
-            Cart::create([
+            $expiryTime = now()->addMinutes(2)->toDateTimeString();
+
+            $newCartItem = Cart::create([
                 'user_id' => $user_id,
                 'price' => $request->price,
                 'buyer_id' => $buyer_id,
-                'schedule_id' => $schedule->id
+                'schedule_id' => $schedule->id,
+                'timer_expiry' => $expiryTime,
             ]);
 
+            // ReduceTimerJob::dispatch($newCartItem->id)->delay(now()->addSeconds(1));
             return redirect('/game')->with('success', 'Added to Cart! Continue Shopping.');
         } else {
             // Jika jadwal tidak ditemukan, tampilkan pesan atau lakukan penanganan lain sesuai kebutuhan aplikasi Anda
             return redirect()->back()->with('error', 'Schedule not found!');
         }
     }
+
+
 
     public function update(Request $request, $id)
     {
@@ -119,14 +127,30 @@ class OrderController extends Controller
     {
         // Retrieve the cart items for the user
         $cart = $user->cart()->with('seller', 'schedule')->get();
-
+        $timerExpiryValues = $cart->pluck('timer_expiry');
 
         $scheduleCount = Schedule::where('buyer_id', $user->id)->count();
+        $cartItems = Cart::where('user_id', $user->id)->get();
+        $timerExpiryValues = $cartItems->pluck('timer_expiry');
+    // Periksa dan hapus cart jika timer telah habis
+    // foreach ($cartItems as $cartItem) {
+    //     if ($cartItem->timer_expiry > 0) {
+    //         // Kurangi timer_expiry sebanyak 1 detik
+    //         $cartItem->timer_expiry -= 1;
+    //         $cartItem->save();
+    //     } else {
+    //         // Jika timer_expiry habis, hapus item
+    //         $cartItem->delete(); // Hapus item jika timer telah habis
+    //     }
+    // }
 
         return view('order.show',compact('scheduleCount'), [
             "title" => "order show",
             'active' => 'order show',
-            'cart' => $cart // Pass the cart items to the view
+            'cart' => $cart,
+            'cartItems' => $cartItems,
+            '$timerExpiryValues' => $timerExpiryValues
+             // Pass the cart items to the view
         ]);
     }
 
@@ -247,7 +271,7 @@ class OrderController extends Controller
             // Hapus item dari Cart
             cart::whereIn('id', $selectedItems)->delete();
 
-            return response()->view('your_view')->with(['refresh' => true]);
+            return redirect()->back()->with('success','Place Order Successful');
         } else {
             return redirect()->back()->with('error', 'Insufficient points. Please top up first.');
         }
