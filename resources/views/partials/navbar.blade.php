@@ -49,7 +49,7 @@
                                     <li>
                                         <a href="/transactions" style="text-decoration: none">
                                             <button type="button" class="dropdown-item">
-                                                <i class="bi bi-cart-check"></i> Order Transactions
+                                                <i class="bi bi-cart-check"></i> Order history
                                             </button>
                                         </a>
                                     </li>

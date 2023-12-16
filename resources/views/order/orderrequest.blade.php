@@ -5,9 +5,9 @@
         <h2 class="text-center">Order Requests</h2>
 
         @if ($orderValidations->isEmpty())
-            <p class="text-center">No order requests available.</p>
+            <p class="text-center text-danger">No order requests available.</p>
         @else
-            <table class="table table-bordered table-white-text text-danger">
+            <table class="table table-bordered table-white-text text-white">
                 <thead>
                     <tr>
                         <th>Order ID</th>
