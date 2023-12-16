@@ -307,7 +307,7 @@ function updateCart() {
         placeOrderButton.style.display = 'inline-block';
     }
     topUpButton.addEventListener('click', function() {
-        window.location.href = '/top_up';
+        window.location.href = '/top_up?from_cart=true';
     });
 }
 
