@@ -20,6 +20,7 @@
                         <th class="white-text text-center">Price</th>
                         <th class="white-text text-center">Schedule</th>
                         <th class="white-text text-center">Actions</th>
+                        <th class="white-text text-center">Timer</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,6 +53,11 @@
                                   </form>
                                 {{-- <a href="#" class="badge bg-danger border-0 delete-item" data-item-id="{{ $cartItem->id }}"><span class="bi bi-trash" style="color: white"></span></a> --}}
                             </td>
+
+                             {{-- <td class="text-center">{{ $cartItem->timer_expiry }}</td> --}}
+                            {{-- <td><div id="timer"></div></td> --}}
+                            <td class="text-center"><span class="expiry-time" data-expiry="{{ $cartItem->timer_expiry }}" data-item-id="{{ $cartItem->id }}"></span></td>
+
                         </tr>
                     @endfor
                 </tbody>
@@ -95,6 +101,69 @@
 <!-- JavaScript -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const expiryElements = document.querySelectorAll('.expiry-time');
+    const countdownTimers = []; // Variabel untuk menyimpan timers
+
+    expiryElements.forEach((expiryElement, index) => {
+        let expiryTime = new Date(expiryElement.dataset.expiry); // Ambil waktu kedaluwarsa dari HTML
+
+        function updateExpiryDisplay() {
+            const now = new Date();
+            const timeLeft = Math.floor((expiryTime - now) / 1000); // Hitung waktu yang tersisa dalam detik
+
+            if (timeLeft <= 0) {
+                clearInterval(countdownTimers[index]);
+                expiryElement.textContent = 'Expired';
+                alert('Item Expired!');
+                // Menghilangkan baris item dari tampilan
+                const itemRow = expiryElement.closest('tr');
+                if (itemRow) {
+                    itemRow.remove();
+                }
+
+                const itemId = expiryElement.dataset.itemId;
+                // Kirim permintaan DELETE ke backend untuk menghapus item
+                fetch(`/addtocart/${itemId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Item berhasil dihapus, lakukan sesuatu (misalnya, tampilkan notifikasi)
+                        location.reload();
+                        alert('Item Expired!');
+                        console.log('Item deleted successfully.');
+                    } else {
+                        // Handle error
+                        console.error('Failed to delete item');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            } else {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                expiryElement.textContent = `${padWithZero(minutes)}:${padWithZero(seconds)}`;
+            }
+        }
+        function padWithZero(number) {
+            return (number < 10 ? '0' : '') + number; // Tambahkan 0 di depan jika angka kurang dari 10
+        }
+
+        updateExpiryDisplay();
+        countdownTimers[index] = setInterval(updateExpiryDisplay, 1000); // Simpan timer dalam array
+    });
+});
+// Panggil fungsi untuk memulai timer saat halaman dimuat
+// document.addEventListener('DOMContentLoaded', startTimer);
+
 $(document).ready(function() {
     $('form#placeOrderForm').on('submit', function(e) {
         e.preventDefault();
@@ -113,6 +182,7 @@ $(document).ready(function() {
                 _token: '{{ csrf_token() }}'
             },
             success: function(data) {
+                alert('Place Order Successful!');
                 $('#orderModal').modal('hide');
                 location.reload();
             },

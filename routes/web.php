@@ -139,3 +139,4 @@ Route::get('/editavailabletimes', [ScheduleController::class, 'showEditSchedule'
 Route::get('/admin/pending-updates', [AdminUpdateSingleUser::class, 'showPendingUpdates'])->name('admin.pending-updates');
 Route::put('/admin/approve-update/{id}', [AdminUpdateSingleUser::class, 'approveUpdate'])->name('admin.approve-update');
 
+Route::post('/update-time-left/{itemId}', [OrderController::class, 'updateTimeLeft']);
