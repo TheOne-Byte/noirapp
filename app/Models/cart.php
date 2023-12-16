@@ -14,7 +14,8 @@ class cart extends Model
         'buyer_id',
         'quantity',
         'price',
-        'schedule_id'
+        'schedule_id',
+        'timer_expiry'
 
     ];
     public function buyer(){

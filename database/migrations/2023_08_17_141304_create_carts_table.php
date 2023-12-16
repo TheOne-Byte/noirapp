@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('buyer_id')->references('id')->on('users');
             $table->unsignedBigInteger('schedule_id')->nullable();
             $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade'); // Assuming you have a 'schedules' table
-
+            $table->dateTime('timer_expiry')->nullable();
         });
     }
 

@@ -31,11 +31,11 @@
                 @error('idcardnumber')
                 <div class="invalid-feedback">{{$message }}</div>
                 @enderror
-                
+
             </div>
-        </div>        
-    </div>     
-    
+        </div>
+    </div>
+
     <div class="row justify-content-center text-center">
         <div class="col-md-5">
 
@@ -192,34 +192,55 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('button').click(function(e) {
-                e.preventDefault(); // Prevent the form from submitting
 
-                var pointTopUp = $('select[name="point_top_up"]').val();
-                var paymentMethod = $('select[name="payment_method"]').val();
+        const authenticatedUsername = "{{ auth()->user()->username }}";
 
-                if (pointTopUp !== 'Silahkan Pilih Point' && paymentMethod !== 'Silahkan pilih Metode pembayaran') {
-                    var formData = new FormData($('#topUpForm')[0]);
 
-                    $.ajax({
-                        url: "{{ route('top_up') }}",
-                        type: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(data) {
-                            console.log(data);
-                            window.location.href = "{{ route('topup.sukses') }}";
-                        },
-                        error: function(error) {
-                            console.error('Error:', error);
-                        }
-                    });
-                } else {
-                    alert('Please select both Point and Payment Method.');
-                }
-            });
+        function redirectToCart() {
+            const cartUrl = `/cart/${authenticatedUsername}`;
+            window.location.href = cartUrl;
+        }
+
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const fromCart = urlParams.get('from_cart');
+
+
+        function redirectToTopUp() {
+            if (fromCart || fromCart == "true") {
+                redirectToCart();
+            } else {
+                window.location.href = "{{ route('topup.sukses') }}";
+            }
+        }
+
+
+        $('button').click(function(e) {
+            e.preventDefault();
+
+            var pointTopUp = $('select[name="point_top_up"]').val();
+            var paymentMethod = $('select[name="payment_method"]').val();
+
+            if (pointTopUp !== 'Silahkan Pilih Point' && paymentMethod !== 'Silahkan pilih Metode pembayaran') {
+                var formData = new FormData($('#topUpForm')[0]);
+
+                $.ajax({
+                    url: "{{ route('top_up') }}",
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        console.log(data);
+                        redirectToTopUp();
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            } else {
+                alert('Please select both Point and Payment Method.');
+            }
         });
     </script>
 
