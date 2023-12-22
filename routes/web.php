@@ -22,6 +22,8 @@ use App\Http\Controllers\AdminUpdateSingleUser;
 use App\Http\Controllers\RoleRequestController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminReportController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -140,3 +142,14 @@ Route::get('/admin/pending-updates', [AdminUpdateSingleUser::class, 'showPending
 Route::put('/admin/approve-update/{id}', [AdminUpdateSingleUser::class, 'approveUpdate'])->name('admin.approve-update');
 
 Route::post('/update-time-left/{itemId}', [OrderController::class, 'updateTimeLeft']);
+
+Route::get('/report/{user:username}', [ReportController::class,'index'])->middleware('exceptAdmin')->middleware('auth');
+
+Route::post('/createreport', [ReportController::class, 'store']);
+
+Route::get('/report-users', [AdminReportController::class, 'index']);
+Route::get('/report-detail/{user:username}', [AdminReportController::class, 'index_detail']);
+
+
+Route::post('/report/{id}/ban', [ReportController::class, 'ban'])->name('report.ban');
+Route::post('/report/{id}/unban', [ReportController::class, 'unban'])->name('report.unban');

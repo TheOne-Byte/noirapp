@@ -30,6 +30,9 @@ return new class extends Migration
             $table->bigInteger('norekening')->nullable();
             $table->string('idcardstatcode');
             $table->integer('points')->nullable();
+            $table->boolean('ban_status')->nullable()->default(false);
+            $table->integer('report_times')->nullable();
+            $table->integer('unban_times')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
