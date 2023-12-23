@@ -71,11 +71,6 @@
                         </p>
                     </li>
                 </ul>
-                <span class="w-100 d-flex justify-content-end mt-4">
-                    <button class="btn btn-learn py-2 px-4 d-flex align-items-center">Learn More
-                        <i class="bi bi-arrow-right ms-2"></i>
-                    </button>
-                </span>
             </div>
         </div>
 
