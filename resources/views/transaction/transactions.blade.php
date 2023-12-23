@@ -30,14 +30,19 @@
                     <td>{{ $transaction->buyer->name }}</td>
                     <td>{{ $transaction->seller->role->name}}</td>
                     <td>{{ $transaction->price}}</td>
-                    <td>{{ $transaction->status}}</td>
-                    <td>
-                        <form action="{{ route('transactions.markAsDone', $transaction->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" class="btn btn-success">Mark as Done</button>
-                        </form>
-                    </td>
+                    <td>{{ $status[$loop ->iteration-1]}}</td>
+                    @if ($transaction->status === 'ON_GOING')
+                        <td>
+                            <form action="{{ route('transactions.markAsDone', $transaction->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-success">Mark as Done</button>
+                            </form>
+                        </td>
+                    @else
+                        <td></td>
+                    @endif
+
                 </tr>
             @endforeach
         </tbody>

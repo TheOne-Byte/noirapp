@@ -182,7 +182,7 @@
                                     <input type="hidden" name="status" value="paid">
                                 </li>
                             </ul>
-                            <button type="submit" class="btn btn-primary px-3 text-white">Beli</button>
+                            <button type="submit" class="btn btn-learn text-white">Purchase</button>
                         </form>
                     </div>
                 </div>

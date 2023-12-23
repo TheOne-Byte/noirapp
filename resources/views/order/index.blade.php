@@ -135,7 +135,7 @@
                     const selectedDate = new Date(dateInput.value);
                     if (selectedDate <= currentDate) {
                         shouldPreventSubmit = false;
-                        alert('Silakan pilih tanggal setelah hari ini.');
+                        alert('Please choose day after today!');
                         return;
                     }
                     if (!dateInput.value) {

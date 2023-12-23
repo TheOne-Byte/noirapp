@@ -45,9 +45,8 @@ class RatingController extends Controller
     public function store(Request $request)
     {
         $transaction = Transaction::where('slug', $request->slug)->first();
-        $rating = rating::where('id',$transaction->id)->first();
         
-        if($rating){
+        if($transaction->already_review == 1) {
             return redirect('/history')->with('error','You Already Review This!');    
         }
 
@@ -61,6 +60,8 @@ class RatingController extends Controller
         $validated['seller_id'] = $transaction->seller_id;
 
         rating::create($validated);
+        Transaction::where('id', $transaction->id)->update(array('already_review' => 1));
+
         return redirect('/history')->with('success','Review Has Been Saved!');    
 
     }

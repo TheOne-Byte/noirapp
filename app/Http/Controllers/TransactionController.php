@@ -13,10 +13,18 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = Transaction::where('seller_id', auth()->user()->id)
-                                ->where('status', 'ON_GOING')
                                 ->get();
+        $status = [""];
+        for($i = 0; $i < Count($transactions) ; $i++) {
+            if($transactions[$i]->status == "ON_GOING"){
+                $status[$i] = 'On Going';
+            }
+            else if($transactions[$i]->status == "DONE"){
+                $status[$i] = 'Done';
+            }
+        }
 
-        return view('transaction.transactions', compact('transactions'),['active' => 'transactionPage']);
+        return view('transaction.transactions', compact('transactions','status'),['active' => 'transactionPage']);
     }
 
     public function markAsDone($id)
@@ -49,7 +57,7 @@ class TransactionController extends Controller
                 $status[$i] = 'Done';
             }
         }
-        return view('transaction.history', compact('transactions','status'),['active' => 'historyPage']);
+        return view('transaction.history', compact('transactions','status'),['active' => 'historyPage'],compact('transactions','transactions'));
     }
 
     public function foruser(){

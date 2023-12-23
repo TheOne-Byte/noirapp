@@ -24,19 +24,32 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        if(Auth::attempt($credential)){
-            $request->session()->regenerate(); //regenerate itu untuk keamanaan biar ga kena session fixation (wikipedia)
-
-            if(Auth()->user()->role_id != 3){
-                return redirect()->intended('/game');
-            }
-            else{
-                return redirect()->intended('/dashboard');
-            }
+        if(Auth::attempt($credential) && auth()->user()->ban_status == 1){
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return back()->with('loginError','Your Account Is Banned! Please try again later.');
         }
 
-        // return back()->withErrors();
+        else if(Auth::attempt($credential) && auth()->user()->ban_status == 0){
+           
+            $request->session()->regenerate(); //regenerate itu untuk keamanaan biar ga kena session fixation (wikipedia)
+            
+                if(auth()->user()->role_id != 3){
+                    return redirect()->intended('/game');
+                }
+                else{
+                    return redirect()->intended('/dashboard');
+                }
+            
+        }
+
+
         return back()->with('loginError','login failed!');
+
+
+        
+        // return back()->withErrors();
 
 
     }

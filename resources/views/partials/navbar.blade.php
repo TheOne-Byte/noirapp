@@ -23,23 +23,105 @@
             </ul>
 
 
-            @auth
-            <ul class="navbar-nav d-flex flex-column flex-lg-row justify-items-center align-items-start align-items-lg-center px-2">
-                <li class="nav-item d-flex align-items-center mb-2 mb-lg-0 me-lg-2 btn">
-                    <a href="/cart/{{ auth()->user()->username }}">
-                        <i class="bi bi-cart-fill" style="color: white"></i>
-                    </a>
-                </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link {{ $active === 'top_up' ? 'active' : '' }}" href="/top_up">Top Up</a>
-                </li> -->
-                <li class="nav-item d-flex align-items-center me-lg-2 btn">
-                    <img src="/img/gatcha.png" style="height:1.25rem" alt="" class="me-2"/>
-                    <a href="/top_up" style="text-decoration: none; color: white" class="me-2">
-                        @if (auth()->user()->points)
-                        {{ auth()->user()->points }} POINT
-                        @else
-                        0 POINT
+                @auth
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a href="/cart/{{ auth()->user()->username }}" class="btn">
+                                <i class="bi bi-cart-fill"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ $active === 'top_up' ? 'active' : '' }}" href="/top_up">Top Up</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Welcome back, {{ auth()->user()->name }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                @if (in_array(auth()->user()->role_id, [1, 2]))
+                                    <!-- Periksa role_id -->
+                                    <li>
+                                        <a href="/order-request" style="text-decoration: none">
+                                            <button type="button" class="dropdown-item">
+                                                <i class="bi bi-arrow-down-left-square"></i> Order Request
+                                            </button>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/transactions" style="text-decoration: none">
+                                            <button type="button" class="dropdown-item">
+                                                <i class="bi bi-cart-check"></i> Order history
+                                            </button>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/usertransaction" style="text-decoration: none">
+                                            <button type="button" class="dropdown-item">
+                                                <i class="bi bi-clipboard2-check"></i> Your Transactions
+                                            </button>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/withdrawal" style="text-decoration: none">
+                                            <button type="button" class="dropdown-item">
+                                                <i class="bi bi-cash-coin"></i> Gatcha withdrawal
+                                            </button>
+                                        </a>
+                                    </li>
+                                    {{-- <li>
+                                        <a href="/updatesingleuser" style="text-decoration: none">
+                                            <button type="button" class="dropdown-item">
+                                                <i class="bi bi-arrow-up-right-square"></i> Edit Displayed Item
+                                            </button></a>
+                                    </li> --}}
+                                    <li>
+                                        <a href="/editavailabletimes" style="text-decoration: none">
+                                            <button type="button" class="dropdown-item">
+                                                <i class="bi bi-arrow-down-left-square"></i> Edit Available Times
+                                            </button>
+                                        </a>
+                                    </li>
+                                    <li>
+                                <a href="/sellerschedule" style="text-decoration: none">
+                                    <button type="button" class="dropdown-item">
+                                        <i class="bi bi-arrow-up-right-square"></i> Schedule
+                                    </button>
+                                </a>
+                            </li>
+                            <li>
+                                        <a href="/history" style="text-decoration: none">
+                                            <button type="button" class="dropdown-item">
+                                                <i class="bi bi-clock-history"></i> History
+                                            </button>
+                                        </a>
+                                    </li>
+
+
+                                @endif
+                                @if (auth()->user()->role_id == 4)
+                                    <li>
+                                        <a href="/usertransaction" style="text-decoration: none">
+                                            <button type="button" class="dropdown-item">
+                                                <i class="bi bi-clipboard2-check"></i> Your Transactions
+                                            </button>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/history" style="text-decoration: none">
+                                            <button type="button" class="dropdown-item">
+                                                <i class="bi bi-clock-history"></i> History
+                                            </button>
+                                        </a>
+                                    </li>
+
+                                    {{-- <li>
+                                        <a href="/userschedule" style="text-decoration: none">
+                                            <button type="button" class="dropdown-item">
+                                                <i class="bi bi-arrow-up-right-square"></i> Schedule
+                                            </button>
+                                        </a>
+                                    </li> --}}
                         @endif
                     </a>
                     <a class="{{ $active === 'top_up' ? 'active' : '' }}" href="/top_up">

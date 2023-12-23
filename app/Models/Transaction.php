@@ -14,7 +14,8 @@ class Transaction extends Model
         'seller_id',
         'schedule_id',
         'price',
-        'status'
+        'status',
+        'already_review'
     ];
 
     // Definisikan relasi dengan model User jika diperlukan

@@ -11,9 +11,11 @@
 
 @section('container')
     <style>
-        .carousel-control-prev, .carousel-control-next {
+        .carousel-control-prev,
+        .carousel-control-next {
             background-color: orange;
         }
+
         .carousel-controls {
             position: absolute;
             top: 50%;
@@ -81,6 +83,12 @@
                                         <img src="{{ asset('storage/' . $permission->image) }}" alt="Uploaded Image"
                                             class="d-block w-100">
                                     </div>
+                                    @if (property_exists($permission, 'imageprofile'))
+                                        <div class="carousel-item">
+                                            <img src="{{ asset('storage/' . $permission->imageprofile) }}"
+                                                alt="Uploaded Image" class="d-block w-100">
+                                        </div>
+                                    @endif
                                     <div class="carousel-item">
                                         <video class="d-block w-100" controls>
                                             <source src="{{ asset('storage/' . $permission->video) }}" type="video/mp4">
@@ -127,14 +135,22 @@
 
                 <div class="row">
                     <div class="col-md-5">
-                        <img style="border-radius: 10px" src="https://source.unsplash.com/40x50/?game" class="card-img-top"
-                            alt="...">
+                        @php
+                            $imageSrc = $user->category->image ? asset('storage/' . $user->category->image) : 'https://source.unsplash.com/40x50/?game';
+                        @endphp
+                        @if ($user->category->image)
+                            <img style="border-radius: 10px" src="{{ $imageSrc }}" class="card-img-top" alt="...">
+                        @else
+                            <img style="border-radius: 10px" src="https://source.unsplash.com/40x50/?game"
+                                class="card-img-top" alt="...">
+                        @endif
                     </div>
                     <div class="col-md-6 text-white mt-5">
                         {{ $user->category->name }}
                         <div class="price mt-1"><i class="bi bi-coin"></i> {{ $user->price }} / match</div>
                     </div>
                 </div>
+
 
                 <p class="mt-4"
                     style="font-size: 2rem; color:orange; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
@@ -147,22 +163,24 @@
                         <p>{{ $user->body }}</p>
                     @endif
                 </div>
-                <p class="mt-4" style="font-size: 2rem; color:orange; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Available Times</p>
+                <p class="mt-4"
+                    style="font-size: 2rem; color:orange; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
+                    Available Times</p>
                 <hr>
                 <div class="informasi">
                     <ul>
-                        @foreach($availableTimes as $availableTime)
-                        @php
-                            $startTime = strtotime($availableTime->start_time);
-                            $endTime = strtotime($availableTime->end_time);
-                            $day = $availableTime->day;
-                        @endphp
+                        @foreach ($availableTimes as $availableTime)
+                            @php
+                                $startTime = strtotime($availableTime->start_time);
+                                $endTime = strtotime($availableTime->end_time);
+                                $day = $availableTime->day;
+                            @endphp
 
-                        <li>
-                            {{ date('H:i', $startTime) }} - {{ date('H:i', $endTime) }}
-                            ({{ date('l', strtotime($day)) }})
-                        </li>
-                    @endforeach
+                            <li>
+                                {{ date('H:i', $startTime) }} - {{ date('H:i', $endTime) }}
+                                ({{ date('l', strtotime($day)) }})
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
 
@@ -192,14 +210,14 @@
 
 
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('scheduleForm');
             form.addEventListener('submit', function(event) {
                 const dateInput = document.getElementById('date');
                 const selectedDate = new Date(dateInput.value);
 
-                const availableDays = [@foreach($availableTimes as $availableTime) '{{ date("D", strtotime($availableTime->day)) }}', @endforeach];
+                const availableDays = [@foreach ($availableTimes as $availableTime) '{{ date("D", strtotime($availableTime->day)) }}', @endforeach];
 
                 const selectedDay = selectedDate.toLocaleDateString('en-US', { weekday: 'short' });
 
@@ -209,9 +227,9 @@
                 }
             });
         });
-        @if(session('error'))
+        @if (session('error'))
         // Show a JavaScript alert with the error message
         alert('{{ session('error') }}');
         @endif
-    </script>
+    </script> --}}
 @endsection

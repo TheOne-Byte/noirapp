@@ -70,6 +70,10 @@ class User extends Authenticatable
         return $this->hasMany(cart::class,'buyer_id');
     }
 
+    public function permissions(){
+    return $this->hasMany(permission::class, 'user_id');
+    }
+
     public function permission(){
         return $this->belongsTo(permission::class,'permission_id');
     }
@@ -77,12 +81,12 @@ class User extends Authenticatable
     public function schedules()
     {
         return $this->hasMany(Schedule::class);
-    }    public function updateSingleBlade()
+    }    
+    
+    public function updateSingleBlade()
     {
         return $this->hasOne(EditDisplayed::class, 'user_id');
     }
-
-
 
 
 }

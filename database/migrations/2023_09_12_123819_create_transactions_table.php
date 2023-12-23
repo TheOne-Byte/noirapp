@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('buyer_id');
             $table->unsignedBigInteger('seller_id');
             $table->unsignedBigInteger('schedule_id');
+            $table->boolean('already_review')->nullable()->default(false);
             $table->decimal('price', 8, 2);
             $table->enum('status', ['ON_GOING', 'DONE', 'CANCEL']);
             $table->timestamps();

@@ -25,6 +25,7 @@
         <th scope="col">Username</th>
         <th scope="col">Name</th>
         <th scope="col">Report Times</th>
+        <th scope="col">Banned Count</th>
         <th scope="col">Detail</th>
         <th scope="col">Action</th>
       </tr>
@@ -37,6 +38,7 @@
         <td>{{ $user->name }}</td>
         <td>{{ $user->username }}</td>
         <td>{{ $user->report_times }}</td>
+        <td>{{ $user->unban_times }}</td>
         <td>
             <a href="/report-detail/{{ $user->username }}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">Detail</a>
         </td>
