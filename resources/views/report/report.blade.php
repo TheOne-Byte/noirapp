@@ -18,8 +18,8 @@
                             @method('POST')
                             <input type="hidden" name="user_id" value="{{ $user->id }}">
                             <div class="form-floating mt-2">
-                                <div class="text-white">
-                                    <label for="header">Report Header</label>
+                                <div class="text-black">
+                                    <label for="header">Title</label>
                                 </div>
                                 <input style="border-radius: 5px" value="{{ old('header') }}" type="text"
                                     class="mb-1 form-control @error('header') is-invalid @enderror" id="header" placeholder="header"
@@ -30,7 +30,7 @@
                                 @enderror
                             </div>
                             <div class="form-floating mt-2">
-                                <div class="text-white">
+                                <div class="text-black">
                                     <label for="header">Report Detail</label>
                                 </div>
                                 <input style="border-radius: 5px" value="{{ old('detail') }}" type="text"
@@ -41,7 +41,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="mb-3 text-white">
+                            <div class="mb-3 text-black">
                                 <label for="image" class="form-label">Upload Image</label>
                                 {{-- ini bawah, biar bisa preview image --}}
                                 <img class="img-preview img-fluid mb-3 col-sm-5">

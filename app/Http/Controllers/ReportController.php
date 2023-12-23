@@ -10,7 +10,7 @@ class ReportController extends Controller
 {
     public function index(User $user){
 
-
+//adoako
         // dd($scheduleCount);
         return view('report.report', [
             'active' => 'report',

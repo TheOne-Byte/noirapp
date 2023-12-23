@@ -1,25 +1,20 @@
 @extends('admin.layouts.main')
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 @section('container')
     <h1 class="h2">ROLE REQUEST</h1>
-
     @if (session()->has('success'))
         <div class="alert alert-success col-lg-5" role="alert">
             {{ session('success') }}
         </div>
     @endif
-
     <div class="table-responsive small col-lg-5">
         <table class="table table-striped table-sm ">
             <thead>
@@ -36,7 +31,6 @@
                 </tr>
             </thead>
             <tbody>
-
                 @foreach ($permissions as $permission)
                     <tr class="text-center">
                         <td>{{ $loop->iteration }}</td>
@@ -46,8 +40,7 @@
                         <td>{{ $permission->norekening }}</td>
                         <td>
                             <button type="button" class="badge bg-info showbtn" data-toggle="modal"
-                                data-target="#imageModalProfile{{ $permission->id }}"><span class="bi bi-eye "
-                                    style="color: black"></span></button>
+                                data-target="#imageModalProfile{{ $permission->id }}"><span class="bi bi-eye" style="color: black"></span></button>
                         </td>
                         <td>
                             <button type="button" class="badge bg-info showbtn" data-toggle="modal"
@@ -81,6 +74,17 @@
             <div class="modal fade" id="imageModal{{ $permission->id }}" tabindex="-1"
                 aria-labelledby="imageModalLabel{{ $permission->id }}" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
+
+    
+          
+            
+    
+
+          
+          Expand Down
+    
+    
+  
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="imageModalLabel{{ $permission->id }}">Image Preview</h5>
@@ -127,7 +131,6 @@
                         <div class="modal-body text-center">
                             <img src="{{ asset('storage/' . $permission->imageprofile) }}" alt="Uploaded Image"
                                 style="max-width: 100%;">
-
                         </div>
                     </div>
                 </div>
@@ -137,7 +140,6 @@
     </div>
     </div>
 @endsection
-
 @section('scripts')
     <script>
         $(document).ready(function() {
@@ -149,10 +151,8 @@
             $(document).on('click', '.showbtn', function() {
                 var imageSrc = $(this).data('image-src');
                 var imageProfileSrc = $(this).data('imageprofile-src');
-
                 $('#imagePreview').attr('src', imageSrc);
                 $('#imageModal').modal('show');
-
                 $('#imageProfilePreview').attr('src', imageProfileSrc);
                 $('#imageModalProfile').modal('show');
             });
