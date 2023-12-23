@@ -2,7 +2,7 @@
 
 @section('container')
 <div class="container">
-    <h2 class="text-white text-center">My Cart</h2>
+    <h2 class="text-warning text-center">My Cart</h2>
 
     @if(session()->has('success'))
         <div class="alert alert-success" role="alert">
@@ -66,7 +66,7 @@
     </div>
 
     <div class="text-center">
-        <h3>Total Token: <span id="grand-total">{{ number_format($totalPrice, 2) }}</span></h3>
+        <h3 class="text-warning">Total Token: <span id="grand-total">{{ number_format($totalPrice, 2) }}</span></h3>
     </div>
 
     <div class="text-center">
@@ -356,16 +356,7 @@ function updateCart() {
 </script>
 
 <style>
-    /* Define the text color for the table content */
-    .table-white-text tbody tr td {
-        color: white;
-    }
-
-    /* Define the text color for the specific header cells */
-    .white-text {
-        color: white;
-    }
-
+   
     /* Style for the quantity input */
     .quantity-input {
         width: 50px !important; /* Adjust this as needed */

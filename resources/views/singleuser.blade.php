@@ -201,9 +201,6 @@
                         <source src="{{ asset('storage/' . $video) }}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
-                @else
-                    <!-- Handle other cases or show an error message -->
-                    <p>Error: Invalid request</p>
                 @endif
             </div>
         </div>
