@@ -55,7 +55,7 @@
             }
         </style>
         @if(session('topup_success'))
-        <div class="empty-3-2" style="font-family: 'Poppins', sans-serif;">
+        <div class="empty-3-2" style="font-family: 'Poppins', sans-serif; min-height: 100vh">
             <div class="mx-auto d-flex align-items-center justify-content-center flex-column">
                 <img class="main-img"
                     src="http://api.elements.buildwithangga.com/storage/files/2/assets/Empty%20State/EmptyState3/Empty-3-4.png"
