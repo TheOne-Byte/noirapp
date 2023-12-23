@@ -3,7 +3,7 @@
 
 {{-- @dd($users[0]->permissions) --}}
 @if ($users->count())
-    <div class="card mb-3 text-center">
+    <div class="card mb-3 text-center mx-3 my-3 user-card">
 
         @if ($users[0]->imageprofile)
             <div style="max-height:350px; overflow:hidden;">
@@ -20,20 +20,23 @@
             @endif
         @endif
 
-        <div class="card-body">
-            <p>
-                <h3>{{ $users[0]->username }}</h3>
-                Divisi
+        <div class="card-body position-relative">
+            <h4 class="user-card-text m-0">{{ $users[0]->username }}
+                <p class="user-card-text user-card-descr fs-6">
+                    {{ $users[0]->created_at->diffForHumans() }}
+                </p>
+            </h4>
+            <p class="user-card-text btn fs-6 position-absolute top-0 end-0 m-3 text-uppercase">
                 @if ($users[0]->category)
-                    <a class="text-decoration-none" href="/categories/{{ $users[0]->category->slug }}">{{ $users[0]->category->name }}</a>
+                    <a class="text-decoration-none text-white" href="/categories/{{ $users[0]->category->slug }}">{{ $users[0]->category->name }}</a>
                 @else
                     No category
                 @endif
-                {{ $users[0]->created_at->diffForHumans() }}
             </p>
-            <p class="card-text">{{ $users[0]->excerpt }}</p>
-            <a class="text-decoration-none btn btn-primary" href="/user/{{ $users[0]->username }}">
-                read more..
+
+            <p class="card-text user-card-text">{{ $users[0]->excerpt }}</p>
+            <a class="text-decoration-none btn btn-primary w-100" href="/user/{{ $users[0]->username }}">
+                Read More
             </a>
         </div>
     </div>

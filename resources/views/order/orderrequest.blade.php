@@ -2,7 +2,7 @@
 
 @section('container')
     <div class="container mt-5">
-        <h2 class="text-center">Order Requests</h2>
+        <h2 class="text-center text-title-menu">Order Requests</h2>
 
         @if ($orderValidations->isEmpty())
             <p class="text-center text-danger">No order requests available.</p>

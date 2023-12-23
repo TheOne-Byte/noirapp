@@ -31,11 +31,11 @@
                 @error('idcardnumber')
                 <div class="invalid-feedback">{{$message }}</div>
                 @enderror
-
+                
             </div>
-        </div>
-    </div>
-
+        </div>        
+    </div>     
+    
     <div class="row justify-content-center text-center">
         <div class="col-md-5">
 
@@ -47,7 +47,7 @@
 
 @else
     <section class="contact-us-light-lick position-relative">
-        <section class="h-100 w-100" style="box-sizing: border-box; background-color: #141432">
+        <section class="h-100 w-100" style="box-sizing: border-box; background-color: #141432; min-height: 100vh">
             <style scoped>
                 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
@@ -145,10 +145,10 @@
                         class="right-column d-flex flex-column align-items-lg-start align-items-center text-lg-start text-center">
                         <form id="topUpForm">
                             @csrf
-                            <h2 class="title-text text-white">Top Up Page</h2>
+                            <h2 class="title-text text-white mb-4">Top Up Page</h2>
                             <ul style="padding: 0; margin: 0">
                                 <li class="list-unstyled" style="margin-bottom: 2rem">
-                                    <p class="text-caption">
+                                    <p class="text-caption mb-2">
                                         Poin
                                     </p>
                                     <h4
@@ -165,7 +165,7 @@
 
                                 </li>
                                 <li class="list-unstyled" style="margin-bottom: 2rem">
-                                    <p class="text-caption">
+                                    <p class="text-caption mb-2">
                                         Metode Pembayaran
                                     </p>
                                     <h4
