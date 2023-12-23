@@ -17,7 +17,7 @@ class ReportController extends Controller
             'user' => $user
             // Post::find($id)
 
-        ]);s
+        ]);
     }
 
     public function store(Request $request)
