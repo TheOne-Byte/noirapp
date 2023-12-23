@@ -146,7 +146,7 @@
                 @error('norekening')
                 <div class="invalid-feedback">{{$message }}</div>
                 @enderror
-              </div>
+            </div>
             </div>
           <button class="btn btn-primary w-50" type="submit" id="register">Request now</button>
         </form>

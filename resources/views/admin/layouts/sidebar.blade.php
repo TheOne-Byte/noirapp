@@ -43,6 +43,12 @@
             </a>
         </li>
 
+        <li class="nav-item" style="background-color: rgb(135, 197, 206);">
+            <a class="nav-link {{ $active == 'editdisplayeditem' ? 'active' : ''}}" href="/report-users">
+                <svg class="bi"><use xlink:href="#file-earmark"/></svg>
+                Report
+            </a>
+        </li>
 
         </ul>
 

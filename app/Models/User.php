@@ -29,7 +29,11 @@ class User extends Authenticatable
         'points',
         'idcardnumber',
         'norekening',
-        'idcardstatcode'
+        'idcardstatcode',
+        'report_times',
+        'ban_status',
+        'unban_times'
+
 
     ];
 
