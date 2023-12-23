@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->string('slug');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('buyer_id');
-            $table->unsignedBigInteger('seller_id');
-            $table->unsignedBigInteger('schedule_id');
-            $table->boolean('already_review')->nullable()->default(false);
-            $table->decimal('price', 8, 2);
-            $table->enum('status', ['ON_GOING', 'DONE', 'CANCEL']);
+            $table->foreign('buyer_id')->references('id')->on('users');
+            $table->string('header');
+            $table->string('detail');
+            $table->string('image');
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('reports');
     }
 };

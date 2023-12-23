@@ -29,7 +29,11 @@ class User extends Authenticatable
         'points',
         'idcardnumber',
         'norekening',
-        'idcardstatcode'
+        'idcardstatcode',
+        'report_times',
+        'ban_status',
+        'unban_times'
+
 
     ];
 
@@ -77,12 +81,12 @@ class User extends Authenticatable
     public function schedules()
     {
         return $this->hasMany(Schedule::class);
-    }    public function updateSingleBlade()
+    }    
+    
+    public function updateSingleBlade()
     {
         return $this->hasOne(EditDisplayed::class, 'user_id');
     }
-
-
 
 
 }

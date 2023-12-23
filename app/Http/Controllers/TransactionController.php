@@ -57,7 +57,7 @@ class TransactionController extends Controller
                 $status[$i] = 'Done';
             }
         }
-        return view('transaction.history', compact('transactions','status'),['active' => 'historyPage']);
+        return view('transaction.history', compact('transactions','status'),['active' => 'historyPage'],compact('transactions','transactions'));
     }
 
     public function foruser(){

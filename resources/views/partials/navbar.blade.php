@@ -76,7 +76,7 @@
                                     <li>
                                         <a href="/editavailabletimes" style="text-decoration: none">
                                             <button type="button" class="dropdown-item">
-                                                <i class="bi bi-arrow-down-left-square"></i> Edit Schedule
+                                                <i class="bi bi-arrow-down-left-square"></i> Edit Available Times
                                             </button>
                                         </a>
                                     </li>

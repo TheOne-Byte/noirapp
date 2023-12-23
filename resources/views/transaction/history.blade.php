@@ -36,7 +36,7 @@
                     <td>{{ $status[$loop ->iteration-1] }}</td>
 
                     <td>
-                        @if( $status[$loop ->iteration-1]  == 'Done')
+                        @if( $status[$loop ->iteration-1]  == 'Done' && $transaction->already_review != 1 )
                         <a href="/rating?TrxNo={{ $transaction->slug }}">
                             <button type="" class="btn btn-card text-white">Review</button>
                         </a>

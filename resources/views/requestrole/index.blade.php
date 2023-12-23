@@ -123,6 +123,33 @@
                         <div class="text-white">
                             <label for="available_times">Available Times</label>
                         </div>
+                        <select name="available_time_start" class="form-select mb-2">
+                            @for ($hour = 0; $hour <= 23; $hour++)
+                                @for ($minute = 0; $minute <= 59; $minute += 15)
+                                    <option value="{{ sprintf('%02d:%02d', $hour, $minute) }}">{{ sprintf('%02d:%02d', $hour, $minute) }}</option>
+                                @endfor
+                            @endfor
+                        </select>
+                        <select name="available_time_end" class="form-select mb-2">
+                            @for ($hour = 0; $hour <= 23; $hour++)
+                                @for ($minute = 0; $minute <= 59; $minute += 15)
+                                    <option value="{{ sprintf('%02d:%02d', $hour, $minute) }}">{{ sprintf('%02d:%02d', $hour, $minute) }}</option>
+                                @endfor
+                            @endfor
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-floating">
+                <input value="{{ old('norekening') }}" type="norekening" class="mb-2 form-control  @error('norekening') is-invalid @enderror rounded-bottom" id="norekening" placeholder="norekening" name="norekening">
+                <label for="norekening">Nomor Rekening</label>
+                @error('norekening')
+                <div class="invalid-feedback">{{$message }}</div>
+                @enderror
+            </div>
+            </div>
+          <button class="btn btn-primary w-50" type="submit" id="register">Request now</button>
+        </form>
 
                         <div class="row">
                             <div class="col">

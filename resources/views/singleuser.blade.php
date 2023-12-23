@@ -122,9 +122,10 @@
                 <div class="col-md-4 d-inline">
                     <a href="/addtocart/{{ $user->username }}" class="btn btn-lg">Order</a>
                     <button type="submit" class="btn-chat" data-chat-with="{{ $user->id }}"
-                        onclick="window.location.href='/chatify/{{ $user->id }}'"><i class="bi bi-chat-heart"></i>
-                        Chat</button>
+                        onclick="window.location.href='/chatify/{{ $user->id }}'"><i class="bi bi-chat-heart"></i> Chat</button>
+                    <a href="/report/{{ $user->username }}" class="btn btn-lg">Report</a>
                 </div>
+
             </div>
 
             <div class="col-md-3">
