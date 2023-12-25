@@ -41,7 +41,7 @@
     <div class="col-12 col-sm-6 col-lg-3 p-1 p-md-2">
       <a class="max-h-card card-category bg-dark card border border-0" href="/categories/{{ $categoryItems[0]->slug }}" >
         @if ($categoryItems[0]->image)
-        <img src="{{ asset('storage/' .$categoryItems[0]->image) }}" class="card-img-top" alt="...">
+        <img src="{{ asset('storage/' .$categoryItems[0]->image) }}" class="card-img-top" alt="..." width="300" height="310">
         @else
         <img src="https://source.unsplash.com/500x500?{{ $categoryItems[0]->name }}" class="card-img-top" alt="...">
         @endif

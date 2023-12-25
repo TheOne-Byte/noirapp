@@ -1,5 +1,6 @@
 @extends('layouts/main')
 @section('container')
+    {{-- @dd($permissions) --}}
     <style>
         /* Gaya untuk label "available days" */
         .form-check-label {
@@ -36,8 +37,9 @@
                         </div>
                         <select class="form-select" id="category" name="category_id">
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}"
-                                    {{ old('category_id') == $category->id ? ' selected' : ' ' }}>{{ $category->name }}
+                                <option
+                                    value="{{ $category->id }}"{{ $permissions->isEmpty() ? '' : ($permissions[0]->category_id == $category->id ? ' selected' : '') }}>
+                                    {{ $category->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -48,8 +50,10 @@
                         </div>
                         <select class="form-select" id="role" name="role_id">
                             @foreach ($roles as $role)
-                                <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? ' selected' : ' ' }}>
-                                    {{ $role->name }}</option>
+                                <option
+                                    value="{{ $role->id }}"{{ $permissions->isEmpty() ? '' : ($permissions[0]->role_id == $role->id ? ' selected' : '') }}>
+                                    {{ $role->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -57,18 +61,21 @@
                         <div class="text-white">
                             <label for="price">Price</label>
                         </div>
-                        <input style="border-radius: 5px" value="{{ old('price', 100) }}" type="number"
-                            class="mb-2 form-control @error('price') is-invalid @enderror" id="price"
+                        <input style="border-radius: 5px"
+                            value="{{ $permissions->isEmpty() ? old('price', 100) : $permissions[0]->price }}"
+                            type="number" class="mb-2 form-control @error('price') is-invalid @enderror" id="price"
                             placeholder="price" name="price">
                         @error('price')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="form-floating mt-2">
                         <div class="text-white">
                             <label for="body">Bio (pengalaman/skill)</label>
                         </div>
-                        <input style="border-radius: 5px" value="{{ old('body') }}" type="text"
+                        <input style="border-radius: 5px"
+                            value="{{ $permissions->isEmpty() ? old('body') : $permissions[0]->body }}" type="text"
                             class="mb-2 form-control @error('body') is-invalid @enderror" id="body" placeholder="body"
                             name="body">
                         @error('body')
@@ -76,19 +83,37 @@
                         @enderror
                     </div>
                     <div class="mb-3 text-white">
-                        <label for="image" class="form-label">Upload Your Profile Image</label>
-                        {{-- ini bawah, biar bisa preview image --}}
-                        <img class="img-preview img-fluid mb-3 col-sm-5">
+                        <label for="image" class="form-label">Upload Your Profile Image</label><br>
+                        {{-- Check if there is data in permission --}}
+                        @if (isset($permissions) &&
+                                $permissions->isNotEmpty() &&
+                                $permissions[0]->statcode === 'APV' &&
+                                $permissions[0]->imageprofile)
+                            {{-- Display the image from permission if available --}}
+                            <img src="{{ asset('storage/' . $permissions[0]->imageprofile) }}"
+                                class="img-preview img-fluid mb-3 col-sm-5">
+                        @else
+                            {{-- Display the image preview if user has filled in the form --}}
+                            <img class="img-preview img-fluid mb-3 col-sm-5">
+                        @endif
                         <input class="form-control @error('imageprofile') is-invalid @enderror" style="border-radius: 5px"
                             type="file" id="imageprofile" name="imageprofile" onchange="previewImageProfile()">
                         @error('imageprofile')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    <!-- Repeat similar modifications for the other file types -->
+
+                    <!-- Code for Game Skill Image -->
                     <div class="mb-3 text-white">
-                        <label for="image" class="form-label">Upload Your Game Skill Image</label>
-                        {{-- ini bawah, biar bisa preview image --}}
-                        <img class="img-preview img-fluid mb-3 col-sm-5">
+                        <label for="image" class="form-label">Upload Your Game Skill Image</label><br>
+                        @if (isset($permissions) && $permissions->isNotEmpty() && $permissions[0]->statcode === 'APV' && $permissions[0]->image)
+                            <img src="{{ asset('storage/' . $permissions[0]->image) }}"
+                                class="img-preview img-fluid mb-3 col-sm-5">
+                        @else
+                            <img class="img-preview img-fluid mb-3 col-sm-5">
+                        @endif
                         <input class="form-control @error('image') is-invalid @enderror" style="border-radius: 5px"
                             type="file" id="image" name="image" onchange="previewImage()">
                         @error('image')
@@ -97,6 +122,12 @@
                     </div>
                     <div class="mb-3 text-white">
                         <label for="video" class="form-label">Upload Your Game Skill Video</label>
+                        @if(isset($permissions) && $permissions->isNotEmpty() && $permissions[0]->statcode === 'APV' && $permissions[0]->video)
+                            <video class="d-block w-100 video-preview" controls>
+                                <source src="{{ asset('storage/' . $permissions[0]->video) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        @endif
                         <input class="form-control @error('video') is-invalid @enderror" style="border-radius: 5px"
                             type="file" id="video" name="video" onchange="previewVideo()">
                         @error('video')
@@ -105,6 +136,12 @@
                             </div>
                         @enderror
                     </div>
+
+
+
+
+
+
                     <div class="form-floating mt-2">
                         <div class="text-white">
                             <label for="available_times">Available Times</label>
@@ -146,14 +183,16 @@
                             </div>
                         </div>
                         <div class="form-floating">
-                            <input value="{{ old('norekening') }}" type="norekening"
-                                class="mb-2 form-control  @error('norekening') is-invalid @enderror rounded-bottom"
+                            <input value="{{ $permissions->isEmpty() ? old('norekening') : $permissions[0]->norekening }}"
+                                type="norekening"
+                                class="mb-2 form-control @error('norekening') is-invalid @enderror rounded-bottom"
                                 id="norekening" placeholder="norekening" name="norekening">
                             <label for="norekening">Nomor Rekening</label>
                             @error('norekening')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+
                     </div>
                     <button class="btn btn-primary w-50" type="submit" id="register">Request now</button>
                 </form>
@@ -170,29 +209,33 @@
             </main>
         </div> --}}
         <script>
-            function previewImage() {
-                const image = document.querySelector('#image');
-                const imgPreview = document.querySelector('.img-preview');
-                imgPreview.style.display = 'block';
-                const ofReader = new FileReader();
-                ofReader.readAsDataURL(image.files[0]);
-                ofReader.onload = function(oFREvent) {
-                    imgPreview.src = oFREvent.target.result;
-                }
-            }
+function previewImage() {
+    const image = document.querySelector('#image');
+    const imgPreview = document.querySelector('.img-preview'); // Change this class name
+    imgPreview.style.display = 'block';
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(image.files[0]);
+    fileReader.onload = function(oFREvent) {
+        imgPreview.src = oFREvent.target.result;
+    }
+}
+
             function previewImageProfile() {
-                const imageProfile = document.querySelector('#imageprofile');
-                const imgProfilePreview = document.querySelector('.img-profile-preview');
-                imgProfilePreview.style.display = 'block';
-                const fileReader = new FileReader();
-                fileReader.readAsDataURL(imageProfile.files[0]);
-                fileReader.onload = function(oFREvent) {
-                    imgProfilePreview.src = oFREvent.target.result;
-                }
-            }
+    const imageProfile = document.querySelector('#imageprofile');
+    const imgProfilePreview = document.querySelector('.img-preview'); // Corrected class name
+    imgProfilePreview.style.display = 'block';
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(imageProfile.files[0]);
+    fileReader.onload = function(oFREvent) {
+        imgProfilePreview.src = oFREvent.target.result;
+    }
+}
+
+
             function previewVideo() {
                 const video = document.querySelector('#video');
                 const videoPreview = document.querySelector('.video-preview');
+                videoPreview.style.display = 'block';
                 const fileReader = new FileReader();
                 fileReader.readAsDataURL(video.files[0]);
                 fileReader.onload = function(event) {

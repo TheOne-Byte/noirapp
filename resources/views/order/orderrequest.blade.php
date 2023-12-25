@@ -38,7 +38,7 @@
                                 </form>
                                 <form action="{{ route('order.reject', $orderValidation->id) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-danger">Reject</button>
+                                    <button type="submit" class="btn btn-danger" style="margin-top: 6px">Reject</button>
                                 </form>
                             </td>
                         </tr>
