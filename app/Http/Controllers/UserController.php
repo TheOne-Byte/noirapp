@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Schedule;
-use App\Models\EditDisplayed;
 use App\Models\permission;
 use Illuminate\Http\Request;
 use App\Models\AvailableTime;
@@ -75,7 +74,7 @@ class UserController extends Controller
     }
 
 
-
+    //gaperlu
     public function updateSingleUser(Request $request)
     {
         // Validate the request data
@@ -114,6 +113,7 @@ class UserController extends Controller
         return redirect('/updatesingleuser')->with('success', 'Update request submitted successfully. Waiting for admin approval.');
     }
 
+    //hrny gaperlu
     public function showRequestDetails($requestId)
     {
         $roleRequest = permission::find($requestId);

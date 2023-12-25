@@ -113,7 +113,7 @@ class DatabaseSeeder extends Seeder
             'idcardnumber'=>1234567890123454,
             'norekening'=>1234567890123454,
             'idcardstatcode' => "APV",
-            "password" => bcrypt('rafael123')
+            "password" => bcrypt('password')
         ]);
         User::create([
             'name' => 'pujo',
