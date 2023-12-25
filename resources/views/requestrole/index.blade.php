@@ -143,7 +143,7 @@
 
 
                     <div class="form-floating mt-2">
-                        <div class="text-white">
+                        {{-- <div class="text-white">
                             <label for="available_times">Available Times</label>
                         </div>
 
@@ -181,7 +181,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-floating">
                             <input value="{{ $permissions->isEmpty() ? old('norekening') : $permissions[0]->norekening }}"
                                 type="norekening"

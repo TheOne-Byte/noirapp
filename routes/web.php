@@ -128,9 +128,9 @@ Route::resource('/withdrawal', WithdrawalController::class)->middleware('auth')-
 
 
 
-
-Route::get('/updatesingleuser', [UserController::class, 'showUpdateForm'])->name('profile.update');
-Route::put('/updatesingleuser', [UserController::class, 'updateSingleUser']);
+//gaperlu
+// Route::get('/updatesingleuser', [UserController::class, 'showUpdateForm'])->name('profile.update');
+// Route::put('/updatesingleuser', [UserController::class, 'updateSingleUser']);
 
 
 Route::put('/updateavailabletimes', [ScheduleController::class, 'updateSchedule']);

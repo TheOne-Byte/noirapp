@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\cart;
-use App\Models\point;
 use App\Models\top_up;
 use App\Models\User;
 
