@@ -8,10 +8,10 @@
         </div>
     @endif
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-6 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="card-title">Update Available Times</h2>
+                        <h2 class="card-title text-black">Update Available Times</h2>
 
                         <form action="/updateavailabletimes" method="POST" enctype="multipart/form-data">
                             @csrf
