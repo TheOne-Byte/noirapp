@@ -91,10 +91,10 @@
                                 $permissions[0]->imageprofile)
                             {{-- Display the image from permission if available --}}
                             <img src="{{ asset('storage/' . $permissions[0]->imageprofile) }}"
-                                class="img-preview img-fluid mb-3 col-sm-5">
+                                class="img-profile-preview img-fluid mb-3 col-sm-5">
                         @else
                             {{-- Display the image preview if user has filled in the form --}}
-                            <img class="img-preview img-fluid mb-3 col-sm-5">
+                            <img class="img-profile-preview img-fluid mb-3 col-sm-5">
                         @endif
                         <input class="form-control @error('imageprofile') is-invalid @enderror" style="border-radius: 5px"
                             type="file" id="imageprofile" name="imageprofile" onchange="previewImageProfile()">
@@ -103,7 +103,6 @@
                         @enderror
                     </div>
 
-                    <!-- Repeat similar modifications for the other file types -->
 
                     <!-- Code for Game Skill Image -->
                     <div class="mb-3 text-white">
@@ -120,27 +119,47 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="mb-3 text-white">
+
+<!-- Code for Game Skill Video -->
+<div class="mb-3 text-white">
+    <label for="video" class="form-label">Upload Your Game Skill Video</label>
+    @if(isset($permissions) && $permissions->isNotEmpty() && $permissions[0]->statcode === 'APV' && $permissions[0]->video)
+        <video class="d-block w-100 video-preview" controls>
+            <source src="{{ asset('storage/' . $permissions[0]->video) }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    @endif
+    <input class="form-control" style="border-radius: 5px"
+        type="file" id="video" name="video" onchange="previewVideo()">
+    @error('video')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
+
+
+
+                    {{-- <div class="mb-3 text-white">
                         <label for="video" class="form-label">Upload Your Game Skill Video</label>
-                        @if(isset($permissions) && $permissions->isNotEmpty() && $permissions[0]->statcode === 'APV' && $permissions[0]->video)
+                        @if (isset($permissions) && $permissions->isNotEmpty() && $permissions[0]->statcode === 'APV' && $permissions[0]->video)
                             <video class="d-block w-100 video-preview" controls>
                                 <source src="{{ asset('storage/' . $permissions[0]->video) }}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
+                        @else
+                        <video class="d-block w-100 video-preview" controls>        </video>
+                        <!-- Display an empty video element for preview -->
+                            </video>
                         @endif
-                        <input class="form-control @error('video') is-invalid @enderror" style="border-radius: 5px"
-                            type="file" id="video" name="video" onchange="previewVideo()">
+                        <input class="form-control" style="border-radius: 5px" type="file" id="video" name="video"
+                            onchange="previewVideo()">
                         @error('video')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror
-                    </div>
-
-
-
-
-
+                    </div> --}}
 
                     <div class="form-floating mt-2">
                         {{-- <div class="text-white">
@@ -209,29 +228,27 @@
             </main>
         </div> --}}
         <script>
-function previewImage() {
-    const image = document.querySelector('#image');
-    const imgPreview = document.querySelector('.img-preview'); // Change this class name
-    imgPreview.style.display = 'block';
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(image.files[0]);
-    fileReader.onload = function(oFREvent) {
-        imgPreview.src = oFREvent.target.result;
-    }
-}
+            function previewImage() {
+                const image = document.querySelector('#image');
+                const imgPreview = document.querySelector('.img-preview');
+                imgPreview.style.display = 'block';
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(image.files[0]);
+                fileReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+            }
 
             function previewImageProfile() {
-    const imageProfile = document.querySelector('#imageprofile');
-    const imgProfilePreview = document.querySelector('.img-preview'); // Corrected class name
-    imgProfilePreview.style.display = 'block';
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(imageProfile.files[0]);
-    fileReader.onload = function(oFREvent) {
-        imgProfilePreview.src = oFREvent.target.result;
-    }
-}
-
-
+                const imageProfile = document.querySelector('#imageprofile');
+                const imgProfilePreview = document.querySelector('.img-profile-preview');
+                imgProfilePreview.style.display = 'block';
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(imageProfile.files[0]);
+                fileReader.onload = function(oFREvent) {
+                    imgProfilePreview.src = oFREvent.target.result;
+                }
+            }
             function previewVideo() {
                 const video = document.querySelector('#video');
                 const videoPreview = document.querySelector('.video-preview');
