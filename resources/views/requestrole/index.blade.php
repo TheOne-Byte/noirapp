@@ -120,23 +120,27 @@
                         @enderror
                     </div>
 
-<!-- Code for Game Skill Video -->
-<div class="mb-3 text-white">
-    <label for="video" class="form-label">Upload Your Game Skill Video</label>
-    @if(isset($permissions) && $permissions->isNotEmpty() && $permissions[0]->statcode === 'APV' && $permissions[0]->video)
-        <video class="d-block w-100 video-preview" controls>
-            <source src="{{ asset('storage/' . $permissions[0]->video) }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    @endif
-    <input class="form-control" style="border-radius: 5px"
-        type="file" id="video" name="video" onchange="previewVideo()">
-    @error('video')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-    @enderror
-</div>
+                    <!-- Code for Game Skill Video -->
+                    <div class="mb-3 text-white">
+                        <label for="video" class="form-label">Upload Your Game Skill Video</label>
+                        @if(isset($permissions) && $permissions->isNotEmpty() && $permissions[0]->statcode === 'APV' && $permissions[0]->video)
+                            <video class="d-block w-100 video-preview" controls>
+                                <source src="{{ asset('storage/' . $permissions[0]->video) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        @else
+                            <video class="d-block w-100 video-preview" controls style="display: none;">
+                                <!-- Display an empty video element for preview -->
+                            </video>
+                        @endif
+                        <input class="form-control" style="border-radius: 5px"
+                            type="file" id="video" name="video" onchange="previewVideo()">
+                        @error('video')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
 
 
 
@@ -249,6 +253,7 @@
                     imgProfilePreview.src = oFREvent.target.result;
                 }
             }
+
             function previewVideo() {
                 const video = document.querySelector('#video');
                 const videoPreview = document.querySelector('.video-preview');
