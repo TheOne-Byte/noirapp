@@ -19,8 +19,8 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('buyer_id');
             $table->foreign('buyer_id')->references('id')->on('users');
-            $table->string('header');
-            $table->string('detail');
+            $table->string('header',20);
+            $table->string('detail',100);
             $table->string('image');
             $table->timestamps();
         });

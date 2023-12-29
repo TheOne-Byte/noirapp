@@ -217,7 +217,7 @@
                         </div>
 
                     </div>
-                    <button class="btn btn-primary w-50" type="submit" id="register">Request now</button>
+                    <button class="btn btn-primary w-50" style="margin-top:2%; margin-left: 25%; margin-bottom: 2%" type="submit" id="register">Request now</button>
                 </form>
             </main>
         </div>

@@ -16,8 +16,11 @@ return new class extends Migration
         Schema::create('order_validations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('buyer_id');
+            $table->foreign('buyer_id')->references('id')->on('users');
             $table->unsignedBigInteger('seller_id');
+            $table->foreign('seller_id')->references('id')->on('users');
             $table->unsignedBigInteger('schedule_id');
+            $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade'); // Assuming you have a 'schedules' table
             $table->decimal('price', 8, 2);
             $table->enum('status', ['REQ', 'APV', 'RJC']);
             $table->timestamps();
