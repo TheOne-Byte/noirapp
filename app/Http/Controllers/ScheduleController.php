@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use App\Models\AvailableTime;
+use Illuminate\Support\Facades\DB;
 
 class ScheduleController extends Controller
 {
@@ -92,8 +93,14 @@ class ScheduleController extends Controller
 
     public function showEditSchedule()
     {
+        $user = auth()->user(); // Get the authenticated user
+
+        // Fetch the user's available times from the database
+        $userAvailableTimes = AvailableTime::where('user_id', $user->id)->get();
+
         $active = 'editschedule';
-        return view('schedule.editavailabletimes', compact('active')); // Pass the $active variable to the view
+
+        return view('schedule.editavailabletimes', compact('userAvailableTimes', 'active'));
     }
 
     public function updateSchedule(Request $request)
