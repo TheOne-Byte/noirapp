@@ -19,10 +19,10 @@ return new class extends Migration
         });
 
         Schema::table('top_ups', function ($table) {
-            $table->string('username');
+            $table->string('username',50);
             $table->integer('point_top_up');
-            $table->string('payment_method');
-            $table->string('status');
+            $table->string('payment_method',50);
+            $table->string('status',10);
         });
     }
 

@@ -46,7 +46,7 @@
           @enderror
         </div>
         
-        <button class="btn btn-primary w-50" type="submit" id="register">Register</button>
+        <button class="btn btn-primary w-50" style="margin-left: 25%" type="submit" id="register">Register</button>
       </form>
 
       <small class="d-block text-center mt-3 text-white">have an account?<a href="/login">Login Here</a></small>
