@@ -15,20 +15,19 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('excerpt')->nullable();
-            $table->string('body')->nullable();
+            $table->string('name',50);
+            $table->string('username',50)->unique();
+            $table->string('excerpt',50)->nullable();
+            $table->string('body',255)->nullable();
             $table->decimal('price')->nullable();
-            $table->string('email')->unique();
+            $table->string('email',50)->unique();
             $table->foreignId('category_id')->nullable();
             $table->foreignId('permission_id')->nullable();
             $table->foreignId('role_id');
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->bigInteger('idcardnumber')->nullable();
             $table->bigInteger('norekening')->nullable();
-            $table->string('idcardstatcode');
+            $table->string('idcardstatcode',5);
             $table->integer('points')->nullable();
             $table->boolean('ban_status')->nullable()->default(false);
             $table->integer('report_times')->nullable();

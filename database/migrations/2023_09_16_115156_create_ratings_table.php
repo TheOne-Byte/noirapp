@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('seller_id')->nullable();
             $table->foreignId('transaction_id')->nullable();
             $table->integer('rating');
-            $table->string('comment');
+            $table->string('comment',25);
             $table->timestamps();
         });
     }

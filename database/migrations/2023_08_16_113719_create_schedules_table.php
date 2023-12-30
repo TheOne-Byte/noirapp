@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->string('start_time')->nullable();
             $table->string('end_time')->nullable();
+            $table->boolean('is_active')->nullable()->default(true);
             $table->timestamps();
             $table->unsignedBigInteger('buyer_id');
             $table->foreign('buyer_id')->references('id')->on('users');

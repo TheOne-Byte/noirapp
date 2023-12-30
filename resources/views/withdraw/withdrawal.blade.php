@@ -22,11 +22,11 @@
         </div>
         <div class="text-white">
             <label for="Withdrawal">Your Gatcha Balance Now : {{ auth()->user()->points == null | 0 ? 0 : auth()->user()->points }}</label>
+            <br>
+            <label for="Withdrawal">Your Balance Now : {{ auth()->user()->points }}</label>
+
         </div>
         <div class="col-md-4 mt-5 text-center">
-            <div class="form-floating">
-                <label for="Withdrawal">Your Balance Now : {{ auth()->user()->points }}</label>
-            </div>
             <div class="form-floating">
                 <input value="{{ old('Withdrawal') }}" type="number" class="mb-2 form-control  @error('Withdrawal') is-invalid @enderror rounded-bottom" id="Withdrawal" placeholder="Withdrawal" name="Withdrawal">
                 <label for="Withdrawal">Withdrawal number</label>

@@ -1,8 +1,9 @@
 @extends('layouts/main')
 
 @section('container')
-    <div class="container mt-5">
-        <h2 class="text-center text-title-menu">Order Requests</h2>
+    <div class="container mt-4">
+        <h1 class="h2-title-text mb-4">ORDER REQUEST</h1>
+        <hr>
 
         @if ($orderValidations->isEmpty())
             <p class="text-center text-danger">No order requests available.</p>
@@ -10,7 +11,7 @@
             <table class="table table-bordered table-white-text text-white">
                 <thead>
                     <tr>
-                        <th>Order ID</th>
+                        <th>#</th>
                         <th>Buyer</th>
                         <th>Price</th>
                         <th>Schedule</th> <!-- Ganti Quantity dengan Schedule -->
@@ -20,8 +21,7 @@
                 </thead>
                 <tbody>
                     @foreach ($orderValidations as $orderValidation)
-                        <tr>
-                            <td>{{ $orderValidation->id }}</td>
+                            <td>{{ $loop ->iteration }}</td>
                             <td>{{ $orderValidation->buyer->name }}</td>
                             <td>{{ $orderValidation->price }}</td>
                             <td>
