@@ -11,7 +11,7 @@
             <table class="table table-bordered table-white-text text-white">
                 <thead>
                     <tr>
-                        <th>Order ID</th>
+                        <th>#</th>
                         <th>Buyer</th>
                         <th>Price</th>
                         <th>Schedule</th> <!-- Ganti Quantity dengan Schedule -->
@@ -21,8 +21,7 @@
                 </thead>
                 <tbody>
                     @foreach ($orderValidations as $orderValidation)
-                        <tr>
-                            <td>{{ $orderValidation->id }}</td>
+                            <td>{{ $loop ->iteration }}</td>
                             <td>{{ $orderValidation->buyer->name }}</td>
                             <td>{{ $orderValidation->price }}</td>
                             <td>

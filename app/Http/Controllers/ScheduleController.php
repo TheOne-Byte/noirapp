@@ -86,7 +86,7 @@ class ScheduleController extends Controller
 
     public function sellerSchedules()
     {
-        $userSchedules = Schedule::where('user_id',auth()->user()->id)->get();
+        $userSchedules = Schedule::where('user_id',auth()->user()->id)->where('is_active',true)->get();
 
         return view('schedule.sellerschedule', ['schedules' => $userSchedules,'active' => 'userschedule']);
     }
