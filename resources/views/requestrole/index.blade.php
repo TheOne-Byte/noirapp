@@ -124,14 +124,18 @@
                     <div class="mb-3 text-white">
                         <label for="video" class="form-label">Upload Your Game Skill Video</label>
                         @if(isset($permissions) && $permissions->isNotEmpty() && $permissions[0]->statcode === 'APV' && $permissions[0]->video)
-                            <video class="d-block w-100 video-preview" controls>
-                                <source src="{{ asset('storage/' . $permissions[0]->video) }}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                            <div class="video-container">
+                                <video class="d-block w-100 video-preview" controls>
+                                    <source src="{{ asset('storage/' . $permissions[0]->video) }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
                         @else
-                            <video class="d-block w-100 video-preview" controls style="display: none;">
-                                <!-- Display an empty video element for preview -->
-                            </video>
+                            <div class="video-container" style="display: none;">
+                                <video class="d-block w-100 video-preview" controls>
+                                    <!-- Display an empty video element for preview -->
+                                </video>
+                            </div>
                         @endif
                         <input class="form-control" style="border-radius: 5px"
                             type="file" id="video" name="video" onchange="previewVideo()">
@@ -141,6 +145,10 @@
                             </div>
                         @enderror
                     </div>
+
+
+
+
 
 
 
@@ -255,15 +263,35 @@
             }
 
             function previewVideo() {
-                const video = document.querySelector('#video');
-                const videoPreview = document.querySelector('.video-preview');
-                videoPreview.style.display = 'block';
-                const fileReader = new FileReader();
-                fileReader.readAsDataURL(video.files[0]);
-                fileReader.onload = function(event) {
-                    videoPreview.src = event.target.result;
-                }
+    const video = document.querySelector('#video');
+    const videoPreviewContainer = document.querySelector('.video-container');
+
+    console.log('Video Element:', video);  // Log the video element
+
+    if (video && videoPreviewContainer) {
+        console.log('Video Preview Container:', videoPreviewContainer);  // Log the video preview container
+
+        videoPreviewContainer.style.display = 'block';
+
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(video.files[0]);
+        fileReader.onload = function(event) {
+            console.log('FileReader Result:', event.target.result);  // Log the result of FileReader
+
+            const videoPreview = videoPreviewContainer.querySelector('.video-preview');
+            if (videoPreview) {
+                videoPreview.src = event.target.result;
+            } else {
+                console.error('Video Preview element not found.');
             }
+        }
+    } else {
+        console.error('Video element or Video Preview container not found.');
+    }
+}
+
+
+
         </script>
     </div>
 @endsection
