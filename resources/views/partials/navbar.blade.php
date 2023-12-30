@@ -31,15 +31,27 @@
                             <i class="bi bi-cart-fill" style="color: white"></i>
                         </a>
                     </li>
-                    <!-- 
-                        <li class="nav-item">
-                            <a class="nav-link {{ $active === 'top_up' ? 'active' : '' }}" href="/top_up">Top Up</a>
-                        </li> -->
+
+                    <li class="nav-item d-flex align-items-center me-lg-2 btn">
+                        <img src="/img/gatcha.png" style="height:1.25rem" alt="" class="me-2" />
+                        <a href="/top_up" style="text-decoration: none; color: white" class="me-2">
+                            @if (auth()->user()->points)
+                            {{ auth()->user()->points }} POINT
+                            @else
+                            0 POINT
+                            @endif
+                        </a>
+                        <a class="{{ $active === 'top_up' ? 'active' : '' }}" href="/top_up">
+                            <i class="bi bi-plus-circle-fill" style="color: white"></i>
+                        </a>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Welcome back, {{ auth()->user()->name }}
                         </a>
+
                         <ul class="dropdown-menu position-absolute">
                             @if (in_array(auth()->user()->role_id, [1, 2]))
                             <!-- Periksa role_id -->
@@ -142,16 +154,6 @@
                                 </form>
                             </li>
                         </ul>
-                    </li>
-                    <li class="nav-item mt-2">
-                        <img src="/img/gatcha.png" style="height:30px" alt="" />
-                        <a href="/top_up" style="text-decoration: none; color: white">
-                            @if (auth()->user()->points)
-                            {{ auth()->user()->points }} POINT
-                            @else
-                            0 POINT
-                            @endif
-                        </a>
                     </li>
                 </ul>
                 @else
