@@ -545,6 +545,9 @@ hr {
 /* .form-signin .form-floating:focus-within {
   z-index: 2;
 } */
+.form-floating>label::after{
+    background-color: transparent !important;
+}
 
 .form-signin input[type="email"] {
     margin-bottom: 5px;
