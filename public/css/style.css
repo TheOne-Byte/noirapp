@@ -7,6 +7,10 @@
     font-weight: 400;
 }
 
+body{
+    overflow-x: hidden;
+}
+
 .content-3-4 .btn:focus,
 .content-3-4 .btn:active {
     outline: none !important;
@@ -464,11 +468,10 @@ body {
     /* background-color: #ee7828; */
 }
 
-h3 {
+h3, h4 {
     color: white;
-    font-weight: bold;
-    font-family: "Josefin Sans", sans-serif;
-    font-family: "Quicksand", sans-serif;
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif;
 }
 
 h2 {
@@ -512,6 +515,8 @@ hr {
     /* border-radius: 16px; */
     color: white;
 }
+
+
 .btn-chat {
     border: solid 2px #786778;
     border-radius: 16px;
@@ -541,6 +546,9 @@ hr {
 /* .form-signin .form-floating:focus-within {
   z-index: 2;
 } */
+.form-floating>label::after{
+    background-color: transparent !important;
+}
 
 .form-signin input[type="email"] {
     margin-bottom: 5px;
@@ -559,10 +567,6 @@ hr {
 }
 
 #login {
-    margin-left: 120px;
-}
-
-#register {
     margin-left: 120px;
 }
 
@@ -671,4 +675,9 @@ hr {
 }
 .btn:hover{
     background-color: #f57084;
+}
+.btn:active, .btn:focus-visible{
+    background-color: #fe536d !important;
+    border-color: #fe536d !important;
+    box-shadow: none;
 }
