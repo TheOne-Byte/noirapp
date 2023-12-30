@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark position-sticky top-0">
-    <div class="container-fluid px-3 d-flex">
+    <div class="container-fluid ps-3 d-flex">
         <div class="d-flex align-items-center justify-content-center px-lg-3">
             <a class="navbar-brand text-center mx-0" href="/home">NOIR</a>
         </div>
@@ -25,7 +25,7 @@
 
                 @auth
                 <ul
-                    class="navbar-nav d-flex flex-column flex-lg-row justify-items-center align-items-start align-items-lg-center px-2">
+                    class="navbar-nav d-flex flex-column flex-lg-row justify-items-center align-items-start align-items-lg-center ps-2 h-100">
                     <li class="nav-item d-flex align-items-center mb-2 mb-lg-0 me-lg-2 btn">
                         <a href="/cart/{{ auth()->user()->username }}">
                             <i class="bi bi-cart-fill" style="color: white"></i>

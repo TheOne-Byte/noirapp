@@ -468,11 +468,10 @@ body {
     /* background-color: #ee7828; */
 }
 
-h3 {
+h3, h4 {
     color: white;
-    font-weight: bold;
-    font-family: "Josefin Sans", sans-serif;
-    font-family: "Quicksand", sans-serif;
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif;
 }
 
 h2 {
@@ -516,6 +515,8 @@ hr {
     /* border-radius: 16px; */
     color: white;
 }
+
+
 .btn-chat {
     border: solid 2px #786778;
     border-radius: 16px;
@@ -674,4 +675,9 @@ hr {
 }
 .btn:hover{
     background-color: #f57084;
+}
+.btn:active, .btn:focus-visible{
+    background-color: #fe536d !important;
+    border-color: #fe536d !important;
+    box-shadow: none;
 }
