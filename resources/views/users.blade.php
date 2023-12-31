@@ -3,7 +3,8 @@
 
 {{-- @dd($users[0]->permissions) --}}
 @if ($users->count())
-<div class="card mb-3 text-center mx-3 my-3 user-card">
+<div class="container">
+<div class="card mb-3 text-center my-3 user-card p-0">
 
     @if ($users[0]->imageprofile)
     <div style="max-height:350px; overflow:hidden;">
@@ -43,8 +44,9 @@
         </a>
     </div>
 </div>
+</div>
 
-<div class="container-fluid mx-1">
+<div class="container">
     <div class="row">
         @foreach ($users->skip(1) as $user)
         <div class="col-md-4 mb-3">
