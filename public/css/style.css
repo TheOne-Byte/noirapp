@@ -681,3 +681,7 @@ hr {
     border-color: #fe536d !important;
     box-shadow: none;
 }
+
+.crt-at-small-text{
+    font-size:medium;
+}
