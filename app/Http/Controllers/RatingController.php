@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\rating;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -33,7 +34,7 @@ class RatingController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -45,9 +46,9 @@ class RatingController extends Controller
     public function store(Request $request)
     {
         $transaction = Transaction::where('slug', $request->slug)->first();
-        
+
         if($transaction->already_review == 1) {
-            return redirect('/history')->with('error','You Already Review This!');    
+            return redirect('/history')->with('error','You Already Review This!');
         }
 
         $validated = $request->validate([
@@ -62,7 +63,7 @@ class RatingController extends Controller
         rating::create($validated);
         Transaction::where('id', $transaction->id)->update(array('already_review' => 1));
 
-        return redirect('/history')->with('success','Review Has Been Saved!');    
+        return redirect('/history')->with('success','Review Has Been Saved!');
 
     }
 
@@ -72,9 +73,16 @@ class RatingController extends Controller
      * @param  \App\Models\rating  $rating
      * @return \Illuminate\Http\Response
      */
-    public function show(rating $rating)
+    public function show(User $user)
     {
-        //
+            // dd($scheduleCount);
+            return view('rating.detail', [
+                'active' => 'report_detail',
+                'user' => $user,
+                'ratings'=> Rating::where('seller_id',$user->id)->get()
+                // Post::find($id)
+
+            ]);
     }
 
     /**

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('buyer_id')->nullable();
-            $table->foreignId('seller_id')->nullable();
+            $table->foreignId('buyer_id')->nullable()->references('id')->on('users');
+            $table->foreignId('seller_id')->nullable()->references('id')->on('users');
             $table->foreignId('transaction_id')->nullable();
             $table->integer('rating');
             $table->string('comment');
