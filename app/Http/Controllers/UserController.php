@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\rating;
+use App\Models\category;
 use App\Models\Schedule;
 use App\Models\permission;
 use Illuminate\Http\Request;
 use App\Models\AvailableTime;
-use App\Models\category;
-use Illuminate\Support\Facades\Auth;
+use App\Models\EditDisplayed;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -24,6 +26,19 @@ class UserController extends Controller
         $availableTimes = AvailableTime::where('user_id', $user->id)->get();
         $availableDays = $availableTimes->pluck('day')->unique()->values()->toArray();
         // $schedules = Schedule::where('buyer_id',auth()->user()->id)->get();
+        $ratings = rating::where('seller_id', $user->id)->get();
+
+        // Hitung total rating yang ada
+        $totalRating = 0;
+        $totalUsers = count($ratings);
+
+        foreach ($ratings as $rating) {
+            $totalRating += $rating->rating;
+        }
+
+        // Hitung rata-rata rating
+        $averageRating = $totalUsers > 0 ? $totalRating / $totalUsers : 0;
+
         if(auth()->user() == null){
             return redirect('/login');
         }
@@ -49,6 +64,7 @@ class UserController extends Controller
             'user' => $user->load('category', 'role', 'cart', 'permission'),
             'permissions' => $permissions,
             'categories' => $user->category,
+            'averageRating' => $averageRating
         ]);
 
     }
