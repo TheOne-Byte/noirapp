@@ -45,7 +45,7 @@
     </div>
 
     <div class="w-100 d-flex justify-content-end">
-        <button type="submit" class="btn btn-warning mt-3"><i class="fa fa-angle-left"></i> 
+        <button type="submit" class="btn btn-warning mt-3"><i class="fa fa-angle-left"></i>
             Continue Shopping
             <i class="bi bi-caret-right-fill"></i>
         </button>
@@ -58,7 +58,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="scheduleModalLabel">Schedule Meeting</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -87,9 +87,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="saveTempSchedule(event)">Save
-                        changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveTempSchedule(event)">Save changes</button>
                 </div>
             </form>
         </div>
@@ -97,6 +96,15 @@
 </div>
 
 <script>
+    var closeModalBtn = document.getElementById('closeModalBtn');
+
+        // Tambahkan event listener untuk menutup modal saat tombol Close diklik
+    closeModalBtn.addEventListener('click', function() {
+        var modal = document.getElementById('scheduleModal');
+        var bootstrapModal = new bootstrap.Modal(modal); // Pastikan Anda memiliki versi Bootstrap yang mendukung 'Modal'
+
+        bootstrapModal.hide(); // Menutup modal
+    });
     function saveTempSchedule(event) {
         event.preventDefault(); // Prevent default form submission
 
