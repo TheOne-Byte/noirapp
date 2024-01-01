@@ -15,7 +15,7 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Nama Kategori</th>
+            <th scope="col">Category Name</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
