@@ -96,15 +96,7 @@
 </div>
 
 <script>
-    var closeModalBtn = document.getElementById('closeModalBtn');
 
-        // Tambahkan event listener untuk menutup modal saat tombol Close diklik
-    closeModalBtn.addEventListener('click', function() {
-        var modal = document.getElementById('scheduleModal');
-        var bootstrapModal = new bootstrap.Modal(modal); // Pastikan Anda memiliki versi Bootstrap yang mendukung 'Modal'
-
-        bootstrapModal.hide(); // Menutup modal
-    });
     function saveTempSchedule(event) {
         event.preventDefault(); // Prevent default form submission
 
