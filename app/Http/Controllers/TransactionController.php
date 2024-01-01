@@ -39,7 +39,9 @@ class TransactionController extends Controller
         $user->points += $transaction->price;
         $user->save();
         $transaction->status = 'DONE';
-        $schedule->delete();
+        
+        $schedule->is_active = false;
+        $schedule->save();
         $transaction->save();
 
         return redirect()->route('transactions.index')->with('success', 'Transaction marked as done.');

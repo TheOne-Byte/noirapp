@@ -1,9 +1,9 @@
 @extends('layouts/main')
 
 @section('container')
-<div class="container">
-    <h2 class="text-warning text-center">My Cart</h2>
-
+<div class="container mt-4">
+<h1 class="h2-title-text mb-4">MY CART</h1>
+      <hr>
     @if(session()->has('success'))
         <div class="alert alert-success" role="alert">
             {{ session('success') }}
@@ -65,11 +65,8 @@
         </div>
     </div>
 
-    <div class="text-center">
-        <h3 class="text-warning">Total Token: <span id="grand-total">{{ number_format($totalPrice, 2) }}</span></h3>
-    </div>
-
-    <div class="text-center">
+    <div class="text-center d-flex justify-content-between align-items-center mt-3">
+        <h4 class="text">Total Token: <span id="grand-total">{{ number_format($totalPrice, 2) }}</span></h4>
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#orderModal">Place Order</button>
     </div>
     <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">

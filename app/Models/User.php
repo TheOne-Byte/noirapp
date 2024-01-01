@@ -83,10 +83,10 @@ class User extends Authenticatable
         return $this->hasMany(Schedule::class);
     }    
     
-    public function updateSingleBlade()
-    {
-        return $this->hasOne(EditDisplayed::class, 'user_id');
-    }
+    // public function updateSingleBlade()
+    // {
+    //     return $this->hasOne(EditDisplayed::class, 'user_id');
+    // }
 
 
 }

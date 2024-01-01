@@ -2,8 +2,9 @@
 @extends('layouts.main')
 
 @section('container')
-<div class="container mt-5">
-    <h2 class="text-center">Transaction</h2>
+<div class="container mt-4">
+    <h1 class="h2-title-text mb-4">TRANSACTION</h1>
+    <hr>
 
     @if(session()->has('success'))
         <div class="alert alert-success">
@@ -13,7 +14,8 @@
     {{-- @if ($transactions->isEmpty())
             <p class="text-center text-danger">No transaction available.</p>
     @else --}}
-    <table class="table text-white">
+    <div class="card overflow-hidden">
+    <table class="table text-white card-body">
         <thead>
             <tr>
                 <th>#</th>
@@ -35,6 +37,8 @@
             @endforeach
         </tbody>
     </table>
+    </div>
+
     {{-- @endif --}}
 </div>
 @endsection

@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('imageprofile');
             $table->string('image');
             $table->string('video');
-            $table->string('norekening');
-            $table->string('statcode');
-            $table->string('body');
+            $table->bigInteger('norekening');
+            $table->string('statcode',5);
+            $table->string('body',100);
             $table->timestamps();
         });
     }

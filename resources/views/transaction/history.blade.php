@@ -1,7 +1,10 @@
 @extends('layouts.main')
 
-@section('container')
-    <h2 class="text-center">Transaction History</h2>
+@section('container')`
+<div class="container">
+<h1 class="h2-title-text mb-4">TRANSACTION HISTORY</h1>
+    <hr>
+
     @if(session()->has('success'))
     <div class="alert alert-success" role="alert">
         {{ session('success') }}
@@ -48,4 +51,5 @@
         </tbody>
     </table>
     @endif
+</div>
 @endsection

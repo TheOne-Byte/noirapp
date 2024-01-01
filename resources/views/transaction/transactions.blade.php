@@ -1,8 +1,9 @@
 @extends('layouts.main')
 
 @section('container')
-<div class="container mt-5">
-    <h2 class="text-center">Transaction</h2>
+<div class="container mt-4">
+    <h1 class="h2-title-text mb-4">ORDER HISTORY</h1>
+    <hr>
 
     @if(session()->has('success'))
         <div class="alert alert-success">
