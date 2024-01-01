@@ -49,6 +49,15 @@
             height: 400px;
             object-fit: cover;
         }
+        .filled-star {
+            font-size: 24px; /* Ukuran bintang yang diisi */
+            color: yellow; /* Warna bintang saat diisi */
+        }
+
+        .empty-star {
+            font-size: 24px; /* Ukuran bintang kosong */
+            color: gray; /* Warna bintang kosong */
+        }
     </style>
 
     <div class="container">
@@ -199,6 +208,26 @@
                         Your browser does not support the video tag.
                     </video>
                 @endif
+
+                <p class="mt-4"
+                style="font-size: 2rem; color:orange; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
+                Rating</p>
+                <hr>
+                <div>
+                    @php
+                        $fullStars = floor($averageRating); // Bintang penuh
+                        $emptyStars = 5 - $fullStars; // Bintang kosong (total bintang - bintang penuh)
+                        $username = $user->username;
+                    @endphp
+
+                    @for ($i = 0; $i < $fullStars; $i++)
+                        <a href="/rating-detail/{{ $username }}"><i class="bi bi-star-fill filled-star" style="color: yellow;"></i></a>
+                    @endfor
+
+                    @for ($i = 0; $i < $emptyStars; $i++)
+                        <a href="/rating-detail/{{ $username }}"><i class="bi bi-star empty-star"></i></a>
+                    @endfor
+                </div>
             </div>
         </div>
     </div>

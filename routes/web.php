@@ -153,3 +153,5 @@ Route::get('/report-detail/{user:username}', [AdminReportController::class, 'ind
 
 Route::post('/report/{id}/ban', [ReportController::class, 'ban'])->name('report.ban');
 Route::post('/report/{id}/unban', [ReportController::class, 'unban'])->name('report.unban');
+
+Route::get('/rating-detail/{user:username}', [RatingController::class, 'show'])->name('rating.detail');
