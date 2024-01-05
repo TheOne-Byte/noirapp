@@ -214,6 +214,7 @@
                 Rating</p>
                 <hr>
                 <div>
+
                     @php
                         $roundedRating = floor($averageRating * 2) / 2; // Bulatkan ke setengah bintang terdekat ke bawah
                         $fullStars = floor($roundedRating); // Bintang penuh
