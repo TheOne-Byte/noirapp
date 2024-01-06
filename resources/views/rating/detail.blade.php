@@ -24,12 +24,16 @@
         color: #555;
     }
 </style>
-<div class="rating-details">
-    <h1 class="title text-white">Detail Rating</h1>
+<div class="rating-details"> 
+    <h3 class="title text-white text-center">Ratings detail</h3>
     @foreach($ratings as $rating)
         <div class="rating-card">
             <div class="user-name">{{ $rating->buyer->name }}</div>
             <div class="comment">{{ $rating->comment }}</div>
+            @for ($i = 0; $i < $rating->rating; $i++)
+            <i class="bi bi-star-fill filled-star" style="color: yellow;"></i>
+            @endfor
+
         </div>
     @endforeach
 </div>
