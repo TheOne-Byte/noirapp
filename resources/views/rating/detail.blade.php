@@ -25,7 +25,7 @@
     }
 </style>
 <div class="rating-details"> 
-    <h3 class="title text-white text-center">Rating detail</h3>
+    <h3 class="title text-white text-center">Ratings detail</h3>
     @foreach($ratings as $rating)
         <div class="rating-card">
             <div class="user-name">{{ $rating->buyer->name }}</div>
