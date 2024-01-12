@@ -16,6 +16,8 @@
         }
     </style>
     <div class="row justify-content-center">
+        <p class="text-right" id="registertext">Role Request Status : {{ $status }}</p>
+
         <div class="col-lg-5">
             @if (session()->has('success'))
                 <div class="alert alert-success col-lg-5" role="alert">

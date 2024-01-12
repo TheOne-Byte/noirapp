@@ -66,7 +66,7 @@
     </div>
 
     <div class="text-center d-flex justify-content-between align-items-center mt-3">
-        <h4 class="text">Total Token: <span id="grand-total">{{ number_format($totalPrice, 2) }}</span></h4>
+        <h4 class="text">Total gacha point: <span id="grand-total">{{ number_format($totalPrice, 2) }}</span></h4>
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#orderModal">Place Order</button>
     </div>
     <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
