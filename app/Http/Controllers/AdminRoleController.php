@@ -104,7 +104,12 @@ class AdminRoleController extends Controller
     public function destroy($id)
     {
         $permission = permission::findOrFail($id);
-        $permission->delete();
+        $validatedpermission['statcode'] = "RJC";
+
+        
+        permission::where('id',$id)
+        ->update($validatedpermission);
+
         AvailableTime::where('user_id', $permission->user_id)->delete();
 
         return redirect('/dashboard')->with('success', 'Role request deleted successfully');

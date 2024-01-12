@@ -27,13 +27,26 @@ class RoleRequestController extends Controller
         $permissions = DB::table('permissions')
             ->where('user_id', $user->id)
             ->where('statcode', 'APV')
+            ->orderBy('created_at','desc')
             ->get(['id', 'category_id', 'role_id', 'user_id', 'price', 'imageprofile', 'image', 'video', 'norekening', 'statcode', 'body']);
-
+        $permissions2 =  permission::orderBy('created_at','desc')->where('user_id', $user->id)->first();
         // Available times data
         $availableTimes = DB::table('available_times')
             ->where('user_id', $user->id)
             ->get(['id', 'user_id', 'day', 'start_time', 'end_time']);
 
+        $status = '';
+        if($permissions2) {
+            if($permissions2->statcode == 'REQ'){
+                $status = 'Waiting to be accepted by administrator';
+            }
+            elseif($permissions2->statcode == 'APV'){
+                $status = 'Your previous role request has been accepted by administrator';
+            }
+            elseif($permissions2->statcode == 'RJC'){
+                $status = 'Your previous role request has been rejected by administrator';
+            }
+        }
         return view('requestrole.index', [
             "title" => "request role",
             'active' => 'request role',
@@ -41,6 +54,7 @@ class RoleRequestController extends Controller
             'roles' => role::whereNotIn('name', ['user', 'admin'])->get(),
             'permissions' => $permissions,
             'availableTimes' => $availableTimes,
+            'status' => $status
         ]);
     }
 
@@ -64,7 +78,8 @@ class RoleRequestController extends Controller
    public function store(Request $request)
 {
     $user = auth()->user();
-    $data = permission::where('user_id', $user->id)->first();
+    $lastdatastat = permission::where('user_id', $user->id)->orderBy('created_at','desc')->first();
+    $dataREQ = permission::where('user_id', $user->id)->where('statcode','REQ')->first();
 
     $validated = $request->validate([
         'role_id' => 'required',
@@ -92,26 +107,25 @@ class RoleRequestController extends Controller
     $validated['user_id'] = $user->id;
     $validated['statcode'] = "REQ";
 
+    if ($dataREQ) {
+        return redirect('/role/request')->with('danger', 'You Already Have Pending Request!');
+    } 
     // Check if there is an existing record with statcode "APV" for the same user
-    if ($data && $data->statcode === "APV") {
+    else if ($lastdatastat && $lastdatastat->statcode === "APV") {
         // Update the existing record
-        permission::where('id', $data->id)->update($validated);
+        permission::create($validated);
         return redirect('/role/request')->with('success', 'Changing Role Request Has Been Submitted!');
+    }
+    else if ($lastdatastat && $lastdatastat->statcode === "RJC") {
+        // Use updateOrCreate instead of update
+        permission::create($validated);
+        return redirect('/role/request')->with('success', 'Role Request Again Has Been Submitted!');
     }
 
     // Check other conditions and update or create permission records accordingly
-    if ($data) {
-        if ($data->statcode === "REQ") {
-            return redirect('/role/request')->with('danger', 'You Already Have Pending Request!');
-        } else if ($data->statcode === "RJC") {
-            // Use updateOrCreate instead of update
-            permission::updateOrCreate(
-                ['user_id' => $user->id, 'statcode' => 'REQ'],
-                $validated
-            );
-            return redirect('/role/request')->with('success', 'Role Request Again Has Been Submitted!');
-        }
-    }
+    // if ($data) {
+    
+    // }
         foreach ($request->input('available_days', []) as $day => $value) {
             AvailableTime::updateOrCreate(
                 ['user_id' => auth()->user()->id, 'day' => $day],
@@ -123,10 +137,7 @@ class RoleRequestController extends Controller
 
     if (!$existingRecord) {
         // Create a new permission record only if no existing record with the same 'norekening' is found
-        permission::updateOrCreate(
-            ['user_id' => $user->id, 'statcode' => 'REQ'],
-            $validated
-        );
+        permission::create($validated);
 
         // Update or create AvailableTime records
 
