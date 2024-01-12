@@ -31,7 +31,7 @@
                             <div class="col-sm-3 hidden-xs"><img src="http://placehold.it/100x100" alt="..."
                                     class="img-responsive" /></div>
                             <div class="col-sm-9">
-                                <h4 class="nomargin">{{ $user->role->name }}</h4>
+                                <h4 class="nomargin text-black">{{ $user->role->name }}</h4>
                                 <p>{{ $user->username }}</p>
                             </div>
                         </div>

@@ -23,10 +23,10 @@
                     <th scope="col">Username</th>
                     <th scope="col">Game Category</th>
                     <th scope="col">Role</th>
-                    <th scope="col">Nomor Rekening</th>
-                    <th scope="col">Image Profile</th>
-                    <th scope="col">Image Skill</th>
-                    <th scope="col">Video</th>
+                    <th scope="col">Id card number</th>
+                    <th scope="col">Profile image</th>
+                    <th scope="col">Skill image</th>
+                    <th scope="col">Skill video</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>

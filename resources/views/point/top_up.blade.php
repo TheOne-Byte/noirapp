@@ -154,7 +154,7 @@
                                     <h4
                                         class="title-caption text-white d-flex flex-lg-row flex-column align-items-center justify-content-lg-start justify-content-center">
                                         <select class="form-select" aria-label="Default select example" name="point_top_up">
-                                            <option selected>Silahkan Pilih Point</option>
+                                            <option selected>Gacha point</option>
                                             <option value="50">50 Point</option>
                                             <option value="100">100 Point</option>
                                             <option value="150">150 Point</option>
@@ -166,13 +166,13 @@
                                 </li>
                                 <li class="list-unstyled" style="margin-bottom: 2rem">
                                     <p class="text-caption mb-2">
-                                        Metode Pembayaran
+                                        Payment method
                                     </p>
                                     <h4
                                         class="title-caption text-white d-flex flex-lg-row flex-column align-items-center justify-content-lg-start justify-content-center">
                                         <select class="form-select" aria-label="Default select example"
                                             name="payment_method">
-                                            <option selected>Silahkan pilih Metode pembayaran</option>
+                                            <option selected>Please choose payment method!</option>
                                             <option value="bca">BCA</option>
                                             <option value="mandiri">Mandiri</option>
                                             <option value="gopay">Gopay</option>
