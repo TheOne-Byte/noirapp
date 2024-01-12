@@ -75,77 +75,82 @@ class RoleRequestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-   public function store(Request $request)
-{
-    $user = auth()->user();
-    $lastdatastat = permission::where('user_id', $user->id)->orderBy('created_at','desc')->first();
-    $dataREQ = permission::where('user_id', $user->id)->where('statcode','REQ')->first();
+    public function store(Request $request)
+    {
+        $user = auth()->user();
+        $lastdatastat = permission::where('user_id', $user->id)->orderBy('created_at','desc')->first();
+        $dataREQ = permission::where('user_id', $user->id)->where('statcode','REQ')->first();
 
-    $validated = $request->validate([
-        'role_id' => 'required',
-        'price' => 'required',
-        'imageprofile' => isset($request->imageprofile) ? 'required|image|file|max:1024' : 'image|file|max:1024',
-        'image' => isset($request->image) ? 'required|image|file|max:1024' : 'image|file|max:1024',
-        'video' => isset($request->video) ? 'required|mimes:mp4,avi,wmv|max:10240' : 'mimes:mp4,avi,wmv|max:10240',
-        'category_id' => 'required',
-        'norekening' => 'required|max:16|min:16',
-        'body' => 'required|max:30',
-    ]);
+        // Validate the request
+        $validated = $request->validate([
+            'role_id' => 'required',
+            'price' => 'required',
+            'imageprofile' => isset($request->imageprofile) ? 'required|image|file|max:1024' : 'nullable|image|file|max:1024',
+            'image' => isset($request->image) ? 'required|image|file|max:1024' : 'nullable|image|file|max:1024',
+            'video' => isset($request->video) ? 'required|mimes:mp4,avi,wmv|max:10240' : 'nullable|mimes:mp4,avi,wmv|max:10240',
+            'category_id' => 'required',
+            'norekening' => 'required|max:16|min:16',
+            'body' => 'required|max:30',
+        ]);
 
-    if ($request->file('imageprofile')) {
-        $validated['imageprofile'] = $request->file('imageprofile')->store('role-profile-images');
-    }
+        if ($request->hasFile('imageprofile')) {
+            $validated['imageprofile'] = $request->file('imageprofile')->store('role-profile-images');
+        } elseif (!$request->hasFile('imageprofile') && isset($lastdatastat) && $lastdatastat->imageprofile) {
+            $validated['imageprofile'] = $lastdatastat->imageprofile;
+        }
 
-    if ($request->file('image')) {
-        $validated['image'] = $request->file('image')->store('role-request-images');
-    }
 
-    if ($request->file('video')) {
-        $validated['video'] = $request->file('video')->store('role-request-videos');
-    }
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('role-request-images');
+        } elseif (!$request->hasFile('image') && isset($lastdatastat) && $lastdatastat->image) {
+            $validated['image'] = $lastdatastat->image;
+        }
 
-    $validated['user_id'] = $user->id;
-    $validated['statcode'] = "REQ";
 
-    if ($dataREQ) {
-        return redirect('/role/request')->with('danger', 'You Already Have Pending Request!');
-    } 
-    // Check if there is an existing record with statcode "APV" for the same user
-    else if ($lastdatastat && $lastdatastat->statcode === "APV") {
-        // Update the existing record
-        permission::create($validated);
-        return redirect('/role/request')->with('success', 'Changing Role Request Has Been Submitted!');
-    }
-    else if ($lastdatastat && $lastdatastat->statcode === "RJC") {
-        // Use updateOrCreate instead of update
-        permission::create($validated);
-        return redirect('/role/request')->with('success', 'Role Request Again Has Been Submitted!');
-    }
+        if ($request->hasFile('video')) {
+            $validated['video'] = $request->file('video')->store('role-request-videos');
+        } elseif (!$request->hasFile('video') && isset($lastdatastat) && $lastdatastat->video) {
+            $validated['video'] = $lastdatastat->video;
+        }
 
-    // Check other conditions and update or create permission records accordingly
-    // if ($data) {
-    
-    // }
+        $validated['user_id'] = $user->id;
+        $validated['statcode'] = "REQ";
+
+        if ($dataREQ) {
+            return redirect('/role/request')->with('danger', 'You Already Have Pending Request!');
+        } elseif ($lastdatastat && $lastdatastat->statcode === "APV") {
+            // Update the existing record
+            permission::create($validated);
+            return redirect('/role/request')->with('success', 'Changing Role Request Has Been Submitted!');
+        } elseif ($lastdatastat && $lastdatastat->statcode === "RJC") {
+            // Use updateOrCreate instead of update
+            permission::create($validated);
+            return redirect('/role/request')->with('success', 'Role Request Again Has Been Submitted!');
+        }
+
+        // Check other conditions and update or create permission records accordingly
         foreach ($request->input('available_days', []) as $day => $value) {
             AvailableTime::updateOrCreate(
                 ['user_id' => auth()->user()->id, 'day' => $day],
                 ['start_time' => $request->input('available_time_start', '00:00'), 'end_time' => $request->input('available_time_end', '23:59')]
             );
         }
-    // Check for an existing record based on 'norekening' before creating a new one
-    $existingRecord = permission::where('norekening', $request->input('norekening'))->first();
 
-    if (!$existingRecord) {
-        // Create a new permission record only if no existing record with the same 'norekening' is found
-        permission::create($validated);
+        // Check for an existing record based on 'norekening' before creating a new one
+        $existingRecord = permission::where('norekening', $request->input('norekening'))->first();
 
-        // Update or create AvailableTime records
+        if (!$existingRecord) {
+            // Create a new permission record only if no existing record with the same 'norekening' is found
+            permission::create($validated);
 
-        return redirect('/role/request')->with('success', 'Request Has Been Submitted!');
+            // Update or create AvailableTime records
+
+            return redirect('/role/request')->with('success', 'Request Has Been Submitted!');
+        }
+
+        return redirect('/role/request')->with('danger', 'A record with the same "norekening" already exists!');
     }
 
-    return redirect('/role/request')->with('danger', 'A record with the same "norekening" already exists!');
-}
 
 
 
