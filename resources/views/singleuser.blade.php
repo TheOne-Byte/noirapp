@@ -259,7 +259,7 @@
                 </div>
             </div>
 
-            <div class="mt-5">
+            <div class="mt-4">
                 <h2 class="user-desc-title mb-2">
                     Rating</h2>
                 <hr class="m-0 mb-2">
