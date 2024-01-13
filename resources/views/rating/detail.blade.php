@@ -11,7 +11,6 @@
         /* border: 1px solid #ccc; */
         border-radius: 8px;
         padding: 20px;
-        margin-bottom: 20px;
         background-color: #f9f9f9;
     }
 
@@ -24,10 +23,10 @@
         color: #555;
     }
 </style>
-<div class="row g-3 p-2 px-0">
+<div class="row g-2 gy-0 p-0 py-md-2 px-0">
     {{-- <h3 class="title text-white text-center">Ratings detail</h3> --}}
     @foreach($ratings as $rating)
-    <div class="col">
+    <div class="col-12 col-md-6">
         <div class="rating-card bg-dark position-relative">
             <div class="user-name text-white">{{ $rating->buyer->name }}</div>
             <div class="comment mb-2">{{ $rating->comment }}</div>

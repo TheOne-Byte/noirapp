@@ -161,8 +161,8 @@
                 </div>
                  
                 <div class="row">
-                    <div class="col-6 pe-1">
-                        <div class="card p-3 bg-dark py-2 mb-2">
+                    <div class="col-12 col-md-6 pe-md-1 mb-2 mb-md-0">
+                        <div class="card p-3 bg-transparent border-0 py-2 mb-2">
                             <h3 class="user-desc-title mb-1">
                                 Skill</h3>
                             <hr class="m-0 mb-2">
@@ -186,7 +186,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card p-3 bg-dark py-2">
+                        <div class="card p-3 bg-transparent border-0 py-2">
 
                             <h3 class="user-desc-title mb-1">
                                 Bio</h3>
@@ -218,8 +218,8 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-6 ps-1">
-                        <div class="card p-3 bg-dark py-2 mb-2">
+                    <div class="col-12 col-md-6 ps-md-1">
+                        <div class="card p-3 bg-transparent border-0 py-2 mb-2">
                             <h3 class="user-desc-title mb-1">
                                 Available Times</h3>
                             <hr class="m-0 mb-2">
@@ -240,7 +240,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="card p-3 bg-dark py-2 mb-4">
+                        <div class="card p-3 bg-transparent border-0 py-2 mb-4">
                             <h3 class="user-desc-title mb-1">
                                 Actions</h3>
                             <hr class="m-0 mb-2">
