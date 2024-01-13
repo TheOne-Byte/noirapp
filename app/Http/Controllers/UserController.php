@@ -57,6 +57,7 @@ class UserController extends Controller
         // ->select('start_time', 'end_time')
         // ->get();
         //  dd($existingTimes);
+        
 
         return view('singleuser',compact('availableTimes','availableDays'), [
             'title' => "User Information",
@@ -64,7 +65,9 @@ class UserController extends Controller
             'user' => $user->load('category', 'role', 'cart', 'permission'),
             'permissions' => $permissions,
             'categories' => $user->category,
-            'averageRating' => $averageRating
+            'averageRating' => $averageRating,
+            'ratings'=> Rating::where('seller_id',$user->id)->get(),
+            'active' => 'report_detail'
         ]);
 
     }

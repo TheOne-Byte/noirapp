@@ -1,6 +1,6 @@
-@extends('layouts/main')
+{{-- @extends('layouts/main')
 
-@section('container')
+@section('container') --}}
 <style>
     .rating-details {
         max-width: 600px;
@@ -8,7 +8,7 @@
     }
 
     .rating-card {
-        border: 1px solid #ccc;
+        /* border: 1px solid #ccc; */
         border-radius: 8px;
         padding: 20px;
         margin-bottom: 20px;
@@ -24,17 +24,20 @@
         color: #555;
     }
 </style>
-<div class="rating-details">
-    <h3 class="title text-white text-center">Ratings detail</h3>
+<div class="row g-3 p-2 px-0">
+    {{-- <h3 class="title text-white text-center">Ratings detail</h3> --}}
     @foreach($ratings as $rating)
-        <div class="rating-card">
-            <div class="user-name">{{ $rating->buyer->name }}</div>
+    <div class="col">
+        <div class="rating-card bg-dark position-relative">
+            <div class="user-name text-white">{{ $rating->buyer->name }}</div>
             <div class="comment">{{ $rating->comment }}</div>
+            <div class="position-absolute top-0 end-0 text-white p-3 opacity-25">{{ $rating->created_at }}</div>
             @for ($i = 0; $i < $rating->rating; $i++)
             <i class="bi bi-star-fill filled-star" style="color: yellow;"></i>
             @endfor
 
         </div>
+    </div>
     @endforeach
 </div>
-@endsection
+{{-- @endsection --}}

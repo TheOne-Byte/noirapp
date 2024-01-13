@@ -59,7 +59,7 @@
                         }}</a>
                 </div>
 
-                <div style="height:60%;" class="overflow-hidden bg-secondary d-flex align-items-center">
+                <div style="height:60%;" class="overflow-hidden bg-secondary d-flex">
                     @if ($user->imageprofile)
                     <img src="{{ asset('storage/' . $user->imageprofile) }}" class="img-fluid"
                         alt="{{ $user->category ? $user->category->name : '' }}">
