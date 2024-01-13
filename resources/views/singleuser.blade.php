@@ -65,7 +65,7 @@
         }
     </style>
 
-    <div class="container mt-5">
+    <div class="container mt-5 d-flex justify-content-center">
         <div class="row justify-content-center mb-5 w-100">
 
             <div class="col-md-4 d-inline-block justify-content-right">
@@ -133,7 +133,7 @@
             </div>
 
             <div class="col-md-8">
-                <div class="d-flex align-items-center mb-3 card bg-dark py-2 ">
+                <div class="d-flex align-items-center mb-3 card bg-dark py-2 mt-3 mt-md-0">
                     <h2 class="m-0">{{ $user->username }}</h2>
 
                     <div>

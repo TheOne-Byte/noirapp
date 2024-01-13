@@ -30,7 +30,7 @@
     <div class="col">
         <div class="rating-card bg-dark position-relative">
             <div class="user-name text-white">{{ $rating->buyer->name }}</div>
-            <div class="comment">{{ $rating->comment }}</div>
+            <div class="comment mb-2">{{ $rating->comment }}</div>
             <div class="position-absolute top-0 end-0 text-white p-3 opacity-25">{{ $rating->created_at }}</div>
             @for ($i = 0; $i < $rating->rating; $i++)
             <i class="bi bi-star-fill filled-star" style="color: yellow;"></i>
