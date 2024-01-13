@@ -450,7 +450,8 @@ body {
     background-size: cover;
     -o-background-size: cover;
     font-family: "Quicksand", sans-serif;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(20px);
+    min-height: 100vh;
 }
 
 .nav-item:hover {
