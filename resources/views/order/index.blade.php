@@ -28,16 +28,17 @@
                 <tr>
                     <td data-th="Product">
                         <div class="row">
-                            <div class="col-sm-3 hidden-xs"><img src="http://placehold.it/100x100" alt="..."
-                                    class="img-responsive" /></div>
+                            <div class="col-sm-3 hidden-xs">  <img src="{{ asset('storage/' . $image->imageprofile) }}" alt="player Image"
+                                class="d-block w-100"></div>
                             <div class="col-sm-9">
-                                <h4 class="nomargin text-black">{{ $user->role->name }}</h4>
+                                <h4 class="nomargin" style="color: black">{{ $user->role->name }}</h4>
                                 <p>{{ $user->username }}</p>
                             </div>
                         </div>
                     </td>
-                    <td data-th="Price">{{ $user->price }}</td>
-                    <td data-th="Schedule"></td> <!-- Tempat untuk menampilkan jadwal yang dipilih -->
+                    <td data-th="Price"> <img src="/img/gatcha.png" style="height:1.25rem" alt="" class="me-2" />
+                        {{ $user->price }}</td>
+                    <td data-th="Schedule"> </td> <!-- Tempat untuk menampilkan jadwal yang dipilih -->
                 </tr>
             </tbody>
         </table>
@@ -104,12 +105,14 @@
         const selectedScheduleId = document.getElementById('schedule_id').value;
         const selectedDate = document.getElementById('date').value;
         const selectedTime = document.getElementById('timeSlot').value;
+        const wib = "WIB";
 
         // Create an object to store temporary schedule data
         const tempSchedule = {
             schedule_id: selectedScheduleId,
             date: selectedDate,
-            time: selectedTime
+            time: selectedTime,
+            wib:wib
         };
 
         // Store temporary schedule data in localStorage
@@ -117,7 +120,7 @@
 
         // Display the selected schedule below the product and price
         const scheduleCell = document.querySelector('td[data-th="Schedule"]');
-        scheduleCell.innerHTML = `${selectedDate}, ${selectedTime}`;
+        scheduleCell.innerHTML = `Date : ${selectedDate}, Time : ${selectedTime} ${wib}`;
         document.getElementById('schedule_id').value = selectedScheduleId;
 
         // Close the modal
@@ -178,7 +181,7 @@
                 body: JSON.stringify({
                     user_id: '{{ $user->id }}',
                     date: scheduleData.date,
-                    selectedTime: scheduleData.time
+                    selectedTime: scheduleData.time,
                 })
             })
                 .then(response => {

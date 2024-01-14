@@ -7,6 +7,8 @@ use App\Models\cart;
 use App\Models\User;
 use App\Models\Schedule;
 use App\Models\Transaction;
+use App\Models\permission;
+
 use Illuminate\Support\Str;
 use App\Jobs\ReduceTimerJob;
 use Illuminate\Http\Request;
@@ -38,7 +40,8 @@ class OrderController extends Controller
         return view('order.index',compact('scheduleCount','availableTimes','availableDays','schedules','schedule'), [
             "title" => "order",
             'active' => 'order',
-            'user' => $user
+            'user' => $user,
+            'image' => Permission::where('user_id', $user->id)->orderBy('created_at', 'desc')->where('statcode','APV')->first()
             // Post::find($id)
 
         ]);

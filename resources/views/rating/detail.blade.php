@@ -13,6 +13,7 @@
         padding: 20px;
         margin-bottom: 20px;
         background-color: #f9f9f9;
+        position: relative;
     }
 
     .user-name {
@@ -28,12 +29,12 @@
     <h3 class="title text-white text-center">Ratings detail</h3>
     @foreach($ratings as $rating)
         <div class="rating-card">
+            <div class="right-0" style="position: absolute; padding-right: 2%">{{ $rating->created_at }}</div>
             <div class="user-name">{{ $rating->buyer->name }}</div>
             <div class="comment">{{ $rating->comment }}</div>
             @for ($i = 0; $i < $rating->rating; $i++)
             <i class="bi bi-star-fill filled-star" style="color: yellow;"></i>
             @endfor
-
         </div>
     @endforeach
 </div>

@@ -21,15 +21,15 @@
 
         </div>
         <div class="text-white">
-            <label for="Withdrawal">Your Gatcha Balance Now : {{ auth()->user()->points == null | 0 ? 0 : auth()->user()->points }}</label>
-            <br>
-            <label for="Withdrawal">Your Balance Now : {{ auth()->user()->points }}</label>
-
+            <label for="Withdrawal">Your Gacha Balance Now : {{ auth()->user()->points == null | 0 ? 0 : auth()->user()->points }}</label>
+           
         </div>
         <div class="col-md-4 mt-5 text-center">
             <div class="form-floating">
                 <input value="{{ old('Withdrawal') }}" type="number" class="mb-2 form-control  @error('Withdrawal') is-invalid @enderror rounded-bottom" id="Withdrawal" placeholder="Withdrawal" name="Withdrawal">
                 <label for="Withdrawal">Withdrawal number</label>
+
+                <label for="Withdrawal" name="convertTotal" id="convertTotal">Number of gacha point convert to idr: </label>
                 @error('Withdrawal')
                 <div class="invalid-feedback">{{$message }}</div>
                 @enderror
@@ -47,3 +47,11 @@
     </form>
 
 @endsection
+
+<script>
+    $('#Withdrawal').keyup(function()){
+        var withdraw = parseFloat($('#Withdrawal').val()) || 0;
+        var total = $('#convertTotal').val(withdraw * 150);
+        
+    }
+</script>
