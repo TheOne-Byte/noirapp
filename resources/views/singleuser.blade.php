@@ -65,8 +65,13 @@
         }
     </style>
 
-    <div class="container mt-5 d-flex justify-content-center">
-        <div class="row justify-content-center mb-5 w-100">
+    <div class="container-lg mt-3 d-flex flex-column justify-content-center align-items-center">
+        <div class="w-100">
+
+        <h1 class="h2-title-text mb-4">USER PROFILE</h1>
+        <hr>
+        </div>
+        <div class="row justify-content-center mt-2 mb-5 w-100">
 
             <div class="col-md-4 d-inline-block justify-content-right">
                 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
@@ -133,7 +138,7 @@
             </div>
 
             <div class="col-md-8">
-                <div class="d-flex align-items-center mb-3 card bg-dark py-2 mt-3 mt-md-0">
+                <div class="d-flex align-items-start mb-3 card bg-dark py-2 mt-3 mt-md-0 px-4">
                     <h2 class="m-0">{{ $user->username }}</h2>
 
                     <div>
@@ -147,15 +152,15 @@
         
                         @for ($i = 0; $i < $fullStars; $i++)
                             <span><i class="bi bi-star-fill filled-star"
-                                    style="color: yellow;"></i></span>
+                                    style="color: yellow; font-size: 1.2rem;"></i></span>
                         @endfor
         
                         @if ($hasHalfStar)
-                            <i class="bi bi-star-half filled-star" style="color: yellow;"></i>
+                            <i class="bi bi-star-half filled-star" style="color: yellow; font-size: 1.2rem;"></i>
                         @endif
         
                         @for ($i = 0; $i < 5 - ceil($roundedRating); $i++)
-                            <span><i class="bi bi-star empty-star"></i></span>
+                            <span><i class="bi bi-star empty-star" style=" font-size: 1.2rem;"></i></span>
                         @endfor
                     </div>
                 </div>
@@ -163,8 +168,8 @@
                 <div class="row">
                     <div class="col-12 col-md-6 pe-md-1 mb-2 mb-md-0">
                         <div class="card p-3 bg-transparent border-0 py-2 mb-2">
-                            <h3 class="user-desc-title mb-1">
-                                Skill</h3>
+                            <h4 class="user-desc-title mb-1">
+                                Skill</h4>
                             <hr class="m-0 mb-2">
 
                             <div class="row">
@@ -188,8 +193,8 @@
                         </div>
                         <div class="card p-3 bg-transparent border-0 py-2">
 
-                            <h3 class="user-desc-title mb-1">
-                                Bio</h3>
+                            <h4 class="user-desc-title mb-1">
+                                Bio</h4>
                             <hr class="m-0 mb-2">
                             <div class="informasi px-3 py-2">
                                 @if ($user->updateSingleBlade && $user->updateSingleBlade->approved)
@@ -220,8 +225,8 @@
                     </div>
                     <div class="col-12 col-md-6 ps-md-1">
                         <div class="card p-3 bg-transparent border-0 py-2 mb-2">
-                            <h3 class="user-desc-title mb-1">
-                                Available Times</h3>
+                            <h4 class="user-desc-title mb-1">
+                                Available Times</h4>
                             <hr class="m-0 mb-2">
                             <div class="informasi px-3 py-2">
                                 <ul class="mb-0">
@@ -241,14 +246,16 @@
                             </div>
                         </div>
                         <div class="card p-3 bg-transparent border-0 py-2 mb-4">
-                            <h3 class="user-desc-title mb-1">
-                                Actions</h3>
+                            <h4 class="user-desc-title mb-1">
+                                Actions</h4>
                             <hr class="m-0 mb-2">
-                            <div class="d-inline">
-                                <a href="/addtocart/{{ $user->username }}" class="btn">Order</a>
-                                <a href="/report/{{ $user->username }}" class="btn">Report</a>
+                            <div class="row gx-2 align-items-center justify-content-center">
+                                <a href="/addtocart/{{ $user->username }}" class="btn col m-2">Order</a>
+                                <a href="/report/{{ $user->username }}" class="btn col m-2">Report</a>
+                                
+                                <p class="col-auto text-center align-center text-white mb-0">or</p>
     
-                                <button type="submit" class="btn-chat p-2 py-1" data-chat-with="{{ $user->id }}"
+                                <button type="submit" class="btn-chat p-2 py-1 col  m-2" data-chat-with="{{ $user->id }}"
                                     onclick="window.location.href='/chatify/{{ $user->id }}'">
                                     <i class="bi bi-chat-heart"></i> Chat
                                 </button>
@@ -259,7 +266,7 @@
                 </div>
             </div>
 
-            <div class="mt-4">
+            <div class="mt-3">
                 <h2 class="user-desc-title mb-2">
                     Rating</h2>
                 <hr class="m-0 mb-2">
