@@ -5,6 +5,54 @@
 @if ($users->count())
 <div class="container">
 <div class="card mb-3 text-center my-3 user-card p-0">
+    <form action="/filter" method="GET">
+        <div class="row pb-3">
+          <div class="col-md-5 pt-4">
+  
+          </div>
+  
+          <div class="col-md-3">
+            <label for="">Player/coach</label>
+            <select class="form-select" aria-label="Default select example" name="role">
+              <option selected>role</option>
+              <option value="2">Player</option>
+              <option value="1">Coach</option>
+            </select>
+          </div>
+  
+          <div class="col-md-3">
+            <label for="">Available day :</label>
+            <select class="form-select" aria-label="Default select example" name="day">
+                <option selected>Available day</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+          </div>
+  
+          
+          <div class="col-md-3">
+            <label for="">Start time :</label>
+            <input type="date" class="form-control" name="startdate"> 
+          </div>
+  
+          
+          <div class="col-md-3">
+            <label for="">End time :</label>
+            <input type="date" class="form-control" name="enddate"> 
+          </div>
+
+          <input type="text" class="form-control" name="category" value="{{ $users[0]->category->name }}" hidden> 
+
+          <div class="col-md-1 pt-4">
+            <button type="submit" class="btn btn-primary">Filter</button>
+          </div>
+        </div>
+      </form>
 
     @if ($users[0]->imageprofile)
     <div style="max-height:350px; overflow:hidden;">

@@ -11,6 +11,7 @@
         /* border: 1px solid #ccc; */
         border-radius: 8px;
         background-color: #f9f9f9;
+        position: relative;
     }
 
     .user-name {
@@ -32,7 +33,6 @@
             @for ($i = 0; $i < $rating->rating; $i++)
             <i class="bi bi-star-fill filled-star" style="color: yellow; font-size: 1.25rem;"></i>
             @endfor
-
         </div>
     </div>
     @endforeach
