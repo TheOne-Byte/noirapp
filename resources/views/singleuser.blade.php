@@ -224,7 +224,7 @@
                                 Available Times</h3>
                             <hr class="m-0 mb-2">
                             <div class="informasi px-3 py-2">
-                                <ul>
+                                <ul class="mb-0">
                                     @foreach ($availableTimes as $availableTime)
                                         @php
                                             $startTime = strtotime($availableTime->start_time);
@@ -245,10 +245,10 @@
                                 Actions</h3>
                             <hr class="m-0 mb-2">
                             <div class="d-inline">
-                                <a href="/addtocart/{{ $user->username }}" class="btn btn-lg">Order</a>
-                                <a href="/report/{{ $user->username }}" class="btn btn-lg">Report</a>
+                                <a href="/addtocart/{{ $user->username }}" class="btn">Order</a>
+                                <a href="/report/{{ $user->username }}" class="btn">Report</a>
     
-                                <button type="submit" class="btn-chat" data-chat-with="{{ $user->id }}"
+                                <button type="submit" class="btn-chat p-2 py-1" data-chat-with="{{ $user->id }}"
                                     onclick="window.location.href='/chatify/{{ $user->id }}'">
                                     <i class="bi bi-chat-heart"></i> Chat
                                 </button>

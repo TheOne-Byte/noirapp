@@ -520,15 +520,12 @@ hr {
 .btn-chat {
     border: solid 2px #786778;
     border-radius: 16px;
-    padding: 10px 25px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    margin: 4px 2px;
     cursor: pointer;
     background: transparent;
     color: white;
-    margin-top: 10px;
 }
 .btn:hover .btn-chat:hover {
     background-color: #c3a4c3;
