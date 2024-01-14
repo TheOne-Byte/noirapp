@@ -24,7 +24,14 @@
                                 <input style="border-radius: 5px" value="{{ old('header') }}" type="text"
                                     class="mb-1 form-control @error('header') is-invalid @enderror" id="header" placeholder="header"
                                     name="header">
-
+                                    <select class="form-control" id="header" name="header" required focus>
+                                        <option value="Scamming">Scamming</option>                         
+                                        <option value="Sexual harrassment">Sexual harrassment</option>        
+                                        <option value="Spam or misleading">Spam or misleading</option>  
+                                        <option value="Promotes terrorism">Promotes terrorism</option>   
+                                        <option value="Hateful speech or bullying">Hateful speech or bullying</option>                         
+                                        <option value="" disabled selected>Select reason</option>        
+                                    </select>
                                 @error('header')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

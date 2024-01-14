@@ -154,7 +154,8 @@
                     </div>
                     <div class="col-md-6 text-white mt-5">
                         {{ $user->category->name }}
-                        <div class="price mt-1"><i class="bi bi-coin"></i> {{ $user->price }} / match</div>
+                        <div class="price mt-1"> <img src="/img/gatcha.png" style="height:1.25rem" alt="" class="me-2" />
+                            {{ $user->price }} / match</div>
                     </div>
                 </div>
 
