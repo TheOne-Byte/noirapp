@@ -25,7 +25,7 @@
         color: #555;
     }
 </style>
-<div class="rating-details"> 
+<div class="rating-details">
     <h3 class="title text-white text-center">Ratings detail</h3>
     @foreach($ratings as $rating)
         <div class="rating-card">
