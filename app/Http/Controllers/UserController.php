@@ -66,7 +66,7 @@ class UserController extends Controller
             'permissions' => $permissions,
             'categories' => $user->category,
             'averageRating' => $averageRating,
-            'ratings'=> Rating::where('seller_id',$user->id)->get(),
+            'ratings'=> Rating::where('seller_id',$user->id)->paginate(3),
             'active' => 'report_detail'
         ]);
 
