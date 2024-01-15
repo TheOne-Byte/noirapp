@@ -16,19 +16,19 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function showsingleuser(User $user){
-        $permissions = DB::table('permissions')
-                        ->select('image', 'video','statcode', 'imageprofile')
-                        ->where('user_id', $user->id)
-                        ->get();
-
+    public function showsingleuser(User $user)
+    {
+        $latestApprovedPermission = DB::table('permissions')
+            ->select('image', 'video', 'statcode', 'imageprofile')
+            ->where('user_id', $user->id)
+            ->where('statcode', 'APV') // Assuming 'APV' represents approved status
+            ->latest('created_at') // Get the latest record based on created_at timestamp
+            ->first(); // Retrieve only one record
 
         $availableTimes = AvailableTime::where('user_id', $user->id)->get();
         $availableDays = $availableTimes->pluck('day')->unique()->values()->toArray();
-        // $schedules = Schedule::where('buyer_id',auth()->user()->id)->get();
-        $ratings = rating::where('seller_id', $user->id)->get();
+        $ratings = Rating::where('seller_id', $user->id)->get();
 
-        // Hitung total rating yang ada
         $totalRating = 0;
         $totalUsers = count($ratings);
 
@@ -36,41 +36,24 @@ class UserController extends Controller
             $totalRating += $rating->rating;
         }
 
-        // Hitung rata-rata rating
         $averageRating = $totalUsers > 0 ? $totalRating / $totalUsers : 0;
 
-        if(auth()->user() == null){
+        if (auth()->user() == null) {
             return redirect('/login');
         }
-        else{
 
-        }
-        // Ambil hari yang tersedia
-        // $userSelectedDates = Schedule::where('user_id', $user->id)->pluck('date');
-        // $formattedDates = $userSelectedDates->map(function ($date) {
-        //     return Carbon::parse($date)->toDateString();
-        // });
-        // dd($userSelectedDate);
-
-        // dd($selectedDate);
-        // $existingTimes = Schedule::where('user_id', $user->id)
-        // ->select('start_time', 'end_time')
-        // ->get();
-        //  dd($existingTimes);
-        
-
-        return view('singleuser',compact('availableTimes','availableDays'), [
+        return view('singleuser', compact('availableTimes', 'availableDays'), [
             'title' => "User Information",
             'active' => 'singleuser',
             'user' => $user->load('category', 'role', 'cart', 'permission'),
-            'permissions' => $permissions,
+            'permissions' => collect([$latestApprovedPermission]), // Wrap the permission in a collection
             'categories' => $user->category,
             'averageRating' => $averageRating,
-            'ratings'=> Rating::where('seller_id',$user->id)->get(),
+            'ratings' => Rating::where('seller_id', $user->id)->get(),
             'active' => 'report_detail'
         ]);
-
     }
+
 
     public function reducePoints(Request $request) {
         $user_id = Auth::user()->id;

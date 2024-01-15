@@ -71,7 +71,7 @@ class User extends Authenticatable
     }
 
     public function permissions(){
-    return $this->hasMany(permission::class, 'user_id');
+    return $this->hasMany(permission::class, 'user_id', 'id');
     }
 
     public function permission(){
@@ -81,8 +81,8 @@ class User extends Authenticatable
     public function schedules()
     {
         return $this->hasMany(Schedule::class);
-    }    
-    
+    }
+
     // public function updateSingleBlade()
     // {
     //     return $this->hasOne(EditDisplayed::class, 'user_id');
