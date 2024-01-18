@@ -158,3 +158,4 @@ Route::post('/report/{id}/unban', [ReportController::class, 'unban'])->name('rep
 Route::get('/rating-detail/{user:username}', [RatingController::class, 'show'])->name('rating.detail');
 
 Route::get('/getUnreadMessagesCount', [ChatifyController::class, 'updateUnreadMessagesCount']);
+Route::get('/categories/{category:slug}/filterByRole', [CategoryController::class, 'filterByRole'])->name('filterByRole');
