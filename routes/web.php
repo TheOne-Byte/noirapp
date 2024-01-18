@@ -103,6 +103,7 @@ Route::resource('/dashboard/idcard', AdminIdCardController::class)->middleware('
 
 // Route::get('/chatify', [ChatifyController::class,'showChatify']);
 Route::get('/top_up', [TopUpController::class, 'index'])->middleware('exceptAdmin')->name('top_up')->middleware('auth');
+Route::get('/top_up_fail', [TopUpController::class, 'indexFail'])->middleware('exceptAdmin')->name('top_up_fail')->middleware('auth');
 Route::post('/top_up', [TopUpController::class, 'store'])->middleware('exceptAdmin')->name('store_top_up')->middleware('auth');
 Route::post('/top_up', [TopUpController::class, 'store'])->middleware('exceptAdmin')->name('store_top_up')->middleware('auth');
 Route::get('/top_up/sukses', [TopUpController::class, 'success'])->name('topup.sukses')->middleware('exceptAdmin')->middleware('auth');
@@ -157,3 +158,4 @@ Route::post('/report/{id}/unban', [ReportController::class, 'unban'])->name('rep
 Route::get('/rating-detail/{user:username}', [RatingController::class, 'show'])->name('rating.detail');
 
 Route::get('/getUnreadMessagesCount', [ChatifyController::class, 'updateUnreadMessagesCount']);
+Route::get('/categories/{category:slug}/filterByRole', [CategoryController::class, 'filterByRole'])->name('filterByRole');
