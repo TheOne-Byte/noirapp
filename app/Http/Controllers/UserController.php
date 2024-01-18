@@ -19,6 +19,8 @@ class UserController extends Controller
     public function showsingleuser(User $user){
         $permissions = DB::table('permissions')
                         ->select('image', 'video','statcode', 'imageprofile')
+                        ->where('statcode','APV')
+                        ->orderBy('created_at','desc')
                         ->where('user_id', $user->id)
                         ->get();
 
