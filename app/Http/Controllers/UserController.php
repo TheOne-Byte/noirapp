@@ -39,6 +39,11 @@ class UserController extends Controller
         // Hitung rata-rata rating
         $averageRating = $totalUsers > 0 ? $totalRating / $totalUsers : 0;
 
+        DB::table('users')
+        ->where('id', $user->id)
+        ->update(['rating_avg' => $averageRating]);
+
+
         if(auth()->user() == null){
             return redirect('/login');
         }
@@ -57,7 +62,7 @@ class UserController extends Controller
         // ->select('start_time', 'end_time')
         // ->get();
         //  dd($existingTimes);
-        
+
 
         return view('singleuser',compact('availableTimes','availableDays'), [
             'title' => "User Information",
