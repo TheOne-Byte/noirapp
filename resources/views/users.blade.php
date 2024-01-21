@@ -51,7 +51,11 @@
             @endfor
         @endfor
     </select>
+    <label for="min_rating" class="form-label mt-2 text-white">Minimum Rating:</label>
+        <input type="number" name="min_rating" id="min_rating" class="form-control" min="1" max="5" step="0.1">
 
+        <label for="max_rating" class="form-label mt-2 text-white">Maximum Rating:</label>
+        <input type="number" name="max_rating" id="max_rating" class="form-control" min="1" max="5" step="0.1">
 
         <button type="submit" class="btn btn-primary">Filter</button>
     </form>

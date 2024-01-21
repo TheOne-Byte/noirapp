@@ -49,6 +49,8 @@ class CategoryController extends Controller
         $selectedDay = $request->input('day');
         $startTime = $request->input('start_time');
         $endTime = $request->input('end_time');
+        $minRating = $request->input('min_rating');
+        $maxRating = $request->input('max_rating');
 
         $users = User::whereHas('role', function ($query) use ($roleId) {
             if ($roleId != 'all') {
@@ -74,6 +76,14 @@ class CategoryController extends Controller
                 $query->whereBetween('start_time', [$startTime, $endTime])
                       ->whereBetween('end_time', [$startTime, $endTime]);
             });
+        }
+
+        if ($minRating) {
+            $users->where('rating_avg', '>=', $minRating);
+        }
+
+        if ($maxRating) {
+            $users->where('rating_avg', '<=', $maxRating);
         }
 
         $users = $users->get();

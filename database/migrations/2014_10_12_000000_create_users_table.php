@@ -32,6 +32,7 @@ return new class extends Migration
             $table->boolean('ban_status')->nullable()->default(false);
             $table->integer('report_times')->nullable();
             $table->integer('unban_times')->nullable();
+            $table->decimal('rating_avg', 4, 2)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

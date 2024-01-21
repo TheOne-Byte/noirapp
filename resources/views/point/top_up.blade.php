@@ -235,7 +235,10 @@
             var totalAmount = selectedPoints * 200;
 
             // Generate BCA virtual account details (replace with actual logic if needed)
-            var bcaAccountNumber = "1234-5678-9012";
+            var randomDigits = Math.floor(1000 + Math.random() * 9000);
+            var randomLastDigits = Math.floor(1000 + Math.random() * 9000);
+
+            var bcaAccountNumber = "3879-" + randomDigits + "-" + randomLastDigits;
             var bcaExpiration = "01/25";
 
             // Update modal content

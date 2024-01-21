@@ -73,6 +73,9 @@ Route::post('/logout',[LogoutController::class,'logout'])->middleware('auth');
 
 Route::get('/addtocart/{user:username}', [OrderController::class,'index'])->middleware('exceptAdmin')->middleware('auth');
 Route::resource('/addtocart', OrderController::class)->middleware('exceptAdmin')->middleware('auth');
+// Route::post('/addtocart', [OrderController::class,'store'])->middleware('exceptAdmin')->middleware('auth');
+Route::post('/save-schedule-and-cart', [OrderController::class,'saveScheduleAndCart'])->middleware('exceptAdmin')->middleware('auth');
+
 
 
 Route::get('/cart/{user:username}', [OrderController::class,'GetCartByUserId'])->middleware('exceptAdmin');
@@ -119,6 +122,7 @@ Route::get('/rating', [RatingController::class, 'index']);
 
 
 Route::post('/schedule', [ScheduleController::class,'store']);
+Route::post('/save-schedule', [ScheduleController::class,'saveSchedules']);
 
 
 
