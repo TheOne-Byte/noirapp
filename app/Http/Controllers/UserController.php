@@ -19,6 +19,8 @@ class UserController extends Controller
     public function showsingleuser(User $user){
         $permissions = DB::table('permissions')
                         ->select('image', 'video','statcode', 'imageprofile')
+                        ->where('statcode','APV')
+                        ->orderBy('created_at','desc')
                         ->where('user_id', $user->id)
                         ->get();
 
@@ -71,7 +73,7 @@ class UserController extends Controller
             'permissions' => $permissions,
             'categories' => $user->category,
             'averageRating' => $averageRating,
-            'ratings'=> Rating::where('seller_id',$user->id)->get(),
+            'ratings'=> Rating::where('seller_id',$user->id)->paginate(3),
             'active' => 'report_detail'
         ]);
 

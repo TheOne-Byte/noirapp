@@ -687,3 +687,32 @@ hr {
     font-weight: 500;
     font-style: italic;
 }
+
+.text-muted {
+    color: #fe536d !important;
+}
+
+.active>.page-link, .page-link.active .page-link{
+    color: white !important;
+    background-color: rgb(33,37,41) ;
+    border-color: #fe536d;
+}
+.page-link , .page-link:focus{
+    color: #fe536d;
+    background-color: rgb(33,37,41) ;
+    border-color: rgb(19, 21, 24);
+    box-shadow: none;
+
+}
+.disabled>.page-link, .page-link.disabled{
+    background-color: rgb(33,37,41) ;
+    color: rgb(19, 21, 24);
+    border-color: rgb(19, 21, 24);
+}
+
+.page-link:hover {
+    z-index: 2;
+    color: white;
+    background-color: rgb(160, 52, 68);
+    border-color: #802b37;
+}

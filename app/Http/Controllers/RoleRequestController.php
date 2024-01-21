@@ -90,7 +90,7 @@ class RoleRequestController extends Controller
             'video' => isset($request->video) ? 'required|mimes:mp4,avi,wmv|max:10240' : 'nullable|mimes:mp4,avi,wmv|max:10240',
             'category_id' => 'required',
             'norekening' => 'required|max:16|min:16',
-            'body' => 'required|max:30',
+            'body' => 'required|max:255',
         ]);
 
         if ($request->hasFile('imageprofile')) {

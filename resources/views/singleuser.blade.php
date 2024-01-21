@@ -76,44 +76,22 @@
             <div class="col-md-4 d-inline-block justify-content-right">
                 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        @if (
-                            !empty($user->updateSingleBlade->image_path) &&
-                                !empty($user->updateSingleBlade->video_path) &&
-                                $user->updateSingleBlade->is_approved === 1)
-                            <!-- Display content when both image_path and video_path are not empty and is_approved is 1 -->
-                            <div class="carousel-item active">
-                                <img src="{{ asset('storage/' . $user->updateSingleBlade->image_path) }}"
-                                    class="d-block w-100" alt="Profile Image">
-                            </div>
-                            <div class="carousel-item">
-                                <video class="d-block w-100" controls>
-                                    <source src="{{ asset('storage/' . $user->updateSingleBlade->video_path) }}"
-                                        type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
-                        @elseif (!$permissions->isEmpty())
+                        @if (!$permissions)
                             <!-- Display content based on permissions -->
-                            @foreach ($permissions as $permission)
-                                @if ($permission->statcode === 'APV')
                                     <div class="carousel-item active">
-                                        <img src="{{ asset('storage/' . $permission->image) }}" alt="Uploaded Image"
+                                        <img src="{{ asset('storage/' . $permissions->image) }}" alt="Uploaded Image"
                                             class="d-block w-100">
                                     </div>
-                                    @if (property_exists($permission, 'imageprofile'))
-                                        <div class="carousel-item">
-                                            <img src="{{ asset('storage/' . $permission->imageprofile) }}"
-                                                alt="Uploaded Image" class="d-block w-100">
-                                        </div>
-                                    @endif
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('storage/' . $permissions->imageprofile) }}"
+                                            alt="Uploaded Image" class="d-block w-100">
+                                    </div>
                                     <div class="carousel-item">
                                         <video class="d-block w-100" controls>
-                                            <source src="{{ asset('storage/' . $permission->video) }}" type="video/mp4">
+                                            <source src="{{ asset('storage/' . $permissions->video) }}" type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video>
                                     </div>
-                                @endif
-                            @endforeach
                         @else
                             <!-- Display default image when both permissions and updateSingleBlade data are empty -->
                             <div class="carousel-item active">
@@ -187,7 +165,7 @@
                                 </div>
                                 <div class="col-md-6 text-white mt-5">
                                     {{ $user->category->name }}
-                                    <div class="price mt-1"><i class="bi bi-coin"></i> {{ $user->price }} / match</div>
+                                    <div class="price mt-1"><img src="/img/gatcha.png" style="height:1.25rem" alt="" class="me-2" /> {{ $user->price }} / match</div>
                                 </div>
                             </div>
                         </div>

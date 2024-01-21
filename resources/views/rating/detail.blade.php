@@ -36,5 +36,10 @@
         </div>
     </div>
     @endforeach
+    <div class="mt-3 ">
+        {{ $ratings->links('pagination::bootstrap-5')}}
+    </div>
+
 </div>
+
 {{-- @endsection --}}
