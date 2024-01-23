@@ -16,14 +16,14 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function showsingleuser(User $user)
-    {
-        $latestApprovedPermission = DB::table('permissions')
-            ->select('image', 'video', 'statcode', 'imageprofile')
-            ->where('user_id', $user->id)
-            ->where('statcode', 'APV') // Assuming 'APV' represents approved status
-            ->latest('created_at') // Get the latest record based on created_at timestamp
-            ->first(); // Retrieve only one record
+    public function showsingleuser(User $user){
+        $permissions = DB::table('permissions')
+                        ->select('image', 'video','statcode', 'imageprofile')
+                        ->where('statcode','APV')
+                        ->orderBy('created_at','desc')
+                        ->where('user_id', $user->id)
+                        ->get();
+
 
         $availableTimes = AvailableTime::where('user_id', $user->id)->get();
         $availableDays = $availableTimes->pluck('day')->unique()->values()->toArray();
@@ -38,18 +38,38 @@ class UserController extends Controller
 
         $averageRating = $totalUsers > 0 ? $totalRating / $totalUsers : 0;
 
+        DB::table('users')
+        ->where('id', $user->id)
+        ->update(['rating_avg' => $averageRating]);
+
+
         if (auth()->user() == null) {
             return redirect('/login');
         }
 
-        return view('singleuser', compact('availableTimes', 'availableDays'), [
+
+        // Ambil hari yang tersedia
+        // $userSelectedDates = Schedule::where('user_id', $user->id)->pluck('date');
+        // $formattedDates = $userSelectedDates->map(function ($date) {
+        //     return Carbon::parse($date)->toDateString();
+        // });
+        // dd($userSelectedDate);
+
+        // dd($selectedDate);
+        // $existingTimes = Schedule::where('user_id', $user->id)
+        // ->select('start_time', 'end_time')
+        // ->get();
+        //  dd($existingTimes);
+
+
+        return view('singleuser',compact('availableTimes','availableDays'), [
             'title' => "User Information",
             'active' => 'singleuser',
             'user' => $user->load('category', 'role', 'cart', 'permission'),
-            'permissions' => collect([$latestApprovedPermission]), // Wrap the permission in a collection
+            'permissions' => $permissions,
             'categories' => $user->category,
             'averageRating' => $averageRating,
-            'ratings' => Rating::where('seller_id', $user->id)->get(),
+            'ratings'=> Rating::where('seller_id',$user->id)->paginate(3),
             'active' => 'report_detail'
         ]);
     }

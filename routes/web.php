@@ -73,6 +73,9 @@ Route::post('/logout',[LogoutController::class,'logout'])->middleware('auth');
 
 Route::get('/addtocart/{user:username}', [OrderController::class,'index'])->middleware('exceptAdmin')->middleware('auth');
 Route::resource('/addtocart', OrderController::class)->middleware('exceptAdmin')->middleware('auth');
+// Route::post('/addtocart', [OrderController::class,'store'])->middleware('exceptAdmin')->middleware('auth');
+Route::post('/save-schedule-and-cart', [OrderController::class,'saveScheduleAndCart'])->middleware('exceptAdmin')->middleware('auth');
+
 
 
 Route::get('/cart/{user:username}', [OrderController::class,'GetCartByUserId'])->middleware('exceptAdmin');
@@ -103,6 +106,7 @@ Route::resource('/dashboard/idcard', AdminIdCardController::class)->middleware('
 
 // Route::get('/chatify', [ChatifyController::class,'showChatify']);
 Route::get('/top_up', [TopUpController::class, 'index'])->middleware('exceptAdmin')->name('top_up')->middleware('auth');
+Route::get('/top_up_fail', [TopUpController::class, 'indexFail'])->middleware('exceptAdmin')->name('top_up_fail')->middleware('auth');
 Route::post('/top_up', [TopUpController::class, 'store'])->middleware('exceptAdmin')->name('store_top_up')->middleware('auth');
 Route::post('/top_up', [TopUpController::class, 'store'])->middleware('exceptAdmin')->name('store_top_up')->middleware('auth');
 Route::get('/top_up/sukses', [TopUpController::class, 'success'])->name('topup.sukses')->middleware('exceptAdmin')->middleware('auth');
@@ -118,6 +122,7 @@ Route::get('/rating', [RatingController::class, 'index']);
 
 
 Route::post('/schedule', [ScheduleController::class,'store']);
+Route::post('/save-schedule', [ScheduleController::class,'saveSchedules']);
 
 
 
@@ -157,3 +162,6 @@ Route::post('/report/{id}/unban', [ReportController::class, 'unban'])->name('rep
 Route::get('/rating-detail/{user:username}', [RatingController::class, 'show'])->name('rating.detail');
 
 Route::get('/getUnreadMessagesCount', [ChatifyController::class, 'updateUnreadMessagesCount']);
+Route::post('/accept/report/{report}', [AdminReportController::class, 'acceptReport'])->name('accept.report');
+Route::post('/reject/report/{report}', [AdminReportController::class, 'rejectReport'])->name('reject.report');
+Route::get('/categories/{category:slug}/filterByRole', [CategoryController::class, 'filterByRole'])->name('filterByRole');

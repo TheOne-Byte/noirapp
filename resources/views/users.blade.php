@@ -55,24 +55,22 @@
                     </div>
                 </form>
 
-                @if ($users[0]->imageprofile)
-                <div style="max-height:350px; overflow:hidden;">
-                    <img src="{{ asset('storage/' . $users[0]->imageprofile) }}" class="img-fluid"
-                        alt="{{ $users[0]->category ? $users[0]->category->name : '' }}">
-                </div>
-            @else
-                @php
-                    $firstPermission = $users[0]->permissions->first();
-                    // dd($users[0], $firstPermission); // Add this line for debugging
-                @endphp
-                @if ($firstPermission && $firstPermission->statcode === 'APV')
-                    <img src="{{ asset('storage/' . $firstPermission->imageprofile) }}" alt="Uploaded Image">
+                @if (!empty($users) && isset($users[0]) && $users[0]->imageprofile)
+                    <div style="max-height:350px; overflow:hidden;">
+                        <img src="{{ asset('storage/' . $users[0]->imageprofile) }}" class="img-fluid"
+                            alt="{{ $users[0]->category ? $users[0]->category->name : '' }}">
+                    </div>
                 @else
-                    <img src="https://source.unsplash.com/1200x400/?{{ $users[0]->category ? $users[0]->category->name : '' }}"
-                        class="card-img-top" alt="...">
+                    @php
+                        $firstPermission = $users[0]->permissions->first();
+                    @endphp
+                    @if ($firstPermission && $firstPermission->statcode === 'APV')
+                        <img src="{{ asset('storage/' . $firstPermission->imageprofile) }}" alt="Uploaded Image">
+                    @else
+                        <img src="https://source.unsplash.com/1200x400/?{{ $users[0]->category ? $users[0]->category->name : '' }}"
+                            class="card-img-top" alt="...">
+                    @endif
                 @endif
-            @endif
-
 
                 <div class="card-body position-relative">
                     <h4 class="user-card-text m-0">{{ $users[0]->username }}
@@ -109,10 +107,10 @@
                                     href="/categories/{{ $user->category ? $user->category->slug : '' }}">{{ $user->role->name }}</a>
                             </div>
 
-                            <div style="height: 60%;" class="overflow-hidden bg-secondary d-flex align-items-center justify-content-center">
+                            <div style="height:60%;" class="overflow-hidden bg-secondary d-flex align-items-center">
                                 @if ($user->imageprofile)
                                     <img src="{{ asset('storage/' . $user->imageprofile) }}" class="img-fluid"
-                                        alt="{{ $user->category ? $user->category->name : '' }}" style="object-fit: cover; height: 100%; width: 100%;">
+                                        alt="{{ $user->category ? $user->category->name : '' }}">
                                 @else
                                     @php
                                         $firstPermission = $user->permissions->first();
@@ -128,7 +126,8 @@
                                 @endif
                             </div>
 
-                            <div class="card-body" style="flex: 1; /* Ensures the card-body takes up the available vertical space */">
+                            <div class="card-body"
+                                style="flex: 1; /* Ensures the card-body takes up the available vertical space */">
                                 <div class="row">
                                     <h5 class="col-12 col-lg-8 user-card-text m-0">
                                         {{ $user->username }}
@@ -137,7 +136,8 @@
                                         </p>
                                     </h5>
                                     <span class="col-12 col-lg-4 d-flex justify-content-lg-end">
-                                        <p class="user-card-text btn fs-6 text-uppercase btn-secondary d-flex align-items-center">
+                                        <p
+                                            class="user-card-text btn fs-6 text-uppercase btn-secondary d-flex align-items-center">
                                             <a class="text-decoration-none text-white text-wrap"
                                                 href="/categories/{{ $user->category ? $user->category->slug : '' }}">
                                                 {{ $user->category ? $user->category->name : '' }}</a>
@@ -154,8 +154,6 @@
                 @endforeach
             </div>
         </div>
-
-
     @else
         <p class="text-center fs-4 text-white">no user found</p>
     @endif
