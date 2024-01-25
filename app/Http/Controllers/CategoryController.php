@@ -45,7 +45,7 @@ class CategoryController extends Controller
         return view('users', [
             'title' => "User by category",
             'active' => 'category',
-            'users' => $users,,
+            'users' => $users,
             'category' => $category,
         ]);
     }
